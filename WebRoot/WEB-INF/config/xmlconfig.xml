@@ -22,6 +22,7 @@
   <entry>
     <mainKey id="security_menu" desc="权限url及资源的组织菜单"/>
     <list>
+      <field key="0" value="暂未分配"/>
       <field key="1" value="权限管理"/>
       <field key="2" value="test"/>
     </list>
