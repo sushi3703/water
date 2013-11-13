@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>jQuery UI Autocomplete - Remote datasource</title>
+	<link rel="stylesheet" href="css/jquery.ui.all.css">
+	<script src="jquery-1.8.0.js"></script>
+	<script src="jquery.ui.core.js"></script>
+	<script src="jquery.ui.widget.js"></script>
+	<script src="jquery.ui.position.js"></script>
+	<script src="jquery.ui.autocomplete.js"></script>
+	<script>
+	var showRes = function() {
+		alert($("#res").val());
+	}
+	$(function() {
+		$( "#birds" ).autocomplete({
+			source: "data.jsp",
+			minLength: 1,
+			select: function( event, ui ) {
+				$("#res").val(ui.item.id);
+			}
+		});
+	});
+	</script>
+</head>
+<body>
+
+<div class="demo">
+
+<div class="ui-widget">
+	<label for="birds">Birds: </label>
+	<input value="" aria-haspopup="true" aria-autocomplete="list" role="textbox" autocomplete="off" class="ui-autocomplete-input" id="birds">
+	<input type="button" value="Get Value" onclick="showRes();" />
+	<input type="hidden" name="res" id="res" />
+</div>
+
+</div><!-- End demo -->
+
+
+</body></html>

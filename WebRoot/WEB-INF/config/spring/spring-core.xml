@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <beans xmlns="http://www.springframework.org/schema/beans"  
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"  
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+ 		xmlns:tx="http://www.springframework.org/schema/tx"  
+   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd" default-autowire="byName">
+
+
+	<context:annotation-config/>
+	<context:component-scan base-package="net.water"/>
+  
+ 	<bean id="lobHandler" class="org.springframework.jdbc.support.lob.OracleLobHandler">
+        <property name="nativeJdbcExtractor" ref="nativeJdbcExtractor"/>
+    </bean>
+
+    <bean id="nativeJdbcExtractor" class="org.springframework.jdbc.support.nativejdbc.CommonsDbcpNativeJdbcExtractor"/>
+ 
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg><ref bean="waterDataSource"/></constructor-arg>
+     </bean>
+     
+     <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg><ref bean="waterDataSource"/></constructor-arg>
+     </bean>
+     
+     <bean id="jdbcInsert" class="org.springframework.jdbc.core.simple.SimpleJdbcInsert">
+        <constructor-arg><ref bean="waterDataSource"/></constructor-arg>
+     </bean>
+     
+     <bean id="txManager"  
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+        <property name="dataSource" ref="waterDataSource" />  
+    </bean>  
+       
+    <!-- 定义事务传播属性 -->  
+    <tx:advice id="txAdvice" transaction-manager="txManager">  
+        <tx:attributes>  
+        	<tx:method name="create*" propagation="REQUIRED" read-only="false" rollback-for="net.kuakao.core.exception.DataBaseException" />
+            <tx:method name="insert*" propagation="REQUIRED" read-only="false" rollback-for="net.kuakao.core.exception.DataBaseException" />
+            <tx:method name="save*" propagation="REQUIRED" read-only="false" rollback-for="net.kuakao.core.exception.DataBaseException" />  
+            <tx:method name="add*" propagation="REQUIRED" read-only="false" rollback-for="net.kuakao.core.exception.DataBaseException" />
+            <tx:method name="remove*" propagation="REQUIRED" read-only="false" rollback-for="net.kuakao.core.exception.DataBaseException" /> 
+            <tx:method name="delete*" propagation="REQUIRED" read-only="false" rollback-for="net.kuakao.core.exception.DataBaseException" /> 
+            <tx:method name="destroy*" propagation="REQUIRED" read-only="false" rollback-for="net.kuakao.core.exception.DataBaseException" /> 
+            <tx:method name="update*" propagation="REQUIRED" read-only="false" rollback-for="net.kuakao.core.exception.DataBaseException" />
+            <tx:method name="batch*" propagation="REQUIRED" read-only="false" rollback-for="net.kuakao.core.exception.DataBaseException" />
+            <tx:method name="operate*" propagation="REQUIRED" read-only="false" rollback-for="net.kuakao.core.exception.DataBaseException" />
+            <tx:method name="*" read-only="true"/>     
+        </tx:attributes>  
+    </tx:advice>  
+    
+    <aop:config>  
+        <aop:pointcut id="transactionPointCut" expression="execution(* net.water.*.service..*.*(..))"/>  
+        <aop:advisor pointcut-ref="transactionPointCut" advice-ref="txAdvice"/>  
+    </aop:config> 
+
+</beans>

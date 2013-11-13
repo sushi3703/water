@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+  <!-- common begin -->
+  <entry>
+    <mainKey id="common_yes_no" desc="通用是否参数值"/>
+    <list>
+      <field key="1" value="是"/>
+      <field key="2" value="否"/>
+    </list>
+  </entry>
+  
+  <!-- common end -->
+  <!-- security begin -->
+  <entry>
+    <mainKey id="security_url_method" desc="url访问方式"/>
+    <list>
+      <field key="1" value="GET"/>
+      <field key="2" value="POST"/>
+    </list>
+  </entry>
+  
+  <entry>
+    <mainKey id="security_menu" desc="权限url及资源的组织菜单"/>
+    <list>
+      <field key="1" value="权限管理"/>
+      <field key="2" value="test"/>
+    </list>
+  </entry>
+  
+  <!-- security end -->
+  <entry>
+    <mainKey id="product_unit" desc="产品的单位"/>
+    <list>
+      <field key="KG" value="KG"/>
+      <field key="L" value="L"/>
+      <field key="件" value="件"/>
+    </list>
+  </entry>
+  
+  <entry>
+    <mainKey id="product_pfunc" desc="结算公式"/>
+    <list>
+      <field key="1" value="1"/>
+      <field key="2" value="2"/>
+      <field key="3" value="3"/>
+      <field key="4" value="4"/>
+    </list>
+  </entry>
+  
+  <entry>
+    <mainKey id="product_freighttype" desc="运费系数"/>
+    <list>
+      <field key="A" value="A"/>
+      <field key="B" value="B"/>
+      <field key="C" value="C"/>
+    </list>
+  </entry>
+  
+</map>
