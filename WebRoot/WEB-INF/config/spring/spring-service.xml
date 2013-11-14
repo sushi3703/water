@@ -10,10 +10,13 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd" default-autowire="byName">
 	
 	
-	
-	<!-- other begin -->
+	<!-- login begin -->
 	<bean id="userLoginService" class="net.water.login.service.impl.UserLoginService" />
+	<!-- login end -->
+	
+	<!-- security begin -->
 	<bean id="secUrlService" class="net.water.security.service.impl.SecUrlService" />
-	<!-- other end -->
+	<bean id="secResourceService" class="net.water.security.service.impl.SecResourceService" />
+	<!-- security end -->
 	
 </beans>

@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.kuakao.core.base.util.FormTokenUtil;
 import net.sf.json.JSONObject;
 import net.water.Constants;
 import net.water.security.dto.SecUrlDto;
@@ -15,6 +16,8 @@ import net.water.security.entity.SecUrlEntity;
 import net.water.security.service.ISecUrlService;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +31,7 @@ public class SecUrlAdminController {
 	
 	@Autowired
 	private ISecUrlService secUrlService;
+	protected final Log log = LogFactory.getLog(getClass());
 
 	@RequestMapping("index")
 	public String index(HttpServletRequest request,@ModelAttribute("_page") SecUrlDto secUrlDto, Model model) throws Exception {
@@ -46,6 +50,7 @@ public class SecUrlAdminController {
 	
 	@RequestMapping("edit")
 	public String edit(HttpServletRequest request,@ModelAttribute("secUrlDto") SecUrlDto secUrlDto, Model model) throws Exception {
+		secUrlDto.setFormTokenCode(request);
 		if(StringUtils.isNotBlank(secUrlDto.getUrlId())){
 			secUrlService.getSecUrlById(secUrlDto ,model);
 		}
@@ -54,7 +59,10 @@ public class SecUrlAdminController {
 	}
 	
 	@RequestMapping(value="save",method=RequestMethod.POST)
-	public String save(@ModelAttribute("secUrlDto") SecUrlDto secUrlDto, Model model) throws Exception {
+	public String save(@ModelAttribute("secUrlDto") SecUrlDto secUrlDto, Model model,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		if(FormTokenUtil.validFormToken(request, response, secUrlDto, true)) {
+			return "admin/security/secUrl_edit";
+		}
 		secUrlService.saveSecUrl(secUrlDto ,model);
 		return "redirect:/admin/secUrl/index.action?" + secUrlDto.getDecodeQueryStr();
 	}

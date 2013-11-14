@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
   	<meta charset="utf-8">
-    <title>url增加</title>
+    <title>url编辑</title>
     <script type="text/javascript" src="${pageContext.request.contextPath}/common/include_css_and_js.action"></script>
     <script type="text/javascript">
     
@@ -32,6 +32,7 @@
     <div class="box">
     <form action="${pageContext.request.contextPath}/admin/secUrl/save.action" method="post"  class="form-horizontal">
     <input type="hidden" id="queryStr" name="queryStr" value="${secUrlDto.queryStr}" />
+    <input type="hidden" name="formToken" value="${secUrlDto.formToken}" />
     <input type="hidden" name="urlId" value="${secUrlDto.urlId}" />
     <table class="table table-bordered table-striped">
     <tr>

@@ -1,5 +1,6 @@
 package net.water.security.entity;
 import java.io.Serializable;
+import java.util.List;
 
 import net.water.security.dto.SecResourceDto;
 
@@ -25,6 +26,8 @@ public class SecResourceEntity implements Serializable {
 	/* 状态，1有效0删除 */
 	private int  status;
 			
+	/* 资源所包含的url，用于显示 */
+	private List<SecUrlEntity> urls;
 	
 	public int getResId() {
 		return resId;
@@ -69,6 +72,14 @@ public class SecResourceEntity implements Serializable {
 		this.status = status;
 	}	
 	
+	public List<SecUrlEntity> getUrls() {
+		return urls;
+	}
+
+	public void setUrls(List<SecUrlEntity> urls) {
+		this.urls = urls;
+	}
+
 	public void toSecResourceDto(SecResourceDto SecResourceDto) throws Exception {
 		SecResourceDto.setResId(String.valueOf(this.resId));
 		

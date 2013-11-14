@@ -47,7 +47,7 @@ public class SecurityAdminController {
 		leftInfo.append("</a>");
 		leftInfo.append("<ul class='collapsed-nav closed' style='display: block'>");
 		leftInfo.append("<li><a style='margin-left: 0px;' href='/admin/secUrl/index.action'>t21</a></li>");
-		leftInfo.append("<li><a style='margin-left: 0px;' href='/'><b>t22</b></a></li>");
+		leftInfo.append("<li><a style='margin-left: 0px;' href='/admin/secResource/index.action'>t22</a></li>");
 		leftInfo.append("</ul>");
 		leftInfo.append("</li>");
 		

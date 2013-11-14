@@ -21,76 +21,69 @@ import org.springframework.stereotype.Repository;
 public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 	
 	
-	public List<SecResourceEntity> querySecResources(SecResourceDto SecResourceDto) throws DataBaseException {
-		String sql = "select res_id,res_name,app_type,app_menu,url_ids,status from sec_resource";
+	public List<SecResourceEntity> querySecResources(SecResourceDto secResourceDto) throws DataBaseException {
+		String sql = "select res_id,res_name,app_type,app_menu,url_ids from sec_resource where status=1";
 		StringBuffer where = new StringBuffer();
 		List<Object> args = new ArrayList<Object>();
-		SecResourceEntity SecResourceEntity = SecResourceDto.toSecResourceEntity();
+		SecResourceEntity secResourceEntity = secResourceDto.toSecResourceEntity();
 		
-		if(StringUtils.isNotBlank(SecResourceDto.getResId())) {
-			args.add(SecResourceEntity.getResId());
+		if(StringUtils.isNotBlank(secResourceDto.getResId())) {
+			args.add(secResourceEntity.getResId());
 			where.append(" and res_id=?");
 		}
-		if(StringUtils.isNotBlank(SecResourceDto.getResName())) {
-			where.append(" and res_name like '%"+SecResourceEntity.getResName()+"%'");
+		if(StringUtils.isNotBlank(secResourceDto.getResName())) {
+			where.append(" and res_name like '%"+secResourceEntity.getResName()+"%'");
 		}
-		if(StringUtils.isNotBlank(SecResourceDto.getAppType())) {
-			args.add(SecResourceEntity.getAppType());
+		if(StringUtils.isNotBlank(secResourceDto.getAppType())) {
+			args.add(secResourceEntity.getAppType());
 			where.append(" and app_type=?");
 		}
-		if(StringUtils.isNotBlank(SecResourceDto.getAppMenu())) {
-			args.add(SecResourceEntity.getAppMenu());
+		if(StringUtils.isNotBlank(secResourceDto.getAppMenu())) {
+			args.add(secResourceEntity.getAppMenu());
 			where.append(" and app_menu=?");
 		}
-		if(StringUtils.isNotBlank(SecResourceDto.getStatus())) {
-			args.add(SecResourceEntity.getStatus());
-			where.append(" and status=?");
-		}
 		
-		String querySql = sql + where.toString().replaceFirst("and","where")+" order by res_id";
+		String querySql = sql + where.toString() +" order by res_id";
 		
-		if(SecResourceDto.getPerPage()==-1){
+		if(secResourceDto.getPerPage()==-1){
 			return super.query(querySql, args.toArray(), new RowMapper<SecResourceEntity>() {
 				public SecResourceEntity mapRow(ResultSet rs, int arg1) throws SQLException {
-					SecResourceEntity SecResourceEntity = new SecResourceEntity();
-					SecResourceEntity.setResId(rs.getInt("res_id"));
-					SecResourceEntity.setResName(rs.getString("res_name"));
-					SecResourceEntity.setAppType(rs.getInt("app_type"));
-					SecResourceEntity.setAppMenu(rs.getInt("app_menu"));
-					SecResourceEntity.setUrlIds(rs.getString("url_ids"));
-					SecResourceEntity.setStatus(rs.getInt("status"));
-					return SecResourceEntity;
+					SecResourceEntity secResourceEntity = new SecResourceEntity();
+					secResourceEntity.setResId(rs.getInt("res_id"));
+					secResourceEntity.setResName(rs.getString("res_name"));
+					secResourceEntity.setAppType(rs.getInt("app_type"));
+					secResourceEntity.setAppMenu(rs.getInt("app_menu"));
+					secResourceEntity.setUrlIds(rs.getString("url_ids"));
+					return secResourceEntity;
 				}
 			});
 		}else{
 			return super.queryByPage(querySql, args.toArray(), new RowMapper<SecResourceEntity>() {
 				public SecResourceEntity mapRow(ResultSet rs, int arg1) throws SQLException {
-					SecResourceEntity SecResourceEntity = new SecResourceEntity();
-					SecResourceEntity.setResId(rs.getInt("res_id"));
-					SecResourceEntity.setResName(rs.getString("res_name"));
-					SecResourceEntity.setAppType(rs.getInt("app_type"));
-					SecResourceEntity.setAppMenu(rs.getInt("app_menu"));
-					SecResourceEntity.setUrlIds(rs.getString("url_ids"));
-					SecResourceEntity.setStatus(rs.getInt("status"));
-					return SecResourceEntity;
+					SecResourceEntity secResourceEntity = new SecResourceEntity();
+					secResourceEntity.setResId(rs.getInt("res_id"));
+					secResourceEntity.setResName(rs.getString("res_name"));
+					secResourceEntity.setAppType(rs.getInt("app_type"));
+					secResourceEntity.setAppMenu(rs.getInt("app_menu"));
+					secResourceEntity.setUrlIds(rs.getString("url_ids"));
+					return secResourceEntity;
 				}
-			}, SecResourceDto);
+			}, secResourceDto);
 		}
 	}
 	
 	
 	public SecResourceEntity getSecResourceById(int resId) throws DataBaseException {
-		String sql = "select res_id,res_name,app_type,app_menu,url_ids,status from sec_resource where res_id = ?  limit 1";
+		String sql = "select res_id,res_name,app_type,app_menu,url_ids from sec_resource where res_id = ? and status=1  limit 1";
 		return super.queryForObject(sql, new Object[]{resId }, new RowMapper<SecResourceEntity>() {
 			public SecResourceEntity mapRow(ResultSet rs, int value) throws SQLException {
-				SecResourceEntity SecResourceEntity = new SecResourceEntity();
-				SecResourceEntity.setResId(rs.getInt("res_id"));
-				SecResourceEntity.setResName(rs.getString("res_name"));
-				SecResourceEntity.setAppType(rs.getInt("app_type"));
-				SecResourceEntity.setAppMenu(rs.getInt("app_menu"));
-				SecResourceEntity.setUrlIds(rs.getString("url_ids"));
-				SecResourceEntity.setStatus(rs.getInt("status"));
-				return SecResourceEntity;
+				SecResourceEntity secResourceEntity = new SecResourceEntity();
+				secResourceEntity.setResId(rs.getInt("res_id"));
+				secResourceEntity.setResName(rs.getString("res_name"));
+				secResourceEntity.setAppType(rs.getInt("app_type"));
+				secResourceEntity.setAppMenu(rs.getInt("app_menu"));
+				secResourceEntity.setUrlIds(rs.getString("url_ids"));
+				return secResourceEntity;
 			}
 		});
 	}
@@ -103,26 +96,26 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 	
 	
 	
-	public void createSecResource(SecResourceEntity SecResourceEntity) throws DataBaseException {
-		String sql = "insert into sec_resource(res_name ,app_type ,app_menu ,url_ids ) values(? ,? ,? ,? )";
-		super.update(sql, new Object[]{SecResourceEntity.getResName() ,SecResourceEntity.getAppType() ,SecResourceEntity.getAppMenu() ,SecResourceEntity.getUrlIds() });
+	public void createSecResource(SecResourceEntity secResourceEntity) throws DataBaseException {
+		String sql = "insert into sec_resource(res_name ,app_menu ,url_ids ) values(? ,? ,? )";
+		super.update(sql, new Object[]{secResourceEntity.getResName() ,secResourceEntity.getAppMenu() ,secResourceEntity.getUrlIds() });
 	}
 	
 	
 	
-	public void updateSecResource(SecResourceEntity SecResourceEntity) throws DataBaseException {
+	public void updateSecResource(SecResourceEntity secResourceEntity) throws DataBaseException {
 		StringBuffer updateSql = new StringBuffer("update sec_resource set ");
 		List<Object> args = new ArrayList<Object>();
-		args.add(SecResourceEntity.getResName());
+		args.add(secResourceEntity.getResName());
 		updateSql.append("res_name=?").append(",");
-		args.add(SecResourceEntity.getAppType());
-		updateSql.append("app_type=?").append(",");
-		args.add(SecResourceEntity.getAppMenu());
+//		args.add(secResourceEntity.getAppType());
+//		updateSql.append("app_type=?").append(",");
+		args.add(secResourceEntity.getAppMenu());
 		updateSql.append("app_menu=?").append(",");
-		args.add(SecResourceEntity.getUrlIds());
+		args.add(secResourceEntity.getUrlIds());
 		updateSql.append("url_ids=?").append(",");
 		
-		args.add(SecResourceEntity.getResId());
+		args.add(secResourceEntity.getResId());
 			
 		String sql = updateSql.substring(0, updateSql.length()-1) + " where res_id = ? "; 
 		super.update(sql, args.toArray());

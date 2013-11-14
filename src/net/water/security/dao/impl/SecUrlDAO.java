@@ -154,8 +154,8 @@ public class SecUrlDAO extends BaseDAO implements ISecUrlDAO {
 	
 	
 	public void createSecUrl(SecUrlEntity secUrlEntity) throws DataBaseException {
-		String sql = "insert into sec_url(url_name,url_method,url_path,app_type,app_menu,url_show,url_order) values(? ,? ,? ,? ,? ,? ,? )";
-		super.update(sql, new Object[]{secUrlEntity.getUrlName() ,secUrlEntity.getUrlMethod() ,secUrlEntity.getUrlPath() ,secUrlEntity.getAppType(),secUrlEntity.getAppMenu() ,secUrlEntity.getUrlShow() ,secUrlEntity.getUrlOrder() });
+		String sql = "insert into sec_url(url_name,url_method,url_path,app_menu,url_show,url_order) values(? ,? ,? ,? ,? ,? )";
+		super.update(sql, new Object[]{secUrlEntity.getUrlName() ,secUrlEntity.getUrlMethod() ,secUrlEntity.getUrlPath() ,secUrlEntity.getAppMenu() ,secUrlEntity.getUrlShow() ,secUrlEntity.getUrlOrder() });
 	}
 	
 	

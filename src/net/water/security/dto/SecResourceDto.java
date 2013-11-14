@@ -29,7 +29,8 @@ public class SecResourceDto extends PagerDTO {
 	/* 状态，1有效0删除 */
 	private String  status;
 			
-			
+	/*是否需要查询url信息*/
+	private boolean needUrlInfos=false;
 
 	public String  getResId() {
 		return resId;
@@ -79,6 +80,14 @@ public class SecResourceDto extends PagerDTO {
 		this.status = status;
 	}
 			
+
+	public boolean isNeedUrlInfos() {
+		return needUrlInfos;
+	}
+
+	public void setNeedUrlInfos(boolean needUrlInfos) {
+		this.needUrlInfos = needUrlInfos;
+	}
 
 	public SecResourceEntity toSecResourceEntity() {
 		SecResourceEntity SecResourceEntity = new SecResourceEntity();

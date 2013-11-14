@@ -27,7 +27,7 @@ public class SecUrlService implements ISecUrlService {
 	public List<SecUrlEntity> querySecUrls(SecUrlDto secUrlDto) throws DataBaseException{
 		return secUrlDAO.querySecUrls(secUrlDto);
 	}
-
+	
 	public SecUrlEntity getSecUrlById(SecUrlDto secUrlDto, Model model) throws Exception {
 		if(secUrlDto == null || StringUtils.isBlank(secUrlDto.getUrlId())){
 			return null;
