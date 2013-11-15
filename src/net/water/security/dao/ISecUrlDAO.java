@@ -15,15 +15,7 @@ import net.water.security.entity.SecUrlEntity;
 public interface ISecUrlDAO {
 	
 	/**
-	 * 资源分页查询
-	 * @param secUrlDto 资源Dto
-	 * @return 资源列表
-	 * @throws DataBaseException
-	 */
-	public List<SecUrlEntity> querySecUrlByPage(SecUrlDto secUrlDto) throws DataBaseException;
-	
-	/**
-	 * 资源查询
+	 * 资源(分页)查询
 	 * @param secUrlDto 资源Dto
 	 * @return 资源列表
 	 * @throws DataBaseException

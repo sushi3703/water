@@ -1,5 +1,6 @@
 package net.water.security.controller;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,6 @@ import net.water.security.dto.SecResourceDto;
 import net.water.security.entity.SecResourceEntity;
 import net.water.security.service.ISecResourceService;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,10 +43,8 @@ public class SecResourceAdminController {
 	@RequestMapping("edit")
 	public String edit(@ModelAttribute("secResourceDto") SecResourceDto secResourceDto, Model model,HttpServletRequest request) throws Exception {
 		secResourceDto.setFormTokenCode(request);
-		if(StringUtils.isNotBlank(secResourceDto.getResId())){
-			//基本信息
-			secResourceService.getSecResourceById(secResourceDto ,model);
-		}
+		//基本信息
+		secResourceService.getSecResourceById(secResourceDto ,model);
 		//url信息
 		List<Map<String,Object>> menuUrls = secResourceService.queryAllUrls(secResourceDto.getResId());
 		model.addAttribute("menuUrls", menuUrls);
@@ -64,10 +62,16 @@ public class SecResourceAdminController {
 	
 	
 	@RequestMapping("destroy")
-	public void destroy(SecResourceDto secResourceDto, Model model, HttpServletResponse response) throws Exception {
+	public void destroy(SecResourceDto secResourceDto, Model model, HttpServletResponse response) {
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
-		PrintWriter	writer = response.getWriter();
+		PrintWriter writer = null;
+		try {
+			writer = response.getWriter();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		if(writer == null)return;
 		Map<String,String> msgs = new HashMap<String,String>();
 		
 		try {

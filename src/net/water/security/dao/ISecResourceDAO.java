@@ -16,11 +16,11 @@ public interface ISecResourceDAO {
 	
 	/**
 	 * 权限资源(分页)查询
-	 * @param SecResourceDto 权限资源Dto
+	 * @param secResourceDto 权限资源Dto
 	 * @return 权限资源列表
 	 * @throws DataBaseException
 	 */
-	public List<SecResourceEntity> querySecResources(SecResourceDto SecResourceDto) throws DataBaseException;
+	public List<SecResourceEntity> querySecResources(SecResourceDto secResourceDto) throws DataBaseException;
 	
 	/**
 	 * 查询单个权限资源对象
@@ -32,17 +32,17 @@ public interface ISecResourceDAO {
 	
 	/**
 	 * 创建权限资源
-	 * @param SecResourceEntity 权限资源实体类
+	 * @param secResourceEntity 权限资源实体类
 	 * @throws DataBaseException
 	 */
-	public void createSecResource(SecResourceEntity SecResourceEntity) throws DataBaseException;
+	public void createSecResource(SecResourceEntity secResourceEntity) throws DataBaseException;
 	
 	/**
 	 * 更新权限资源
-	 * @param SecResourceEntity 权限资源实体类
+	 * @param secResourceEntity 权限资源实体类
 	 * @throws DataBaseException
 	 */
-	public void updateSecResource(SecResourceEntity SecResourceEntity) throws DataBaseException;
+	public void updateSecResource(SecResourceEntity secResourceEntity) throws DataBaseException;
 	
 	/**
 	 * 删除权限资源

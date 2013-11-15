@@ -43,11 +43,12 @@ public class SecurityAdminController {
 		//ttt2
 		leftInfo.append("<li class='open'>");
 		leftInfo.append("<a class='light toggle-collapsed' href='#'><div class='ico'><i class='icon-th-large icon-white'></i></div>");
-		leftInfo.append("ttt2<img alt='' src='http://cachecss.kuakao.com/public/ui/img/toggle-subnav-down.png'>");
+		leftInfo.append("security<img alt='' src='http://cachecss.kuakao.com/public/ui/img/toggle-subnav-down.png'>");
 		leftInfo.append("</a>");
 		leftInfo.append("<ul class='collapsed-nav closed' style='display: block'>");
-		leftInfo.append("<li><a style='margin-left: 0px;' href='/admin/secUrl/index.action'>t21</a></li>");
-		leftInfo.append("<li><a style='margin-left: 0px;' href='/admin/secResource/index.action'>t22</a></li>");
+		leftInfo.append("<li><a style='margin-left: 0px;' href='/admin/secUrl/index.action'>url</a></li>");
+		leftInfo.append("<li><a style='margin-left: 0px;' href='/admin/secResource/index.action'>resource</a></li>");
+		leftInfo.append("<li><a style='margin-left: 0px;' href='/admin/secResGroup/index.action'>resGroup</a></li>");
 		leftInfo.append("</ul>");
 		leftInfo.append("</li>");
 		

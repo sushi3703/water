@@ -33,6 +33,7 @@ public class SecResourceService implements ISecResourceService {
 		}
 		if(secResourceDto.isNeedUrlInfos()){
 			SecUrlDto urlDto = new SecUrlDto();
+			urlDto.setPerPage(-1);
 			List<SecUrlEntity> urls;
 			for(SecResourceEntity res : ress){
 				urlDto.setUrlId(res.getUrlIds());
@@ -59,6 +60,7 @@ public class SecResourceService implements ISecResourceService {
 		}
 		
 		SecUrlDto secUrlDto = new SecUrlDto();
+		secUrlDto.setPerPage(-1);
 		List<SecUrlEntity> urls = secUrlDAO.querySecUrls(secUrlDto);
 		if(urls == null || urls.isEmpty()){
 			return list;

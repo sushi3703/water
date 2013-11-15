@@ -21,10 +21,11 @@ public class SecUrlService implements ISecUrlService {
 	private ISecUrlDAO secUrlDAO;
 	
 	public List<SecUrlEntity> querySecUrlByPage(SecUrlDto secUrlDto, Model model) throws Exception {
-		return secUrlDAO.querySecUrlByPage(secUrlDto);
+		return secUrlDAO.querySecUrls(secUrlDto);
 	}
 	
 	public List<SecUrlEntity> querySecUrls(SecUrlDto secUrlDto) throws DataBaseException{
+		secUrlDto.setPerPage(-1);
 		return secUrlDAO.querySecUrls(secUrlDto);
 	}
 	

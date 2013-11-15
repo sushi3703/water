@@ -19,56 +19,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class SecUrlDAO extends BaseDAO implements ISecUrlDAO {
 	
-	
-	public List<SecUrlEntity> querySecUrlByPage(SecUrlDto secUrlDto) throws DataBaseException {
-		String sql = "select url_id,url_name,url_method,url_path,app_type,app_menu,url_show,url_order from sec_url";
-		StringBuffer where = new StringBuffer();
-		List<Object> args = new ArrayList<Object>();
-		SecUrlEntity secUrlEntity = secUrlDto.toSecUrlEntity();
-		
-		if(StringUtils.isNotBlank(secUrlDto.getUrlName())) {
-			where.append(" and url_name like '%"+secUrlDto.getUrlName()+"%'");
-		}
-		if(StringUtils.isNotBlank(secUrlDto.getUrlMethod())) {
-			args.add(secUrlEntity.getUrlMethod());
-			where.append(" and url_method=?");
-		}
-		if(StringUtils.isNotBlank(secUrlDto.getUrlPath())) {
-			args.add(secUrlEntity.getUrlPath());
-			where.append(" and url_path=?");
-		}
-		if(StringUtils.isNotBlank(secUrlDto.getAppType())) {
-			args.add(secUrlEntity.getAppType());
-			where.append(" and app_type=?");
-		}
-		if(StringUtils.isNotBlank(secUrlDto.getAppMenu())) {
-			args.add(secUrlEntity.getAppMenu());
-			where.append(" and app_menu=?");
-		}
-		if(StringUtils.isNotBlank(secUrlDto.getUrlShow())) {
-			args.add(secUrlEntity.getUrlShow());
-			where.append(" and url_show=?");
-		}
-		
-		return super.queryByPage(sql + where.toString().replaceFirst("and","where")+" order by app_type,app_menu,url_order", args.toArray(), new RowMapper<SecUrlEntity>() {
-
-			public SecUrlEntity mapRow(ResultSet rs, int arg1) throws SQLException {
-				SecUrlEntity secUrlEntity = new SecUrlEntity();
-				secUrlEntity.setUrlId(rs.getInt("url_id"));
-				secUrlEntity.setUrlName(rs.getString("url_name"));
-				secUrlEntity.setUrlMethod(rs.getInt("url_method"));
-				secUrlEntity.setUrlPath(rs.getString("url_path"));
-				secUrlEntity.setAppType(rs.getInt("app_type"));
-				secUrlEntity.setAppMenu(rs.getInt("app_menu"));
-				secUrlEntity.setUrlShow(rs.getInt("url_show"));
-				secUrlEntity.setUrlOrder(rs.getInt("url_order"));
-				return secUrlEntity;
-			}
-			
-		}, secUrlDto);
-	}
-	
-	
 	public List<SecUrlEntity> querySecUrls(SecUrlDto secUrlDto) throws DataBaseException {
 		String sql = "select url_id,url_name,url_method,url_path,app_type,app_menu,url_show,url_order from sec_url";
 		StringBuffer where = new StringBuffer();
@@ -107,22 +57,39 @@ public class SecUrlDAO extends BaseDAO implements ISecUrlDAO {
 			where.append(" and url_show=?");
 		}
 		
-		return this.query(sql + where.toString().replaceFirst("and","where")+" order by app_type,app_menu,url_order", args.toArray(), new RowMapper<SecUrlEntity>() {
-
-			public SecUrlEntity mapRow(ResultSet rs, int arg1) throws SQLException {
-				SecUrlEntity secUrlEntity = new SecUrlEntity();
-				secUrlEntity.setUrlId(rs.getInt("url_id"));
-				secUrlEntity.setUrlName(rs.getString("url_name"));
-				secUrlEntity.setUrlMethod(rs.getInt("url_method"));
-				secUrlEntity.setUrlPath(rs.getString("url_path"));
-				secUrlEntity.setAppType(rs.getInt("app_type"));
-				secUrlEntity.setAppMenu(rs.getInt("app_menu"));
-				secUrlEntity.setUrlShow(rs.getInt("url_show"));
-				secUrlEntity.setUrlOrder(rs.getInt("url_order"));
-				return secUrlEntity;
-			}
-			
-		});
+		String sqlStr = sql + where.toString().replaceFirst("and","where")+" order by app_type,app_menu,url_order";
+		if(secUrlDto.getPerPage()==-1){
+			return super.query(sqlStr, args.toArray(), new RowMapper<SecUrlEntity>() {
+				public SecUrlEntity mapRow(ResultSet rs, int arg1) throws SQLException {
+					SecUrlEntity secUrlEntity = new SecUrlEntity();
+					secUrlEntity.setUrlId(rs.getInt("url_id"));
+					secUrlEntity.setUrlName(rs.getString("url_name"));
+					secUrlEntity.setUrlMethod(rs.getInt("url_method"));
+					secUrlEntity.setUrlPath(rs.getString("url_path"));
+					secUrlEntity.setAppType(rs.getInt("app_type"));
+					secUrlEntity.setAppMenu(rs.getInt("app_menu"));
+					secUrlEntity.setUrlShow(rs.getInt("url_show"));
+					secUrlEntity.setUrlOrder(rs.getInt("url_order"));
+					return secUrlEntity;
+				}
+			});	
+		}else{
+			return super.queryByPage(sqlStr, args.toArray(), new RowMapper<SecUrlEntity>() {
+				public SecUrlEntity mapRow(ResultSet rs, int arg1) throws SQLException {
+					SecUrlEntity secUrlEntity = new SecUrlEntity();
+					secUrlEntity.setUrlId(rs.getInt("url_id"));
+					secUrlEntity.setUrlName(rs.getString("url_name"));
+					secUrlEntity.setUrlMethod(rs.getInt("url_method"));
+					secUrlEntity.setUrlPath(rs.getString("url_path"));
+					secUrlEntity.setAppType(rs.getInt("app_type"));
+					secUrlEntity.setAppMenu(rs.getInt("app_menu"));
+					secUrlEntity.setUrlShow(rs.getInt("url_show"));
+					secUrlEntity.setUrlOrder(rs.getInt("url_order"));
+					return secUrlEntity;
+				}
+			}, secUrlDto);
+		}
+		
 	}
 
 	

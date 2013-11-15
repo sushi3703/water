@@ -51,10 +51,7 @@ public class SecUrlAdminController {
 	@RequestMapping("edit")
 	public String edit(HttpServletRequest request,@ModelAttribute("secUrlDto") SecUrlDto secUrlDto, Model model) throws Exception {
 		secUrlDto.setFormTokenCode(request);
-		if(StringUtils.isNotBlank(secUrlDto.getUrlId())){
-			secUrlService.getSecUrlById(secUrlDto ,model);
-		}
-		
+		secUrlService.getSecUrlById(secUrlDto ,model);
 		return "admin/security/secUrl_edit";
 	}
 	
