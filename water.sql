@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50158
 File Encoding         : 65001
 
-Date: 2013-11-13 17:58:28
+Date: 2013-11-15 18:21:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -66,10 +66,29 @@ CREATE TABLE `sec_resource` (
   `url_ids` varchar(200) DEFAULT NULL COMMENT '资源包含的url',
   `status` tinyint(2) DEFAULT '1' COMMENT '状态，1有效0删除',
   PRIMARY KEY (`res_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sec_resource
+-- ----------------------------
+INSERT INTO `sec_resource` VALUES ('1', 'r1', '0', '1', '1,2', '1');
+INSERT INTO `sec_resource` VALUES ('2', 'r2', '1', '1', '1', '1');
+
+-- ----------------------------
+-- Table structure for `sec_res_group`
+-- ----------------------------
+DROP TABLE IF EXISTS `sec_res_group`;
+CREATE TABLE `sec_res_group` (
+  `group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_name` varchar(100) DEFAULT NULL COMMENT '组名',
+  `owner_id` int(11) DEFAULT NULL COMMENT '所有者ID',
+  `res_ids` varchar(2000) DEFAULT NULL COMMENT '包含的资源ID',
+  `status` tinyint(2) DEFAULT '1' COMMENT '状态，1有效0删除',
+  PRIMARY KEY (`group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sec_res_group
 -- ----------------------------
 
 -- ----------------------------
