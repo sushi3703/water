@@ -58,25 +58,19 @@
        <td>${secResGroupEntity.groupName}</td>
        <td>
        &nbsp;
-       <%--<c:if test="${!empty secResGroupEntity.urls}">
-       <table>
-       <c:forEach items="${secResGroupEntity.urls}" var="url">
-       <tr>
-       <td>&nbsp;<c:if test="${url.urlShow==1}">show</c:if></td>
-       <td>${url.urlMethod==1?"get":"post"}</td>
-       <td>${url.urlName}</td>
-       <td>${url.urlPath}</td>
-       </tr>
+       <c:if test="${!empty secResGroupEntity.ress}">
+       <c:forEach items="${secResGroupEntity.ress}" var="res" varStatus="ckey">
+       	<c:if test="${ckey.index%2==0}">${res.resName}</c:if>
+       	<c:if test="${ckey.index%2==1}"><i>${res.resName}</i></c:if>
        </c:forEach>
-       </table>
        </c:if>
-       --%></td>
+       </td>
        <td>
        	<div class="btn-group">
                 <button data-toggle="dropdown" class="btn dropdown-toggle btn-primary">操作 <span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                  <li><a href="${pageContext.request.contextPath}/admin/secResGroup/edit.action?resId=${secResGroupEntity.resId}&queryStr=${_page.encodeQueryStr}">编辑</a></li>
-                  <li><a href="javascript:void(0)" onClick="commonDel('${pageContext.request.contextPath}/admin/secResGroup/destroy.action',{'resId':'${secResGroupEntity.resId}'});">删除</a></li>
+                  <li><a href="${pageContext.request.contextPath}/admin/secResGroup/edit.action?groupId=${secResGroupEntity.groupId}&queryStr=${_page.encodeQueryStr}">编辑</a></li>
+                  <li><a href="javascript:void(0)" onClick="commonDel('${pageContext.request.contextPath}/admin/secResGroup/destroy.action',{'groupId':'${secResGroupEntity.groupId}'});">删除</a></li>
                 </ul>
        	</div>
        </td>

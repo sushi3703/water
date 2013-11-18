@@ -61,7 +61,7 @@ public class SecResourceAdminController {
 	}
 	
 	
-	@RequestMapping("destroy")
+	@RequestMapping(value="destroy",method=RequestMethod.POST)
 	public void destroy(SecResourceDto secResourceDto, Model model, HttpServletResponse response) {
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");

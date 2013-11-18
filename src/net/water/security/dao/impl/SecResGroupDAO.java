@@ -23,7 +23,7 @@ public class SecResGroupDAO extends BaseDAO implements ISecResGroupDAO {
 	
 	
 	public List<SecResGroupEntity> querySecResGroups(SecResGroupDto secResGroupDto) throws DataBaseException {
-		String sql = "select group_id,group_name,owner_id,res_ids from sec_res_group where status=1";
+		String sql = "select group_id,group_name,owner_id,res_ids,status from sec_res_group where status=1";
 		StringBuffer where = new StringBuffer();
 		List<Object> args = new ArrayList<Object>();
 		SecResGroupEntity secResGroupEntity = secResGroupDto.toSecResGroupEntity();
@@ -40,7 +40,7 @@ public class SecResGroupDAO extends BaseDAO implements ISecResGroupDAO {
 			where.append(" and owner_id=?");
 		}
 
-		String sqlStr = sql + " order by group_id";
+		String sqlStr = sql + where.toString() + " order by group_id";
 		if(secResGroupDto.getPerPage() == -1){
 			return super.query(sqlStr, args.toArray(), new RowMapper<SecResGroupEntity>() {
 				public SecResGroupEntity mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -48,6 +48,7 @@ public class SecResGroupDAO extends BaseDAO implements ISecResGroupDAO {
 					secResGroupEntity.setGroupId(rs.getInt("group_id"));
 					secResGroupEntity.setGroupName(rs.getString("group_name"));
 					secResGroupEntity.setOwnerId(rs.getInt("owner_id"));
+					secResGroupEntity.setStatus(rs.getInt("status"));
 					secResGroupEntity.setResIds(rs.getString("res_ids"));
 					return secResGroupEntity;
 				}
@@ -59,6 +60,7 @@ public class SecResGroupDAO extends BaseDAO implements ISecResGroupDAO {
 					secResGroupEntity.setGroupId(rs.getInt("group_id"));
 					secResGroupEntity.setGroupName(rs.getString("group_name"));
 					secResGroupEntity.setOwnerId(rs.getInt("owner_id"));
+					secResGroupEntity.setStatus(rs.getInt("status"));
 					secResGroupEntity.setResIds(rs.getString("res_ids"));
 					return secResGroupEntity;
 				}

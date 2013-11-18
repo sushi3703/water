@@ -34,6 +34,8 @@ public class SecResGroupAdminController {
 	public String index(HttpServletRequest request,@ModelAttribute("_page") SecResGroupDto secResGroupDto, Model model) throws Exception {
 		secResGroupDto.setQueryStr(request.getQueryString() == null ? "" : request.getQueryString());
 		secResGroupDto.setPerPage(Constants.NUM_PAGE_PER);
+		secResGroupDto.setOwnerId((Integer)request.getAttribute(Constants.PARAM_USER_LOGIN_ID)+"");
+		secResGroupDto.setNeedResInfos(true);
 		List<SecResGroupEntity> secResGroupEntitys = secResGroupService.querySecResGroupByPage(secResGroupDto ,model);
 		model.addAttribute("secResGroupEntitys", secResGroupEntitys);
 		return "admin/security/secResGroup_index";
@@ -45,7 +47,8 @@ public class SecResGroupAdminController {
 		//基本信息
 		secResGroupService.getSecResGroupById(secResGroupDto ,model);
 		//资源列表
-		
+		List<Map<String, Object>> menuResources = secResGroupService.queryAllResourcesGroupByMenu(secResGroupDto.getGroupId(), (Integer)request.getAttribute(Constants.PARAM_USER_LOGIN_ID));
+		model.addAttribute("menuResources", menuResources);
 		return "admin/security/secResGroup_edit";
 	}
 	
@@ -54,12 +57,13 @@ public class SecResGroupAdminController {
 		if(FormTokenUtil.validFormToken(request, response, secResGroupDto, true)) {
 			return "admin/security/secResGroup_edit";
 		}
+		secResGroupDto.setOwnerId((Integer)request.getAttribute(Constants.PARAM_USER_LOGIN_ID)+"");
 		secResGroupService.saveSecResGroup(secResGroupDto ,model);
 		return "redirect:/admin/secResGroup/index.action?" + secResGroupDto.getQueryStr();
 	}
 	
 	
-	@RequestMapping("destroy")
+	@RequestMapping(value="destroy",method=RequestMethod.POST)
 	public void destroy(SecResGroupDto secResGroupDto, Model model, HttpServletResponse response) {
 		PrintWriter writer = null;
 		response.setContentType("text/html");

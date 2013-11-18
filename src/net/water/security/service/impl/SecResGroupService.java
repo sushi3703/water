@@ -28,7 +28,22 @@ public class SecResGroupService implements ISecResGroupService {
 
 	public List<SecResGroupEntity> querySecResGroupByPage(
 			SecResGroupDto secResGroupDto, Model model) throws Exception {
-		return secResGroupDAO.querySecResGroups(secResGroupDto);
+		List<SecResGroupEntity> groups = secResGroupDAO.querySecResGroups(secResGroupDto);
+		if(groups == null || groups.isEmpty()){
+			return groups;
+		}
+		if(secResGroupDto.isNeedResInfos()){
+			SecResourceDto resourceDto = new SecResourceDto();
+			resourceDto.setPerPage(-1);
+			List<SecResourceEntity> ress;
+			for(SecResGroupEntity group : groups){
+				if(StringUtils.isBlank(group.getResIds()))continue;
+				resourceDto.setResId(group.getResIds());
+				ress = secResourceDAO.querySecResources(resourceDto);
+				group.setRess(ress);
+			}
+		}
+		return groups;
 	}
 
 	public SecResGroupEntity getSecResGroupById(SecResGroupDto secResGroupDto,
@@ -48,6 +63,13 @@ public class SecResGroupService implements ISecResGroupService {
 		List<SecResourceEntity> ress = new ArrayList<SecResourceEntity>();
 		if(userId == 0)return ress;
 		StringBuffer resIds = new StringBuffer(",");
+		SecResourceDto resourceDto = new SecResourceDto();
+		resourceDto.setPerPage(-1);
+		List<SecResourceEntity> resourceEntities;
+		if(1==1){//super admin has all
+			resourceEntities = secResourceDAO.querySecResources(resourceDto);
+			return resourceEntities;
+		}
 		//resGroup
 		SecResGroupDto secResGroupDto = new SecResGroupDto();
 		secResGroupDto.setPerPage(-1);
@@ -77,14 +99,14 @@ public class SecResGroupService implements ISecResGroupService {
 		return secResourceDAO.querySecResources(secResourceDto);
 	}
 
-	public List<Map<String, Object>> queryAllResourcesGroupByMenu(int groupId, int userId) {
+	public List<Map<String, Object>> queryAllResourcesGroupByMenu(String groupIdStr, int userId) {
 		List<Map<String, Object>> menuResources = new ArrayList<Map<String,Object>>();
 		List<SecResourceEntity> ress = this.queryAllUserResources(userId);
 		if(ress == null || ress.isEmpty())return menuResources;
 		//groupInfo
 		String groupResIds = "";
-		if(groupId != 0){
-			SecResGroupEntity groupEntity = secResGroupDAO.getSecResGroupById(groupId);
+		if(StringUtils.isNotBlank(groupIdStr)){
+			SecResGroupEntity groupEntity = secResGroupDAO.getSecResGroupById(Integer.parseInt(groupIdStr));
 			if(groupEntity != null){
 				groupResIds = groupEntity.getResIds();
 			}
@@ -116,6 +138,7 @@ public class SecResGroupService implements ISecResGroupService {
 			Map<String, Object> menuInfoMap;
 			for(int menuId : menuResourceInfoMap.keySet()){
 				menuInfoMap = new HashMap<String, Object>();
+				menuInfoMap.put("menuId", menuId);
 				menuInfoMap.put("menuName", menuNameMap.get(menuId+""));
 				menuInfoMap.put("resourceInfoMaps", menuResourceInfoMap.get(menuId));
 				

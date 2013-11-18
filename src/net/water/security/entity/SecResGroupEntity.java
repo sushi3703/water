@@ -1,5 +1,6 @@
 package net.water.security.entity;
 import java.io.Serializable;
+import java.util.List;
 
 import net.water.security.dto.SecResGroupDto;
 
@@ -22,6 +23,8 @@ public class SecResGroupEntity implements Serializable {
 	/* 状态，1有效0删除 */
 	private int  status;
 			
+	/*资源列表*/
+	private List<SecResourceEntity> ress;
 	
 	public int getGroupId() {
 		return groupId;
@@ -59,6 +62,14 @@ public class SecResGroupEntity implements Serializable {
 		this.status = status;
 	}	
 	
+	public List<SecResourceEntity> getRess() {
+		return ress;
+	}
+
+	public void setRess(List<SecResourceEntity> ress) {
+		this.ress = ress;
+	}
+
 	public void toSecResGroupDto(SecResGroupDto secResGroupDto) throws Exception {
 		secResGroupDto.setGroupId(String.valueOf(this.groupId));
 		

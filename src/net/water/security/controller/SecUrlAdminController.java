@@ -65,7 +65,7 @@ public class SecUrlAdminController {
 	}
 	
 	
-	@RequestMapping("destroy")
+	@RequestMapping(value="destroy",method=RequestMethod.POST)
 	public void destroy(SecUrlDto secUrlDto, Model model, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");

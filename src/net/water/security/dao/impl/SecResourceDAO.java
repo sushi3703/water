@@ -28,8 +28,12 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 		SecResourceEntity secResourceEntity = secResourceDto.toSecResourceEntity();
 		
 		if(StringUtils.isNotBlank(secResourceDto.getResId())) {
-			args.add(secResourceEntity.getResId());
-			where.append(" and res_id=?");
+			if(secResourceDto.getResId().indexOf(",")>-1){
+				where.append(" and res_id in ("+secResourceDto.getResId()+")");
+			}else{
+				args.add(secResourceEntity.getResId());
+				where.append(" and res_id=?");
+			}
 		}
 		if(StringUtils.isNotBlank(secResourceDto.getResName())) {
 			where.append(" and res_name like '%"+secResourceEntity.getResName()+"%'");
@@ -43,7 +47,7 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 			where.append(" and app_menu=?");
 		}
 		
-		String querySql = sql + where.toString() +" order by res_id";
+		String querySql = sql + where.toString() + " order by res_id";
 		
 		if(secResourceDto.getPerPage()==-1){
 			return super.query(querySql, args.toArray(), new RowMapper<SecResourceEntity>() {

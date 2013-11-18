@@ -27,6 +27,14 @@ public interface ISecResGroupService {
 	public List<SecResourceEntity> queryAllUserResources(int userId);
 	
 	/**
+	 * 编辑资源组，(用户可访问的)资源列表
+	 * @param groupIdStr
+	 * @param userId
+	 * @return
+	 */
+	public List<Map<String, Object>> queryAllResourcesGroupByMenu(String groupIdStr, int userId);
+	
+	/**
 	 * 查询单个资源组对象
 	 * @param secResGroupDto 资源组Dto
 	 * @return 资源组

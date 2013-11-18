@@ -25,7 +25,9 @@ public class SecResGroupDto extends PagerDTO {
 	/* 状态，1有效0删除 */
 	private String  status;
 			
-			
+
+	/*是否需要查询资源信息*/
+	private boolean needResInfos=false;
 
 	public String  getGroupId() {
 		return groupId;
@@ -67,6 +69,14 @@ public class SecResGroupDto extends PagerDTO {
 		this.status = status;
 	}
 			
+
+	public boolean isNeedResInfos() {
+		return needResInfos;
+	}
+
+	public void setNeedResInfos(boolean needResInfos) {
+		this.needResInfos = needResInfos;
+	}
 
 	public SecResGroupEntity toSecResGroupEntity() {
 		SecResGroupEntity secResGroupEntity = new SecResGroupEntity();

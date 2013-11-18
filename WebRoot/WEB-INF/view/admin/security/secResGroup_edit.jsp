@@ -9,15 +9,15 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/common/include_css_and_js.action"></script>
     <script type="text/javascript">
     var checkForm = function(){
-    	var urlIds = "";
-    	$("input[name='resUrl']").each(function(){
+    	var resIds = "";
+    	$("input[name='resGroup']").each(function(){
         	if ($(this).attr("checked")) {
-            	if(urlIds != "")urlIds += ",";
-            	urlIds += $(this).val();
+            	if(resIds != "")resIds += ",";
+            	resIds += $(this).val();
         	}
     	});
-    	//alert("ids==="+urlIds);return false;
-    	$("#urlIds").val(urlIds);
+    	//alert("ids==="+resIds);return false;
+    	$("#resIds").val(resIds);
     	return true;
     };
     </script>
@@ -44,7 +44,7 @@
     <form action="${pageContext.request.contextPath}/admin/secResGroup/save.action" method="post"  class="form-horizontal" onsubmit="return checkForm();">
     <input type="hidden" id="queryStr" name="queryStr" value="${secResGroupDto.queryStr}" />
     <input type="hidden" name="formToken" value="${secResGroupDto.formToken}" />
-    <input type="hidden" name="resId" value="${secResGroupDto.groupId}" />
+    <input type="hidden" name="groupId" value="${secResGroupDto.groupId}" />
     <input type="hidden" name="resIds" id="resIds" />
     <table class="table table-bordered table-striped">
     <tr>
@@ -54,19 +54,16 @@
     <tr>
     <th>包含资源：</th>
     <td>&nbsp;
-    <c:if test="${!empty menuUrls}">
+    <c:if test="${!empty menuResources}">
     <div class="box">
-    <c:forEach items="${menuUrls}" var="menuInfoMap">
+    <c:forEach items="${menuResources}" var="menuInfoMap">
     <a href="#collapse${menuInfoMap['menuId']}" data-parent="#accordion${menuInfoMap['menuId']}" data-toggle="collapse" class="accordion-toggle collapsed">${menuInfoMap['menuName']}</a>
-    <c:if test="${!empty menuInfoMap['urlInfoMaps']}">
+    <c:if test="${!empty menuInfoMap['resourceInfoMaps']}">
 	<div class="accordion-body collapse" id="collapse${menuInfoMap['menuId']}" style="height: 0px;">
 	<div class="accordion-inner">
-    <c:forEach items="${menuInfoMap['urlInfoMaps']}" var="urlInfoMap">
-    <input type="checkbox" name="resUrl" <c:if test="${urlInfoMap['selected']}">checked="checked"</c:if> value="${urlInfoMap['urlId']}" />&nbsp;
-    <c:if test="${urlInfoMap['urlShow']==1}"><b>show</b></c:if>&nbsp;&nbsp;
-    <i>${urlInfoMap['urlMethodShow']}</i>&nbsp;&nbsp;
-    ${urlInfoMap['urlName']}&nbsp;&nbsp;
-    ${urlInfoMap['urlPath']}
+    <c:forEach items="${menuInfoMap['resourceInfoMaps']}" var="resourceInfoMap">
+    <input type="checkbox" name="resGroup" <c:if test="${resourceInfoMap['selected']}">checked="checked"</c:if> value="${resourceInfoMap['resId']}" />&nbsp;
+    ${resourceInfoMap['resName']}
     </c:forEach>
     </div>
     </div>

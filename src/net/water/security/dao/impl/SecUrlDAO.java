@@ -57,7 +57,7 @@ public class SecUrlDAO extends BaseDAO implements ISecUrlDAO {
 			where.append(" and url_show=?");
 		}
 		
-		String sqlStr = sql + where.toString().replaceFirst("and","where")+" order by app_type,app_menu,url_order";
+		String sqlStr = sql + where.toString().replaceFirst("and","where")+" order by app_type,app_menu,url_order,url_id";
 		if(secUrlDto.getPerPage()==-1){
 			return super.query(sqlStr, args.toArray(), new RowMapper<SecUrlEntity>() {
 				public SecUrlEntity mapRow(ResultSet rs, int arg1) throws SQLException {
