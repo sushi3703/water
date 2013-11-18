@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50158
 File Encoding         : 65001
 
-Date: 2013-11-15 18:21:57
+Date: 2013-11-18 18:16:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -66,13 +66,17 @@ CREATE TABLE `sec_resource` (
   `url_ids` varchar(200) DEFAULT NULL COMMENT '资源包含的url',
   `status` tinyint(2) DEFAULT '1' COMMENT '状态，1有效0删除',
   PRIMARY KEY (`res_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sec_resource
 -- ----------------------------
-INSERT INTO `sec_resource` VALUES ('1', 'r1', '0', '1', '1,2', '1');
-INSERT INTO `sec_resource` VALUES ('2', 'r2', '1', '1', '1', '1');
+INSERT INTO `sec_resource` VALUES ('1', 'r1', '0', '1', '1,2', '0');
+INSERT INTO `sec_resource` VALUES ('2', 'r2', '1', '1', '1', '0');
+INSERT INTO `sec_resource` VALUES ('3', 'url管理', '1', '1', '3,4,5,6', '1');
+INSERT INTO `sec_resource` VALUES ('4', '资源管理', '1', '1', '7,8,9,10', '1');
+INSERT INTO `sec_resource` VALUES ('5', '资源组管理', '1', '1', '11,12,13,14', '1');
+INSERT INTO `sec_resource` VALUES ('6', 'test', '1', '2', '15,16,17', '1');
 
 -- ----------------------------
 -- Table structure for `sec_res_group`
@@ -85,11 +89,14 @@ CREATE TABLE `sec_res_group` (
   `res_ids` varchar(2000) DEFAULT NULL COMMENT '包含的资源ID',
   `status` tinyint(2) DEFAULT '1' COMMENT '状态，1有效0删除',
   PRIMARY KEY (`group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sec_res_group
 -- ----------------------------
+INSERT INTO `sec_res_group` VALUES ('1', '注册用户', '1', '5,6', '1');
+INSERT INTO `sec_res_group` VALUES ('2', 'test', '1', '', '0');
+INSERT INTO `sec_res_group` VALUES ('3', 'test2', '1', '3,4,6', '1');
 
 -- ----------------------------
 -- Table structure for `sec_url`
@@ -105,32 +112,26 @@ CREATE TABLE `sec_url` (
   `url_show` tinyint(2) DEFAULT '2' COMMENT '是否显示(1是2否)',
   `url_order` tinyint(2) DEFAULT '0' COMMENT '显示排序',
   PRIMARY KEY (`url_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='资源';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='资源';
 
 -- ----------------------------
 -- Records of sec_url
 -- ----------------------------
-INSERT INTO `sec_url` VALUES ('1', 'test1', '1', '/admin/sa/t1.action', '0', '1', '2', '0');
-INSERT INTO `sec_url` VALUES ('2', 'aaaaaaaaaaaa', '1', '/admin/subQuestion/index.action', '0', '2', '2', '0');
-
--- ----------------------------
--- Table structure for `sec_user`
--- ----------------------------
-DROP TABLE IF EXISTS `sec_user`;
-CREATE TABLE `sec_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL COMMENT '对应cl_user表的用户id',
-  `givenName` varchar(50) DEFAULT NULL COMMENT '用户姓名',
-  `displayName` varchar(30) DEFAULT NULL COMMENT '用户名',
-  `app_ids` varchar(200) DEFAULT NULL COMMENT '有权访问的项目',
-  `status` tinyint(2) DEFAULT NULL COMMENT '状态，1有效，0删除',
-  `department` varchar(200) DEFAULT NULL COMMENT '所属部门',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of sec_user
--- ----------------------------
+INSERT INTO `sec_url` VALUES ('3', 'url管理', '1', '/admin/secUrl/index.action', '1', '1', '1', '0');
+INSERT INTO `sec_url` VALUES ('4', 'url编辑', '1', '/admin/secUrl/edit.action', '1', '1', '2', '0');
+INSERT INTO `sec_url` VALUES ('5', 'url保存', '2', '/admin/secUrl/save.action', '1', '1', '2', '0');
+INSERT INTO `sec_url` VALUES ('6', 'url删除', '2', '/admin/secUrl/destroy.actioin', '1', '1', '2', '0');
+INSERT INTO `sec_url` VALUES ('7', '资源管理', '1', '/admin/secResource/index.action', '1', '1', '1', '0');
+INSERT INTO `sec_url` VALUES ('8', '资源编辑', '1', '/admin/secResource/edit.action', '1', '1', '2', '0');
+INSERT INTO `sec_url` VALUES ('9', '资源保存', '2', '/admin/secResource/save.action', '1', '1', '2', '0');
+INSERT INTO `sec_url` VALUES ('10', '资源删除', '2', '/admin/secResource/destroy.action', '1', '1', '2', '0');
+INSERT INTO `sec_url` VALUES ('11', '资源组管理', '1', '/admin/secResGroup/index.action', '1', '1', '1', '0');
+INSERT INTO `sec_url` VALUES ('12', '资源组编辑', '1', '/admin/secResGroup/edit.action', '1', '1', '2', '0');
+INSERT INTO `sec_url` VALUES ('13', '资源组保存', '2', '/admin/secResGroup/save.action', '1', '1', '2', '0');
+INSERT INTO `sec_url` VALUES ('14', '资源组删除', '2', '/admin/secResGroup/destroy.action', '1', '1', '2', '0');
+INSERT INTO `sec_url` VALUES ('15', 't1', '1', '/admin/test/t1.action', '1', '2', '1', '0');
+INSERT INTO `sec_url` VALUES ('16', 't2', '1', '/admin/test/t2.action', '1', '2', '2', '0');
+INSERT INTO `sec_url` VALUES ('17', 't3', '2', '/admin/test/t3.action', '1', '2', '2', '0');
 
 -- ----------------------------
 -- Table structure for `sec_user_resource`
@@ -148,20 +149,40 @@ CREATE TABLE `sec_user_resource` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `user_base_info`
+-- ----------------------------
+DROP TABLE IF EXISTS `user_base_info`;
+CREATE TABLE `user_base_info` (
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `uname` varchar(100) DEFAULT NULL,
+  `type` tinyint(2) DEFAULT NULL,
+  `create_user_id` int(11) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `create_ip` varchar(50) DEFAULT NULL,
+  `vip_time` datetime DEFAULT NULL,
+  `company` varchar(100) DEFAULT NULL,
+  `department` varchar(100) DEFAULT NULL,
+  `job_title` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user_base_info
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `user_login`
 -- ----------------------------
 DROP TABLE IF EXISTS `user_login`;
 CREATE TABLE `user_login` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uname` varchar(200) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `email` varchar(50) DEFAULT NULL,
   `upwd` varchar(50) DEFAULT NULL,
-  `status` tinyint(2) DEFAULT NULL,
-  `type` tinyint(2) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `status` tinyint(2) DEFAULT NULL COMMENT '状态,1有效0删除',
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_login
 -- ----------------------------
-INSERT INTO `user_login` VALUES ('1', 'admin', 'a', '1', '1', '2013-10-12 17:51:51');
+INSERT INTO `user_login` VALUES ('1', 'admin', 'a', '1');
