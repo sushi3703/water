@@ -13,14 +13,21 @@ import net.water.login.entity.UserLoginEntity;
  */
 public interface IUserLoginDAO {
 	/**
-	 * 用户登录并查询其基本信息
+	 * 用户(uname)登录并查询其基本信息
 	 * @param userLoginEntity
 	 * @return
 	 */
-	public UserLoginEntity queryUserLogin(UserLoginEntity userLoginEntity);
+	public UserLoginEntity queryUserLoginByUname(UserLoginEntity userLoginEntity);
 	
 	/**
-	 * 创建用户
+	 * 用户(email)登录并查询其基本信息
+	 * @param userLoginEntity
+	 * @return
+	 */
+	public UserLoginEntity queryUserLoginByEmail(UserLoginEntity userLoginEntity);
+	
+	/**
+	 * 创建用户(登录信息)
 	 * @param userLoginEntity
 	 * @throws DataBaseException
 	 */
@@ -34,10 +41,17 @@ public interface IUserLoginDAO {
 	public void updateUserPwd(UserLoginEntity userLoginEntity) throws DataBaseException;
 	
 	/**
-	 * 根据用户名查询用户列表
+	 * 根据用户名查看是否存在此用户
 	 * @param uname
 	 * @return
 	 */
 	public List<Map<String,Object>> queryUsersByName(String uname);
+	
+	/**
+	 * 根据邮箱查看是否存在此用户
+	 * @param email
+	 * @return
+	 */
+	public List<Map<String,Object>> queryUsersByEmail(String email);
 }
 

@@ -42,7 +42,7 @@ public class LoginFilter implements Filter {
         		return;
 	        }
         	UserLoginEntity userLoginEntity = (UserLoginEntity)userBaseInfoObj;
-        	request.setAttribute(Constants.PARAM_USER_LOGIN_ID, userLoginEntity.getId());
+        	request.setAttribute(Constants.PARAM_USER_LOGIN_ID, userLoginEntity.getUserId());
         	request.setAttribute(Constants.PARAM_USER_LOGIN_NAME, userLoginEntity.getUname());
         }
       

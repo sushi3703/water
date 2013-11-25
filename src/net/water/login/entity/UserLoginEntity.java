@@ -1,31 +1,40 @@
 package net.water.login.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class UserLoginEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	/* ID */
-	private int  id;
+	private int  userId;
 	
+	/*用户名*/
 	private String uname;
-	
+	/*密码*/
 	private String upwd;
-	
+	/*邮箱*/
+	private String email;
+	/*状态*/
 	private int status;
-	
+
+	/*用户类型,1注册用户,2管理用户*/
 	private int type;
 	
-	private Date createTime;
-
-	public int getId() {
-		return id;
+	public int getType() {
+		return type;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public String getUname() {
@@ -44,6 +53,14 @@ public class UserLoginEntity implements Serializable {
 		this.upwd = upwd;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public int getStatus() {
 		return status;
 	}
@@ -51,21 +68,6 @@ public class UserLoginEntity implements Serializable {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
-	public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
 	
+
 }

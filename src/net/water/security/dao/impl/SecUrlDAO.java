@@ -20,7 +20,7 @@ import org.springframework.stereotype.Repository;
 public class SecUrlDAO extends BaseDAO implements ISecUrlDAO {
 	
 	public List<SecUrlEntity> querySecUrls(SecUrlDto secUrlDto) throws DataBaseException {
-		String sql = "select url_id,url_name,url_method,url_path,app_type,app_menu,url_show,url_order from sec_url";
+		String sql = "select url_id,url_name,url_method,url_path,app_type,app_menu,url_show,url_order from w_sec_url";
 		StringBuffer where = new StringBuffer();
 		List<Object> args = new ArrayList<Object>();
 		SecUrlEntity secUrlEntity = secUrlDto.toSecUrlEntity();
@@ -95,7 +95,7 @@ public class SecUrlDAO extends BaseDAO implements ISecUrlDAO {
 	
 	
 	public SecUrlEntity getSecUrlById(int urlId) throws DataBaseException {
-		String sql = "select url_id,url_name,url_method,url_path,app_type,app_menu,url_show,url_order from sec_url where url_id = ?  limit 1";
+		String sql = "select url_id,url_name,url_method,url_path,app_type,app_menu,url_show,url_order from w_sec_url where url_id = ?  limit 1";
 		return this.queryForObject(sql, new Object[]{urlId }, new RowMapper<SecUrlEntity>() {
 			public SecUrlEntity mapRow(ResultSet rs, int value) throws SQLException {
 				SecUrlEntity secUrlEntity = new SecUrlEntity();
@@ -114,21 +114,21 @@ public class SecUrlDAO extends BaseDAO implements ISecUrlDAO {
 
 	
 	public void destroySecUrl(int urlId) throws DataBaseException {
-		String sql = "delete from sec_url where url_id = ? ";
+		String sql = "delete from w_sec_url where url_id = ? ";
 		super.update(sql, new Object[]{urlId});
 	}
 	
 	
 	
 	public void createSecUrl(SecUrlEntity secUrlEntity) throws DataBaseException {
-		String sql = "insert into sec_url(url_name,url_method,url_path,app_menu,url_show,url_order) values(? ,? ,? ,? ,? ,? )";
+		String sql = "insert into w_sec_url(url_name,url_method,url_path,app_menu,url_show,url_order) values(? ,? ,? ,? ,? ,? )";
 		super.update(sql, new Object[]{secUrlEntity.getUrlName() ,secUrlEntity.getUrlMethod() ,secUrlEntity.getUrlPath() ,secUrlEntity.getAppMenu() ,secUrlEntity.getUrlShow() ,secUrlEntity.getUrlOrder() });
 	}
 	
 	
 	
 	public void updateSecUrl(SecUrlDto secUrlDto) throws DataBaseException {
-		StringBuffer updateSql = new StringBuffer("update sec_url set ");
+		StringBuffer updateSql = new StringBuffer("update w_sec_url set ");
 		List<Object> args = new ArrayList<Object>();
 		SecUrlEntity secUrlEntity = secUrlDto.toSecUrlEntity();
 		if(StringUtils.isNotBlank(secUrlDto.getUrlName())){

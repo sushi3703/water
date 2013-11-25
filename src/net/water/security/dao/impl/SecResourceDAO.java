@@ -22,7 +22,7 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 	
 	
 	public List<SecResourceEntity> querySecResources(SecResourceDto secResourceDto) throws DataBaseException {
-		String sql = "select res_id,res_name,app_type,app_menu,url_ids from sec_resource where status=1";
+		String sql = "select res_id,res_name,app_type,app_menu,url_ids from w_sec_resource where status=1";
 		StringBuffer where = new StringBuffer();
 		List<Object> args = new ArrayList<Object>();
 		SecResourceEntity secResourceEntity = secResourceDto.toSecResourceEntity();
@@ -78,7 +78,7 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 	
 	
 	public SecResourceEntity getSecResourceById(int resId) throws DataBaseException {
-		String sql = "select res_id,res_name,app_type,app_menu,url_ids from sec_resource where res_id = ? and status=1  limit 1";
+		String sql = "select res_id,res_name,app_type,app_menu,url_ids from w_sec_resource where res_id = ? and status=1  limit 1";
 		return super.queryForObject(sql, new Object[]{resId }, new RowMapper<SecResourceEntity>() {
 			public SecResourceEntity mapRow(ResultSet rs, int value) throws SQLException {
 				SecResourceEntity secResourceEntity = new SecResourceEntity();
@@ -94,21 +94,21 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 
 	
 	public void destroySecResource(int resId) throws DataBaseException {
-		String sql = "update sec_resource set status=? where res_id = ? ";
+		String sql = "update w_sec_resource set status=? where res_id = ? ";
 		super.update(sql, new Object[]{Constants.STATUS_DISABLE,resId});
 	}
 	
 	
 	
 	public void createSecResource(SecResourceEntity secResourceEntity) throws DataBaseException {
-		String sql = "insert into sec_resource(res_name ,app_menu ,url_ids ) values(? ,? ,? )";
+		String sql = "insert into w_sec_resource(res_name ,app_menu ,url_ids ) values(? ,? ,? )";
 		super.update(sql, new Object[]{secResourceEntity.getResName() ,secResourceEntity.getAppMenu() ,secResourceEntity.getUrlIds() });
 	}
 	
 	
 	
 	public void updateSecResource(SecResourceEntity secResourceEntity) throws DataBaseException {
-		StringBuffer updateSql = new StringBuffer("update sec_resource set ");
+		StringBuffer updateSql = new StringBuffer("update w_sec_resource set ");
 		List<Object> args = new ArrayList<Object>();
 		args.add(secResourceEntity.getResName());
 		updateSql.append("res_name=?").append(",");

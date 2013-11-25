@@ -20,29 +20,46 @@ public class UserLoginDAO extends BaseDAO implements IUserLoginDAO {
 	@Override
 	public void createUserLoginInfo(UserLoginEntity userLoginEntity)
 			throws DataBaseException {
-		String sql = "insert into user_login(uname,upwd,status,type,create_time) values(?,?,?,?,?)";
-		super.update(sql, new Object[]{userLoginEntity.getUname(),userLoginEntity.getUpwd(),userLoginEntity.getStatus(),userLoginEntity.getType(),userLoginEntity.getCreateTime()});
+		String sql = "insert into w_user_login(user_id,uname,email,upwd,type) values(?,?,?,?,?)";
+		super.update(sql, new Object[]{userLoginEntity.getUserId(),userLoginEntity.getUname(),userLoginEntity.getEmail(),userLoginEntity.getUpwd(),userLoginEntity.getType()});
 	}
 
 
 
 	@Override
-	public UserLoginEntity queryUserLogin(UserLoginEntity userLoginEntity) {
-		String sql = "select * from user_login where uname=? and upwd=? limit 1";
+	public UserLoginEntity queryUserLoginByUname(UserLoginEntity userLoginEntity) {
+		String sql = "select user_id,uname,email,upwd,type,status from w_user_login where uname=? and upwd=? limit 1";
 		return super.queryForObject(sql, new Object[]{userLoginEntity.getUname(),userLoginEntity.getUpwd()}, new RowMapper<UserLoginEntity>() {
 			public UserLoginEntity mapRow(ResultSet rs, int value) throws SQLException {
 				UserLoginEntity entity = new UserLoginEntity();
-				entity.setId(rs.getInt("id"));
+				entity.setUserId(rs.getInt("user_id"));
 				entity.setUname(rs.getString("uname"));
 				entity.setStatus(rs.getInt("status"));
 				entity.setType(rs.getInt("type"));
+				entity.setEmail(rs.getString("email"));
+				return entity;
+			}
+		});
+	}
+
+	@Override
+	public UserLoginEntity queryUserLoginByEmail(UserLoginEntity userLoginEntity) {
+		String sql = "select user_id,uname,email,upwd,type,status from w_user_login where email=? and upwd=? limit 1";
+		return super.queryForObject(sql, new Object[]{userLoginEntity.getEmail(),userLoginEntity.getUpwd()}, new RowMapper<UserLoginEntity>() {
+			public UserLoginEntity mapRow(ResultSet rs, int value) throws SQLException {
+				UserLoginEntity entity = new UserLoginEntity();
+				entity.setUserId(rs.getInt("user_id"));
+				entity.setUname(rs.getString("uname"));
+				entity.setStatus(rs.getInt("status"));
+				entity.setType(rs.getInt("type"));
+				entity.setEmail(rs.getString("email"));
 				return entity;
 			}
 		});
 	}
 
 	public List<Map<String,Object>> queryUsersByName(String uname){
-		String sql = "select id,uname from user_login where uname=?";
+		String sql = "select user_id,uname,email from w_user_login where uname=?";
 		return super.queryForList(sql, new Object[]{uname});
 	}
 
@@ -50,11 +67,15 @@ public class UserLoginDAO extends BaseDAO implements IUserLoginDAO {
 	@Override
 	public void updateUserPwd(UserLoginEntity userLoginEntity)
 			throws DataBaseException {
-		String sql = "update user_login set upwd=? where id=?";
-		super.update(sql, new Object[]{userLoginEntity.getUpwd(),userLoginEntity.getId()});
+		String sql = "update w_user_login set upwd=? where user_id=?";
+		super.update(sql, new Object[]{userLoginEntity.getUpwd(),userLoginEntity.getUserId()});
 	}
 	
 
+	public List<Map<String,Object>> queryUsersByEmail(String email){
+		String sql = "select user_id,uname,email from w_user_login where email=?";
+		return super.queryForList(sql, new Object[]{email});
+	}
 
 }
 

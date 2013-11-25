@@ -13,12 +13,6 @@ public interface IUserLoginService {
 	public UserLoginEntity queryUserLogin(UserLoginEntity userLoginEntity, Model model);
 
 	/**
-	 * 创建用户基本信息
-	 * @param userLoginEntity
-	 */
-	public void createUserLogin(UserLoginEntity userLoginEntity);
-	
-	/**
 	 * 修改用户登录密码
 	 * @param userLoginEntity
 	 */

@@ -23,7 +23,7 @@ public class SecResGroupDAO extends BaseDAO implements ISecResGroupDAO {
 	
 	
 	public List<SecResGroupEntity> querySecResGroups(SecResGroupDto secResGroupDto) throws DataBaseException {
-		String sql = "select group_id,group_name,owner_id,res_ids,status from sec_res_group where status=1";
+		String sql = "select group_id,group_name,owner_id,res_ids,status from w_sec_res_group where status=1";
 		StringBuffer where = new StringBuffer();
 		List<Object> args = new ArrayList<Object>();
 		SecResGroupEntity secResGroupEntity = secResGroupDto.toSecResGroupEntity();
@@ -72,7 +72,7 @@ public class SecResGroupDAO extends BaseDAO implements ISecResGroupDAO {
 	
 	
 	public SecResGroupEntity getSecResGroupById(int groupId) throws DataBaseException {
-		String sql = "select group_id,group_name,owner_id,res_ids from sec_res_group where status=1 and group_id = ?  limit 1";
+		String sql = "select group_id,group_name,owner_id,res_ids from w_sec_res_group where status=1 and group_id = ?  limit 1";
 		return super.queryForObject(sql, new Object[]{groupId }, new RowMapper<SecResGroupEntity>() {
 			public SecResGroupEntity mapRow(ResultSet rs, int value) throws SQLException {
 				SecResGroupEntity secResGroupEntity = new SecResGroupEntity();
@@ -87,21 +87,21 @@ public class SecResGroupDAO extends BaseDAO implements ISecResGroupDAO {
 
 	
 	public void destroySecResGroup(int groupId) throws DataBaseException {
-		String sql = "update sec_res_group set status=? where group_id = ? ";
+		String sql = "update w_sec_res_group set status=? where group_id = ? ";
 		super.update(sql, new Object[]{Constants.STATUS_DISABLE,groupId});
 	}
 	
 	
 	
 	public void createSecResGroup(SecResGroupEntity secResGroupEntity) throws DataBaseException {
-		String sql = "insert into sec_res_group(group_name ,owner_id ,res_ids ) values(? ,? ,? )";
+		String sql = "insert into w_sec_res_group(group_name ,owner_id ,res_ids ) values(? ,? ,? )";
 		super.update(sql, new Object[]{secResGroupEntity.getGroupName() ,secResGroupEntity.getOwnerId() ,secResGroupEntity.getResIds() });
 	}
 	
 	
 	
 	public void updateSecResGroup(SecResGroupEntity secResGroupEntity) throws DataBaseException {
-		StringBuffer updateSql = new StringBuffer("update sec_res_group set ");
+		StringBuffer updateSql = new StringBuffer("update w_sec_res_group set ");
 		List<Object> args = new ArrayList<Object>();
 		args.add(secResGroupEntity.getGroupName());
 		updateSql.append("group_name=?").append(",");
