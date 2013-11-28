@@ -38,18 +38,11 @@ public class UserAdminController {
 		return "admin/user/user_index";
 	}
 	
-	@RequestMapping("show")
-	public String show(@ModelAttribute("userBaseDto") UserBaseDto userBaseDto, Model model) throws Exception {
-		UserBaseEntity userBaseEntity = userBaseService.getUserBaseById(userBaseDto ,model);
-		model.addAttribute("userBaseEntity", userBaseEntity);
-		return "userBase/userBase_show";
-	}
-	
 	@RequestMapping("edit")
 	public String edit(@ModelAttribute("userBaseDto") UserBaseDto userBaseDto, Model model,HttpServletRequest request) throws Exception {
 		userBaseDto.setFormTokenCode(request);
 		userBaseService.getUserBaseById(userBaseDto ,model);
-		return "userBase/userBase_edit";
+		return "admin/user/user_edit";
 	}
 	
 	@RequestMapping(value="save",method=RequestMethod.POST)

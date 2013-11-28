@@ -32,11 +32,7 @@ public class UserBaseService implements IUserBaseService {
 			if(StringUtils.isNotBlank(userIdStr)) {
 				userBaseEntity = userBaseDAO.getUserBaseById(Integer.parseInt(userIdStr));
 				if(userBaseEntity != null) {
-					try {
-						userBaseEntity.toUserBaseDto(userBaseDto);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					userBaseEntity.toUserBaseDto(userBaseDto);
 				}
 			}
 			return userBaseEntity;

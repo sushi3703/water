@@ -27,7 +27,7 @@ public class UserBaseEntity implements Serializable {
 	/* 部门 */
 	private String  department;
 			
-	/* 头衔 */
+	/* 职务 */
 	private String  jobTitle;
 			
 	/* 联系QQ */
@@ -143,7 +143,7 @@ public class UserBaseEntity implements Serializable {
 		this.note = note;
 	}	
 	
-	public void toUserBaseDto(UserBaseDto userBaseDto) throws Exception {
+	public void toUserBaseDto(UserBaseDto userBaseDto) {
 		userBaseDto.setUserId(String.valueOf(this.userId));
 		
 		userBaseDto.setCreateUserId(String.valueOf(this.createUserId));

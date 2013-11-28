@@ -50,7 +50,7 @@
        <tr>
        <th>用户名</th>
        <th>部门</th>
-       <th>头衔</th>
+       <th>职务</th>
        <th>Email</th>
        <th>QQ</th>
        <th>手机</th>
@@ -58,19 +58,22 @@
        <th>操作</th>
        </tr>
        <tbody>
-       <c:forEach var="userEntitys" items="${userEntitys}">
+       <c:forEach var="userEntity" items="${userEntitys}">
        <tr>
-       <td>${secUrlEntity.urlId}</td>
-       <td><kuakao:xmlConfig configName="security_menu" isMap="true" key="${secUrlEntity.appMenu}"/>&nbsp;</td>
-       <td>${secUrlEntity.urlName}</td>
-       <td><kuakao:xmlConfig configName="security_url_method" isMap="true" key="${secUrlEntity.urlMethod}"/></td>
-       <td>${secUrlEntity.urlPath}</td>
-       <td><kuakao:xmlConfig configName="common_yes_no" isMap="true" key="${secUrlEntity.urlShow}"/></td>
+       <td>${userEntity.uname}</td>
+       <td>${userEntity.department}</td>
+       <td>${userEntity.jobTitle}</td>
+       <td>${userEntity.email}</td>
+       <td>${userEntity.qq}</td>
+       <td>${userEntity.mobile}</td>
+       <td>${userEntity.tel}</td>
        <td> <div class="btn-group">
                 <button data-toggle="dropdown" class="btn dropdown-toggle btn-primary">操作 <span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                  <li><a href="${pageContext.request.contextPath}/admin/secUrl/edit.action?urlId=${secUrlEntity.urlId}&queryStr=${_page.encodeQueryStr}">编辑</a></li>
-                  <li><a href="javascript:void(0)" onClick="commonDel('${pageContext.request.contextPath}/admin/secUrl/destroy.action',{'urlId':'${secUrlEntity.urlId}'});">删除</a></li>
+                  <li><a href="${pageContext.request.contextPath}/admin/user/edit.action?userId=${userEntity.userId}&queryStr=${_page.encodeQueryStr}">编辑</a></li>
+                  <li><a href="">设置权限</a></li>
+                  <li><a href="">重置密码</a></li>
+                  <li><a href="javascript:void(0)" onClick="commonDel('${pageContext.request.contextPath}/admin/user/destroy.action',{'userId':'${userEntity.userId}'});">删除</a></li>
                 </ul>
               </div></td>
        </tr>
