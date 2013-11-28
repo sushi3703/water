@@ -53,5 +53,13 @@ public interface IUserLoginDAO {
 	 * @return
 	 */
 	public List<Map<String,Object>> queryUsersByEmail(String email);
+	
+	/**
+	 * 删除用户
+	 * @param userId 用户ID
+	 * @param status 状态
+	 * @throws DataBaseException
+	 */
+	public void updateUserStatus(int userId,int status) throws DataBaseException;
 }
 

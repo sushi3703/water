@@ -53,6 +53,11 @@ public class UserLoginService implements IUserLoginService {
 			model.addAttribute(Constants.PARAM_ERROR_MSG, "密码输入有误");
 			return null;
 		}
+		if(user.getStatus()!=1){
+			model.addAttribute(Constants.PARAM_ERROR_MSG, "账户被锁定或已失效");
+			return null;
+		}
+		
 		return user;
 	}
 

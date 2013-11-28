@@ -59,7 +59,7 @@ public class UserLoginDAO extends BaseDAO implements IUserLoginDAO {
 	}
 
 	public List<Map<String,Object>> queryUsersByName(String uname){
-		String sql = "select user_id,uname,email from w_user_login where uname=?";
+		String sql = "select user_id,uname,email from w_user_login where status=1 and uname=?";
 		return super.queryForList(sql, new Object[]{uname});
 	}
 
@@ -73,9 +73,13 @@ public class UserLoginDAO extends BaseDAO implements IUserLoginDAO {
 	
 
 	public List<Map<String,Object>> queryUsersByEmail(String email){
-		String sql = "select user_id,uname,email from w_user_login where email=?";
+		String sql = "select user_id,uname,email from w_user_login where status=1 and email=?";
 		return super.queryForList(sql, new Object[]{email});
 	}
 
+	public void updateUserStatus(int userId,int status) throws DataBaseException{
+		String sql = "update w_user_login set status=? where user_id=?";
+		super.update(sql, new Object[]{status,userId});
+	}
 }
 
