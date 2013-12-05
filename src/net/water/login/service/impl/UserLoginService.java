@@ -60,6 +60,31 @@ public class UserLoginService implements IUserLoginService {
 		
 		return user;
 	}
+	
+	public boolean operateQqLoginExist(UserLoginEntity userLoginEntity){
+		UserLoginEntity dbLoginInfo = userLoginDAO.queryUserLoginByQqOpenId(userLoginEntity);
+		if(dbLoginInfo == null){
+			return false;
+		}
+		//更新accessToken
+		if(!dbLoginInfo.getQqAccessToken().equals(userLoginEntity.getQqAccessToken())){
+			userLoginDAO.updateUserQqLoginInfo(userLoginEntity);
+		}
+		//设置用户信息
+		userLoginEntity.setEmail(dbLoginInfo.getEmail());
+		userLoginEntity.setType(dbLoginInfo.getType());
+		userLoginEntity.setUname(dbLoginInfo.getUname());
+		userLoginEntity.setUserId(dbLoginInfo.getUserId());
+		return true;
+	}
+	
+	public UserLoginEntity operateBindQqLogin(UserLoginEntity userLoginEntity){
+		if(userLoginEntity.getUserId()==0){
+			return null;
+		}
+		userLoginDAO.updateUserQqLoginInfo(userLoginEntity);
+		return userLoginDAO.queryUserLoginByUserId(userLoginEntity);
+	}
 
 	@Override
 	public void updateUserPwd(UserLoginEntity userLoginEntity) {

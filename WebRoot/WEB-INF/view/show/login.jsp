@@ -22,9 +22,13 @@
           <a href="javascript:alert('请联系管理员，重置密码');"> 忘记密码？</a>
         </label>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+  <p><br/>
+  	<a href="${pageContext.request.contextPath}/login/snsLogin.action?redirectTo=${redirectTo}">
+  		<img src="${pageContext.request.contextPath}/img/login_qq.png" />
+  	</a>
+  </p>
       </form>
 
-    </div> <!-- /container -->
-  
+</div> <!-- /container -->
 </body>
 </html>

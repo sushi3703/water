@@ -16,6 +16,9 @@ public class Constants {
     
     /**模板文件根路径(相对WebRoot)*/
     public final static String PATH_TEMPLATE = "/WEB-INF/templates";
+    
+    /**网站首页*/
+    public final static String SYS_INDEX = "/front/login/index.action";
     //================常量定义end==========
 
 	//===================参数名begin==========

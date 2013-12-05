@@ -21,6 +21,26 @@ public class UserLoginEntity implements Serializable {
 	/*用户类型,1注册用户,2管理用户*/
 	private int type;
 	
+	private String qqOpenId;
+	
+	private String qqAccessToken;
+	
+	public String getQqOpenId() {
+		return qqOpenId;
+	}
+
+	public void setQqOpenId(String qqOpenId) {
+		this.qqOpenId = qqOpenId;
+	}
+
+	public String getQqAccessToken() {
+		return qqAccessToken;
+	}
+
+	public void setQqAccessToken(String qqAccessToken) {
+		this.qqAccessToken = qqAccessToken;
+	}
+
 	public int getType() {
 		return type;
 	}
