@@ -121,8 +121,8 @@ public class LoginController {
 			}
 			return "redirect:"+Constants.SYS_INDEX;
 		}else{// 绑定或注册
-			request.setAttribute("openID", openID);
-    		request.setAttribute("accessToken", accessToken);
+			request.setAttribute("qqOpenId", openID);
+    		request.setAttribute("qqAccessToken", accessToken);
     		return "show/bind";
 		}
 	}
@@ -132,6 +132,7 @@ public class LoginController {
 	 * @param response
 	 */
 	@RequestMapping(value = "validate_user_pwd")
+	@Deprecated
 	public void validateUserPwd(HttpServletRequest request, HttpServletResponse response, Model model){
 		PrintWriter writer = null;
 		response.setContentType("text/html");
@@ -190,8 +191,15 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "bind_sns_account")
-	public String bindSnsAccount(UserLoginEntity userLoginEntity,HttpServletRequest request,HttpServletResponse response) {
+	public String bindSnsAccount(UserLoginEntity userLoginEntity,HttpServletRequest request,HttpServletResponse response, Model model) {
+		UserLoginEntity userBaseInfo = userLoginService.queryUserLogin(userLoginEntity,model);
+		if(userBaseInfo == null){
+			request.setAttribute("qqOpenId", request.getParameter("qqOpenId"));
+    		request.setAttribute("qqAccessToken", request.getParameter("qqAccessToken"));
+    		return "show/bind";
+		}
 		//bind
+		userLoginEntity.setUserId(userBaseInfo.getUserId());
 		UserLoginEntity baseInfo = userLoginService.operateBindQqLogin(userLoginEntity);
 		if(baseInfo == null){
 			request.setAttribute("errorMsg", "QQ登录异常，请用其它方式登录");

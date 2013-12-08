@@ -9,31 +9,20 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/tool/jquery/jquery.min.js"></script>
 <script type="text/javascript">
-	var bindAccount = function(){
-		$.post("${pageContext.request.contextPath}/login/validate_user_pwd.action",
-			{"uname":$("#username").val(),"upwd":$("#password").val()},
-			function(data){
-				var dataJson = $.parseJSON(data);
-			if(!!dataJson['suc']) {
-				//alert("suc");
-				$("#userId").val(dataJson['userId']);
-				$("#bindForm").submit();
-			}else{
-				alert(data);
-			}
-		});
-	}
+	
 </script>
 </head>
 <body>
+<c:if test="${!empty errorMsg}">
+	<font color="red">${errorMsg}</font>
+</c:if>
 <form action="${pageContext.request.contextPath}/login/bind_sns_account.action" method="post" id="bindForm">
-<input type="hidden" name="qqOpenId" value="${openID}" />
-<input type="hidden" name="qqAccessToken" value="${accessToken}" />
-<input type="hidden" name="userId" id="userId" />
+<input type="hidden" name="qqOpenId" value="${qqOpenId}" />
+<input type="hidden" name="qqAccessToken" value="${qqAccessToken}" />
+<p>用户名：<input type="text" name="uname" /></p>
+<p>密码：<input type="password" name="upwd" /></p>
+<p><input type="submit" value="绑定账号" /></p>
 </form>
-<p>用户名：<input type="text" name="username" id="username" /></p>
-<p>密码：<input type="password" name="password" id="password" /></p>
-<p><input type="button" value="绑定账号" onclick="bindAccount()" /></p>
 <br/><br/>
 
 </body>
