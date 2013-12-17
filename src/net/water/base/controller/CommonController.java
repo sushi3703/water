@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import su.tool.Configuration;
+import net.water.tool.file.ConfigUtil;
 
 @Controller
 @RequestMapping("/common")
@@ -32,7 +32,7 @@ public class CommonController {
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter writer = response.getWriter();
 		
-		String filePath = Configuration.getValue("path_WebRoot")+Constants.PATH_TEMPLATE+"/common/common_include_css_js.htm";
+		String filePath = ConfigUtil.getValue("path_WebRoot")+Constants.PATH_TEMPLATE+"/common/common_include_css_js.htm";
 		String includeInfo = FileUtils.readFileToString(new File(filePath), "utf-8");
 		writer.println(includeInfo);
 		writer.flush();

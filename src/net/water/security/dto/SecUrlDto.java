@@ -4,7 +4,7 @@ package net.water.security.dto;
 import net.kuakao.core.base.util.SystemUtils;
 import net.kuakao.core.dto.PagerDTO;
 import net.water.security.entity.SecUrlEntity;
-import su.tool.SuIntUtils;
+import net.water.tool.math.SuIntUtils;
 public class SecUrlDto extends PagerDTO {
 	/** url显示 */
 	public final static int URL_SHOW_TRUE = 1;

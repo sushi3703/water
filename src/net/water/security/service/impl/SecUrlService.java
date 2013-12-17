@@ -8,12 +8,12 @@ import net.water.security.dao.ISecUrlDAO;
 import net.water.security.dto.SecUrlDto;
 import net.water.security.entity.SecUrlEntity;
 import net.water.security.service.ISecUrlService;
+import net.water.tool.math.SuIntUtils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
-import su.tool.SuIntUtils;
 
 public class SecUrlService implements ISecUrlService {
 	

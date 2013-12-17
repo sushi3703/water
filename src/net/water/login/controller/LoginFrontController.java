@@ -17,7 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import su.tool.Configuration;
+import net.water.tool.file.ConfigUtil;
 
 
 @Controller
@@ -90,7 +90,7 @@ public class LoginFrontController {
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter writer = response.getWriter();
 		
-		String filePath = Configuration.getValue("path_WebRoot")+Constants.PATH_TEMPLATE+"/common/common_top.htm";
+		String filePath = ConfigUtil.getValue("path_WebRoot")+Constants.PATH_TEMPLATE+"/common/common_top.htm";
 		String topInfo = FileUtils.readFileToString(new File(filePath), "utf-8");
 		if(StringUtils.isNotBlank(topInfo)){
 			topInfo = topInfo.replaceAll("displayName", (String)request.getAttribute(Constants.PARAM_USER_LOGIN_NAME));
