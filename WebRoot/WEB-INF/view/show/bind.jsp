@@ -13,13 +13,15 @@
 </script>
 </head>
 <body>
+<p></p>
 <c:if test="${!empty errorMsg}">
 	<font color="red">${errorMsg}</font>
 </c:if>
 <form action="${pageContext.request.contextPath}/login/bind_sns_account.action" method="post" id="bindForm">
+<input type="hidden" name="qqUsername" value="${qqUsername}" />
 <input type="hidden" name="qqOpenId" value="${qqOpenId}" />
 <input type="hidden" name="qqAccessToken" value="${qqAccessToken}" />
-<p>用户名：<input type="text" name="uname" /></p>
+<p>登录邮箱：<input type="text" name="email" /></p>
 <p>密码：<input type="password" name="upwd" /></p>
 <p><input type="submit" value="绑定账号" /></p>
 </form>

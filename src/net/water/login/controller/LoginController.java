@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.qq.connect.QQConnectException;
 import com.qq.connect.api.OpenID;
+import com.qq.connect.api.qzone.UserInfo;
 import com.qq.connect.javabeans.AccessToken;
+import com.qq.connect.javabeans.qzone.UserInfoBean;
 import com.qq.connect.oauth.Oauth;
 
 @Controller
@@ -121,6 +123,16 @@ public class LoginController {
 			}
 			return "redirect:"+Constants.SYS_INDEX;
 		}else{// 绑定或注册
+			String qqUsername = "";
+			UserInfo qzoneUserInfo = new UserInfo(accessToken, openID);
+            try {
+				UserInfoBean userInfoBean = qzoneUserInfo.getUserInfo();
+				qqUsername = userInfoBean.getNickname();
+			} catch (QQConnectException e) {
+				e.printStackTrace();
+			}
+			
+			request.setAttribute("qqUsername", qqUsername);
 			request.setAttribute("qqOpenId", openID);
     		request.setAttribute("qqAccessToken", accessToken);
     		return "show/bind";
@@ -194,6 +206,7 @@ public class LoginController {
 	public String bindSnsAccount(UserLoginEntity userLoginEntity,HttpServletRequest request,HttpServletResponse response, Model model) {
 		UserLoginEntity userBaseInfo = userLoginService.queryUserLogin(userLoginEntity,model);
 		if(userBaseInfo == null){
+			request.setAttribute("qqUsername", request.getParameter("qqUsername"));
 			request.setAttribute("qqOpenId", request.getParameter("qqOpenId"));
     		request.setAttribute("qqAccessToken", request.getParameter("qqAccessToken"));
     		return "show/bind";
