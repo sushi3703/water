@@ -20,6 +20,10 @@
 	<bean id="secResGroupService" class="net.water.security.service.impl.SecResGroupService" />
 	<!-- security end -->
 	
+	<!-- team begin -->
+	<bean id="teamService" class="net.water.team.service.impl.TeamService" />
+	<!-- team end -->
+	
 	<!-- user begin -->
 	<bean id="userBaseService" class="net.water.user.service.impl.UserBaseService" />
 	<!-- user end -->

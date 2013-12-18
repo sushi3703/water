@@ -16,7 +16,7 @@
         <c:if test="${!empty errorMsg}">
           <font color="red">${errorMsg}</font>
         </c:if>
-        <input name="uname" type="text" class="form-control" placeholder="账号" autofocus>
+        <input name="email" type="text" class="form-control" placeholder="邮箱" autofocus>
         <input name="upwd" type="password" class="form-control" placeholder="密码">
         <label class="checkbox">
           <a href="javascript:alert('请联系管理员，重置密码');"> 忘记密码？</a>

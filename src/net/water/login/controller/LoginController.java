@@ -38,12 +38,12 @@ public class LoginController {
 	}
 
 	@RequestMapping("do_login")
-	public String login(HttpServletRequest request, Model model){
-		String uname = request.getParameter("uname");
+	public String doLogin(HttpServletRequest request, Model model){
+		String email = request.getParameter("email");
 		String upwd = request.getParameter("upwd");
 		//log.info(username+","+userpwd);
 		UserLoginEntity userLoginEntity = new UserLoginEntity();
-		userLoginEntity.setUname(uname);
+		userLoginEntity.setEmail(email);
 		userLoginEntity.setUpwd(upwd);
 		UserLoginEntity userBaseInfo = userLoginService.queryUserLogin(userLoginEntity,model);
 		if(userBaseInfo == null){
