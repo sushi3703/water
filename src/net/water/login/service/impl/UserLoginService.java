@@ -23,31 +23,18 @@ public class UserLoginService implements IUserLoginService {
 			model.addAttribute(Constants.PARAM_ERROR_MSG, "请输入密码");
 			return null;
 		}
-		if(StringUtils.isBlank(userLoginEntity.getUname()) && StringUtils.isBlank(userLoginEntity.getEmail())){
-			model.addAttribute(Constants.PARAM_ERROR_MSG, "请输入用户名或邮箱");
+		if(StringUtils.isBlank(userLoginEntity.getEmail())){
+			model.addAttribute(Constants.PARAM_ERROR_MSG, "请输入邮箱");
 			return null;
 		}
 		//密码加密
 		//userLoginEntity.setUpwd(Md5.md5(userLoginEntity.getUpwd()));
-		List<Map<String,Object>> users;
-		UserLoginEntity user = null;
-		if(StringUtils.isNotBlank(userLoginEntity.getUname())){
-			users = userLoginDAO.queryUsersByName(userLoginEntity.getUname());
-			if(users == null || users.isEmpty()){
-				model.addAttribute(Constants.PARAM_ERROR_MSG, "无此账户");
-				return null;
-			}
-			user = userLoginDAO.queryUserLoginByUname(userLoginEntity);
+		List<Map<String,Object>> users = userLoginDAO.queryUsersByEmail(userLoginEntity.getEmail());
+		if(users == null || users.isEmpty()){
+			model.addAttribute(Constants.PARAM_ERROR_MSG, "无此账户");
+			return null;
 		}
-
-		if(StringUtils.isNotBlank(userLoginEntity.getEmail())){
-			users = userLoginDAO.queryUsersByEmail(userLoginEntity.getEmail());
-			if(users == null || users.isEmpty()){
-				model.addAttribute(Constants.PARAM_ERROR_MSG, "无此账户");
-				return null;
-			}
-			user = userLoginDAO.queryUserLoginByEmail(userLoginEntity);
-		}
+		UserLoginEntity user = userLoginDAO.queryUserLoginByEmail(userLoginEntity);
 		
 		if(user == null){
 			model.addAttribute(Constants.PARAM_ERROR_MSG, "密码输入有误");

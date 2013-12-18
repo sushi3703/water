@@ -25,6 +25,17 @@ public class UserLoginEntity implements Serializable {
 	
 	private String qqAccessToken;
 	
+	/*所属团队ID*/
+	private int teamId;
+	
+	public int getTeamId() {
+		return teamId;
+	}
+
+	public void setTeamId(int teamId) {
+		this.teamId = teamId;
+	}
+
 	public String getQqOpenId() {
 		return qqOpenId;
 	}
