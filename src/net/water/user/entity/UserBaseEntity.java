@@ -12,17 +12,8 @@ public class UserBaseEntity implements Serializable {
 	/*  */
 	private int  userId;
 			
-	/* 创建者 */
-	private int  createUserId;
-			
 	/* 创建时间 */
 	private Date  createTime;
-			
-	/* 创建或注册时的ip */
-	private String  createIp;
-			
-	/* 公司 */
-	private String  company;
 			
 	/* 部门 */
 	private String  department;
@@ -36,18 +27,26 @@ public class UserBaseEntity implements Serializable {
 	/* 手机 */
 	private String  mobile;
 			
-	/* 固定电话 */
-	private String  tel;
-			
 	/* 备注 */
 	private String  note;
 			
 	
-	/*查询条件，用户名*/
+	/*查询条件并显示信息，用户名*/
 	private String uname;
 	
-	/*查询条件，邮箱*/
+	/*查询条件并显示信息，邮箱*/
 	private String email;
+	
+	/*查询条件并显示信息，所属团队*/
+	private int teamId;
+
+	public int getTeamId() {
+		return teamId;
+	}
+
+	public void setTeamId(int teamId) {
+		this.teamId = teamId;
+	}
 
 	public String getUname() {
 		return uname;
@@ -72,33 +71,12 @@ public class UserBaseEntity implements Serializable {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}	
-	public int getCreateUserId() {
-		return createUserId;
-	}
-	
-	public void setCreateUserId(int createUserId) {
-		this.createUserId = createUserId;
-	}	
 	public Date getCreateTime() {
 		return createTime;
 	}
 	
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
-	}	
-	public String getCreateIp() {
-		return createIp;
-	}
-	
-	public void setCreateIp(String createIp) {
-		this.createIp = createIp;
-	}	
-	public String getCompany() {
-		return company;
-	}
-	
-	public void setCompany(String company) {
-		this.company = company;
 	}	
 	public String getDepartment() {
 		return department;
@@ -128,13 +106,6 @@ public class UserBaseEntity implements Serializable {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}	
-	public String getTel() {
-		return tel;
-	}
-	
-	public void setTel(String tel) {
-		this.tel = tel;
-	}	
 	public String getNote() {
 		return note;
 	}
@@ -146,13 +117,7 @@ public class UserBaseEntity implements Serializable {
 	public void toUserBaseDto(UserBaseDto userBaseDto) {
 		userBaseDto.setUserId(String.valueOf(this.userId));
 		
-		userBaseDto.setCreateUserId(String.valueOf(this.createUserId));
-		
 		userBaseDto.setCreateTime(SystemUtils.dateToStr(this.createTime,"yyyy-MM-dd HH:mm:ss"));
-		
-		userBaseDto.setCreateIp(this.createIp);
-		
-		userBaseDto.setCompany(this.company);
 		
 		userBaseDto.setDepartment(this.department);
 		
@@ -161,8 +126,6 @@ public class UserBaseEntity implements Serializable {
 		userBaseDto.setQq(this.qq);
 		
 		userBaseDto.setMobile(this.mobile);
-		
-		userBaseDto.setTel(this.tel);
 		
 		userBaseDto.setNote(this.note);
 		

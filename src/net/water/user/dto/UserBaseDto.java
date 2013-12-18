@@ -10,20 +10,8 @@ public class UserBaseDto extends PagerDTO {
 	private String  userId;
 			
 			
-	/* 创建者 */
-	private String  createUserId;
-			
-			
 	/* 创建时间 */
 	private String  createTime;
-			
-			
-	/* 创建或注册时的ip */
-	private String  createIp;
-			
-			
-	/* 公司 */
-	private String  company;
 			
 			
 	/* 部门 */
@@ -42,19 +30,26 @@ public class UserBaseDto extends PagerDTO {
 	private String  mobile;
 			
 			
-	/* 固定电话 */
-	private String  tel;
-			
-			
 	/* 备注 */
 	private String  note;
 			
 			
-	/*查询条件，用户名*/
+	/*查询条件并显示信息，用户名*/
 	private String uname;
 	
-	/*查询条件，邮箱*/
+	/*查询条件并显示信息，邮箱*/
 	private String email;
+	
+	/*查询条件并显示信息，所属团队*/
+	private String teamId;
+
+	public String getTeamId() {
+		return teamId;
+	}
+
+	public void setTeamId(String teamId) {
+		this.teamId = teamId;
+	}
 
 	public String getUname() {
 		return uname;
@@ -80,36 +75,12 @@ public class UserBaseDto extends PagerDTO {
 		this.userId = userId;
 	}
 			
-	public String  getCreateUserId() {
-		return createUserId;
-	}
-	
-	public void setCreateUserId(String createUserId) {
-		this.createUserId = createUserId;
-	}
-			
 	public String  getCreateTime() {
 		return createTime;
 	}
 	
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
-	}
-			
-	public String  getCreateIp() {
-		return createIp;
-	}
-	
-	public void setCreateIp(String createIp) {
-		this.createIp = createIp;
-	}
-			
-	public String  getCompany() {
-		return company;
-	}
-	
-	public void setCompany(String company) {
-		this.company = company;
 	}
 			
 	public String  getDepartment() {
@@ -143,15 +114,7 @@ public class UserBaseDto extends PagerDTO {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
-			
-	public String  getTel() {
-		return tel;
-	}
-	
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
-			
+
 	public String  getNote() {
 		return note;
 	}
@@ -165,13 +128,8 @@ public class UserBaseDto extends PagerDTO {
 		UserBaseEntity userBaseEntity = new UserBaseEntity();
 		userBaseEntity.setUserId(SystemUtils.strToInt(this.userId));
 		
-		userBaseEntity.setCreateUserId(SystemUtils.strToInt(this.createUserId));
 		
 		userBaseEntity.setCreateTime(SystemUtils.strToDate(this.createTime,"yyyy-MM-dd HH:mm:ss"));
-		
-		userBaseEntity.setCreateIp(this.getCreateIp());
-		
-		userBaseEntity.setCompany(this.getCompany());
 		
 		userBaseEntity.setDepartment(this.getDepartment());
 		
@@ -180,8 +138,6 @@ public class UserBaseDto extends PagerDTO {
 		userBaseEntity.setQq(this.getQq());
 		
 		userBaseEntity.setMobile(this.getMobile());
-		
-		userBaseEntity.setTel(this.getTel());
 		
 		userBaseEntity.setNote(this.getNote());
 		
