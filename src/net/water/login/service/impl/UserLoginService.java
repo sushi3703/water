@@ -1,12 +1,16 @@
 package net.water.login.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import net.kuakao.core.exception.DataBaseException;
 import net.water.Constants;
 import net.water.login.dao.IUserLoginDAO;
 import net.water.login.entity.UserLoginEntity;
 import net.water.login.service.IUserLoginService;
+import net.water.user.dao.IUserSnsDAO;
+import net.water.user.entity.UserSnsEntity;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,9 @@ public class UserLoginService implements IUserLoginService {
 	
 	@Autowired
 	private IUserLoginDAO userLoginDAO;
+	
+	@Autowired
+	private IUserSnsDAO userSnsDAO;
 
 	@Override
 	public UserLoginEntity queryUserLogin(UserLoginEntity userLoginEntity, Model model) {
@@ -48,29 +55,36 @@ public class UserLoginService implements IUserLoginService {
 		return user;
 	}
 	
-	public boolean operateQqLoginExist(UserLoginEntity userLoginEntity){
-		UserLoginEntity dbLoginInfo = userLoginDAO.queryUserLoginByQqOpenId(userLoginEntity);
-		if(dbLoginInfo == null){
-			return false;
-		}
-		//更新accessToken
-		if(!dbLoginInfo.getQqAccessToken().equals(userLoginEntity.getQqAccessToken())){
-			userLoginDAO.updateUserQqLoginInfo(userLoginEntity);
-		}
-		//设置用户信息
-		userLoginEntity.setEmail(dbLoginInfo.getEmail());
-		userLoginEntity.setType(dbLoginInfo.getType());
-		userLoginEntity.setUname(dbLoginInfo.getUname());
-		userLoginEntity.setUserId(dbLoginInfo.getUserId());
-		return true;
-	}
-	
-	public UserLoginEntity operateBindQqLogin(UserLoginEntity userLoginEntity){
-		if(userLoginEntity.getUserId()==0){
+	public UserLoginEntity operateQqLoginExist(UserSnsEntity userSnsEntity){
+		//qqOpenId是否已绑定本站账户
+		UserSnsEntity dbSnsInfo = userSnsDAO.queryUserSnsByQqOpenId(userSnsEntity);
+		if(dbSnsInfo == null){
 			return null;
 		}
-		userLoginDAO.updateUserQqLoginInfo(userLoginEntity);
-		return userLoginDAO.queryUserLoginByUserId(userLoginEntity);
+		//已绑定，更新accessToken/qqUsername
+		if(!dbSnsInfo.getQqAccessToken().equals(userSnsEntity.getQqAccessToken()) || !dbSnsInfo.getQqUsername().equals(userSnsEntity.getQqUsername())){
+			dbSnsInfo.setQqAccessToken(userSnsEntity.getQqAccessToken());
+			dbSnsInfo.setQqUsername(userSnsEntity.getQqUsername());
+			dbSnsInfo.setUpdateTime(new Date());
+			userSnsDAO.updateUserQqLoginInfo(dbSnsInfo);
+		}
+		//查询对应用户的登录信息
+		return userLoginDAO.queryUserLoginByUserId(dbSnsInfo.getUserId());
+	}
+	
+	public void operateBindQqLogin(UserSnsEntity userSnsEntity)throws DataBaseException{
+		int userId = userSnsEntity.getUserId();
+		if(userId == 0){
+			return;
+		}
+		UserSnsEntity snsEntity = userSnsDAO.queryUserSnsByUserId(userId);
+		if(snsEntity == null){
+			userSnsEntity.setUpdateTime(new Date());
+			userSnsDAO.createUserSns(userSnsEntity);
+		}else{
+			userSnsEntity.setUpdateTime(new Date());
+			userSnsDAO.updateUserQqLoginInfo(userSnsEntity);
+		}
 	}
 
 	@Override

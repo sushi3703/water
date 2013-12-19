@@ -1,17 +1,14 @@
 package net.water.login.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
 import net.water.Constants;
 import net.water.login.entity.UserLoginEntity;
 import net.water.login.service.IUserLoginService;
+import net.water.user.entity.UserSnsEntity;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,121 +108,56 @@ public class LoginController {
 			request.setAttribute("redirectTo", request.getSession().getAttribute("redirectTo"));
 			return "show/login";
 		}
-		UserLoginEntity userLoginEntity = new UserLoginEntity();
-		userLoginEntity.setQqAccessToken(accessToken);
-		userLoginEntity.setQqOpenId(openID);
-		boolean qqLoginExist = userLoginService.operateQqLoginExist(userLoginEntity);
-		if(qqLoginExist){
-			request.getSession().setAttribute(Constants.PARAM_USER_BASE_INFO, userLoginEntity);
-			String redirectTo = request.getParameter("redirectTo");
-			if(StringUtils.isNotBlank(redirectTo)){
-				return "redirect:"+redirectTo;
-			}
-			return "redirect:"+Constants.SYS_INDEX;
-		}else{// 绑定或注册
-			String qqUsername = "";
-			UserInfo qzoneUserInfo = new UserInfo(accessToken, openID);
-            try {
-				UserInfoBean userInfoBean = qzoneUserInfo.getUserInfo();
+		UserSnsEntity userSnsEntity = new UserSnsEntity();
+		userSnsEntity.setQqOpenId(openID);
+		userSnsEntity.setQqAccessToken(accessToken);
+		String qqUsername = "";
+		UserInfo qzoneUserInfo = new UserInfo(accessToken, openID);
+        try {
+			UserInfoBean userInfoBean = qzoneUserInfo.getUserInfo();
+			if(userInfoBean != null){
 				qqUsername = userInfoBean.getNickname();
-			} catch (QQConnectException e) {
-				e.printStackTrace();
 			}
-			
+		} catch (QQConnectException e) {
+			e.printStackTrace();
+		}
+		userSnsEntity.setQqUsername(qqUsername);
+		UserLoginEntity userLoginEntity = userLoginService.operateQqLoginExist(userSnsEntity);
+		if(userLoginEntity == null){// 绑定或注册
 			request.setAttribute("qqUsername", qqUsername);
 			request.setAttribute("qqOpenId", openID);
     		request.setAttribute("qqAccessToken", accessToken);
     		return "show/bind";
-		}
-	}
-	/**
-	 * 验证用户输入的用户名密码
-	 * @param request
-	 * @param response
-	 */
-	@RequestMapping(value = "validate_user_pwd")
-	@Deprecated
-	public void validateUserPwd(HttpServletRequest request, HttpServletResponse response, Model model){
-		PrintWriter writer = null;
-		response.setContentType("text/html");
-		response.setCharacterEncoding("UTF-8");
-		Map<String,String> msgs = new HashMap<String,String>();
-		try {
-			writer = response.getWriter();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		if(writer == null){
-			return;
-		}
-		String uname = request.getParameter("uname");
-		if(uname == null){
-			msgs.put("error", "请输入用户名");
-			writer.print(JSONObject.fromObject(msgs).toString());
-			writer.flush();
-			return;
-		}
-		uname = uname.trim();
-		if("".equals(uname)){
-			msgs.put("error", "请输入用户名");
-			writer.print(JSONObject.fromObject(msgs).toString());
-			writer.flush();
-			return;
-		}
-		String pwd = request.getParameter("upwd");
-		if(pwd == null){
-			msgs.put("error", "请输入密码");
-			writer.print(JSONObject.fromObject(msgs).toString());
-			writer.flush();
-			return;
-		}
-		pwd = pwd.trim();
-		if("".equals(pwd)){
-			msgs.put("error", "请输入密码");
-			writer.print(JSONObject.fromObject(msgs).toString());
-			writer.flush();
-			return;
-		}
-		UserLoginEntity userLoginEntity = new UserLoginEntity();
-		userLoginEntity.setUname(uname);
-		userLoginEntity.setUpwd(pwd);
-		UserLoginEntity userBaseInfo = userLoginService.queryUserLogin(userLoginEntity,model);
-		if(userBaseInfo == null){
-			msgs.put("error", "用户名或密码错误");
-			writer.print(JSONObject.fromObject(msgs).toString());
-			writer.flush();
 		}else{
-			msgs.put("suc", "suc");
-			msgs.put("userId", userBaseInfo.getUserId()+"");
-			writer.print(JSONObject.fromObject(msgs).toString());
-			writer.flush();
+			request.getSession().setAttribute(Constants.PARAM_USER_BASE_INFO, userLoginEntity);
+			String redirectTo = (String)request.getSession().getAttribute("redirectTo");
+			if(StringUtils.isBlank(redirectTo)){
+				redirectTo = Constants.SYS_INDEX;
+			}
+			return "redirect:"+redirectTo;
 		}
 	}
 	
 	@RequestMapping(value = "bind_sns_account")
-	public String bindSnsAccount(UserLoginEntity userLoginEntity,HttpServletRequest request,HttpServletResponse response, Model model) {
-		UserLoginEntity userBaseInfo = userLoginService.queryUserLogin(userLoginEntity,model);
-		if(userBaseInfo == null){
+	public String bindSnsAccount(UserSnsEntity userSnsEntity,HttpServletRequest request,HttpServletResponse response, Model model) {
+		UserLoginEntity validateLoginEntity = new UserLoginEntity();
+		validateLoginEntity.setEmail(request.getParameter("email"));
+		validateLoginEntity.setUpwd(request.getParameter("upwd"));
+		UserLoginEntity userLoginInfo = userLoginService.queryUserLogin(validateLoginEntity,model);
+		if(userLoginInfo == null){
 			request.setAttribute("qqUsername", request.getParameter("qqUsername"));
 			request.setAttribute("qqOpenId", request.getParameter("qqOpenId"));
     		request.setAttribute("qqAccessToken", request.getParameter("qqAccessToken"));
     		return "show/bind";
 		}
+		//login success
+		request.getSession().setAttribute(Constants.PARAM_USER_BASE_INFO, userLoginInfo);
 		//bind
-		userLoginEntity.setUserId(userBaseInfo.getUserId());
-		UserLoginEntity baseInfo = userLoginService.operateBindQqLogin(userLoginEntity);
-		if(baseInfo == null){
-			request.setAttribute("errorMsg", "QQ登录异常，请用其它方式登录");
-			request.setAttribute("redirectTo", request.getSession().getAttribute("redirectTo"));
-			return "show/login";
-		}else{
-			request.getSession().setAttribute(Constants.PARAM_USER_BASE_INFO, baseInfo);
-		}
+		userSnsEntity.setUserId(userLoginInfo.getUserId());
+		userLoginService.operateBindQqLogin(userSnsEntity);
+		
 		//跳转
-		String redirectUrl = request.getParameter("redirectUrl");
-		if(StringUtils.isBlank(redirectUrl)){
-			redirectUrl = (String)request.getSession().getAttribute("redirectTo");
-		}
+		String redirectUrl = (String)request.getSession().getAttribute("redirectTo");
 		if(StringUtils.isBlank(redirectUrl)){
 			redirectUrl = Constants.SYS_INDEX;
 		}

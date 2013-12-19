@@ -21,18 +21,11 @@ public interface IUserLoginDAO {
 	public UserLoginEntity queryUserLoginByEmail(UserLoginEntity userLoginEntity);
 	
 	/**
-	 * 根据qqOpenId取用户登录信息
-	 * @param userLoginEntity
-	 * @return
-	 */
-	public UserLoginEntity queryUserLoginByQqOpenId(UserLoginEntity userLoginEntity);
-	
-	/**
 	 * 根据userId取用户登录信息
-	 * @param userLoginEntity
+	 * @param userId
 	 * @return
 	 */
-	public UserLoginEntity queryUserLoginByUserId(UserLoginEntity userLoginEntity);
+	public UserLoginEntity queryUserLoginByUserId(int userId);
 	
 	/**
 	 * 创建用户(登录信息)
@@ -63,11 +56,5 @@ public interface IUserLoginDAO {
 	 */
 	public void updateUserStatus(int userId,int status) throws DataBaseException;
 	
-	/**
-	 * 更新用户QQ登录信息
-	 * @param userLoginEntity
-	 * @throws DataBaseException
-	 */
-	public void updateUserQqLoginInfo(UserLoginEntity userLoginEntity) throws DataBaseException;
 }
 
