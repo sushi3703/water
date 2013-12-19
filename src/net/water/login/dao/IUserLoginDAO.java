@@ -1,7 +1,4 @@
 package net.water.login.dao;
-import java.util.List;
-import java.util.Map;
-
 import net.kuakao.core.exception.DataBaseException;
 import net.water.login.entity.UserLoginEntity;
 
@@ -14,11 +11,11 @@ import net.water.login.entity.UserLoginEntity;
 public interface IUserLoginDAO {
 	
 	/**
-	 * 用户(email)登录并查询其基本信息
-	 * @param userLoginEntity
+	 * 根据用户email查询登录信息
+	 * @param email
 	 * @return
 	 */
-	public UserLoginEntity queryUserLoginByEmail(UserLoginEntity userLoginEntity);
+	public UserLoginEntity queryUserLoginByEmail(String email);
 	
 	/**
 	 * 根据userId取用户登录信息
@@ -40,13 +37,6 @@ public interface IUserLoginDAO {
 	 * @throws DataBaseException
 	 */
 	public void updateUserPwd(UserLoginEntity userLoginEntity) throws DataBaseException;
-	
-	/**
-	 * 根据邮箱查看是否存在此用户
-	 * @param email
-	 * @return
-	 */
-	public List<Map<String,Object>> queryUsersByEmail(String email);
 	
 	/**
 	 * 删除用户

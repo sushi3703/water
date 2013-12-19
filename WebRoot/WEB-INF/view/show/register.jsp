@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>用户登录-QQ登录</title>
+<title>注册</title>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/tool/jquery/jquery.min.js"></script>
 <script type="text/javascript">
@@ -13,19 +13,15 @@
 </script>
 </head>
 <body>
-<p>hi,${qqUsername}</p>
+<p>创建新账户</p>
 <c:if test="${!empty errorMsg}">
 	<font color="red">${errorMsg}</font>
 </c:if>
-<form action="${pageContext.request.contextPath}/login/bind_sns_account.action" method="post">
-<input type="hidden" name="qqUsername" value="${qqUsername}" />
-<input type="hidden" name="qqOpenId" value="${qqOpenId}" />
-<input type="hidden" name="qqAccessToken" value="${qqAccessToken}" />
-<p>登录邮箱：<input type="text" name="email" /></p>
-<p>密码：<input type="password" name="upwd" /></p>
-<p><input type="submit" value="绑定账号" /></p>
+<form action="${pageContext.request.contextPath}/login/do_register.action" method="post">
+<p>邮箱：<input type="text" name="email" /><span>邮箱作为登录账号，也可用于找回密码等</span></p>
+<p>密码：<input type="password" name="upwd" /><span>请输入密码</span></p>
+<p><input type="submit" value="注册" /></p>
 </form>
-<br/><br/>
 
 </body>
 </html>

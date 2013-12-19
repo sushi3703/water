@@ -2,8 +2,6 @@ package net.water.login.dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 
 import net.kuakao.core.base.dao.BaseDAO;
 import net.kuakao.core.exception.DataBaseException;
@@ -25,13 +23,14 @@ public class UserLoginDAO extends BaseDAO implements IUserLoginDAO {
 	}
 
 	@Override
-	public UserLoginEntity queryUserLoginByEmail(UserLoginEntity userLoginEntity) {
-		String sql = "select user_id,uname,email,upwd,type,status,team_id from w_user_login where email=? and upwd=? limit 1";
-		return super.queryForObject(sql, new Object[]{userLoginEntity.getEmail(),userLoginEntity.getUpwd()}, new RowMapper<UserLoginEntity>() {
+	public UserLoginEntity queryUserLoginByEmail(String email) {
+		String sql = "select user_id,uname,email,upwd,type,status,team_id from w_user_login where email=? limit 1";
+		return super.queryForObject(sql, new Object[]{email}, new RowMapper<UserLoginEntity>() {
 			public UserLoginEntity mapRow(ResultSet rs, int value) throws SQLException {
 				UserLoginEntity entity = new UserLoginEntity();
 				entity.setUserId(rs.getInt("user_id"));
 				entity.setUname(rs.getString("uname"));
+				entity.setUpwd(rs.getString("upwd"));
 				entity.setStatus(rs.getInt("status"));
 				entity.setType(rs.getInt("type"));
 				entity.setEmail(rs.getString("email"));
@@ -64,11 +63,6 @@ public class UserLoginDAO extends BaseDAO implements IUserLoginDAO {
 		super.update(sql, new Object[]{userLoginEntity.getUpwd(),userLoginEntity.getUserId()});
 	}
 	
-
-	public List<Map<String,Object>> queryUsersByEmail(String email){
-		String sql = "select user_id,uname,email from w_user_login where status=1 and email=?";
-		return super.queryForList(sql, new Object[]{email});
-	}
 
 	public void updateUserStatus(int userId,int status) throws DataBaseException{
 		String sql = "update w_user_login set status=? where user_id=?";

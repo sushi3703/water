@@ -1,14 +1,14 @@
 package net.water.login.service.impl;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.UUID;
 
 import net.kuakao.core.exception.DataBaseException;
 import net.water.Constants;
 import net.water.login.dao.IUserLoginDAO;
 import net.water.login.entity.UserLoginEntity;
 import net.water.login.service.IUserLoginService;
+import net.water.tool.Md5;
 import net.water.user.dao.IUserSnsDAO;
 import net.water.user.entity.UserSnsEntity;
 
@@ -34,16 +34,13 @@ public class UserLoginService implements IUserLoginService {
 			model.addAttribute(Constants.PARAM_ERROR_MSG, "请输入邮箱");
 			return null;
 		}
-		//密码加密
-		//userLoginEntity.setUpwd(Md5.md5(userLoginEntity.getUpwd()));
-		List<Map<String,Object>> users = userLoginDAO.queryUsersByEmail(userLoginEntity.getEmail());
-		if(users == null || users.isEmpty()){
+		UserLoginEntity user = userLoginDAO.queryUserLoginByEmail(userLoginEntity.getEmail());
+		if(user == null){
 			model.addAttribute(Constants.PARAM_ERROR_MSG, "无此账户");
 			return null;
 		}
-		UserLoginEntity user = userLoginDAO.queryUserLoginByEmail(userLoginEntity);
 		
-		if(user == null){
+		if(!user.getUpwd().equals(Md5.md5(userLoginEntity.getEmail()+userLoginEntity.getUpwd()))){
 			model.addAttribute(Constants.PARAM_ERROR_MSG, "密码输入有误");
 			return null;
 		}
@@ -51,6 +48,7 @@ public class UserLoginService implements IUserLoginService {
 			model.addAttribute(Constants.PARAM_ERROR_MSG, "账户被锁定或已失效");
 			return null;
 		}
+		user.setUpwd(null);
 		
 		return user;
 	}
@@ -92,6 +90,12 @@ public class UserLoginService implements IUserLoginService {
 		userLoginDAO.updateUserPwd(userLoginEntity);
 	}
 	
+	public void createRegisterUser(UserLoginEntity userLoginEntity, Model model){
+		String userId = UUID.randomUUID().toString();
+		//登录信息
+		userLoginDAO.createUserLoginInfo(userLoginEntity);
+		//基本信息
+	}
 
 }
 

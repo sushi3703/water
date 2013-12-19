@@ -83,16 +83,17 @@ public class LoginController {
 		} catch (QQConnectException e) {
 			e.printStackTrace();
 		}
+		Object sessionRedirectTo = request.getSession().getAttribute("redirectTo");
 		
 		if (accessTokenObj == null) {
 			request.setAttribute("errorMsg", "QQ登录异常，请用其它方式登录");
-			request.setAttribute("redirectTo", request.getSession().getAttribute("redirectTo"));
+			request.setAttribute("redirectTo", sessionRedirectTo);
 			return "show/login";
 		}
 		accessToken = accessTokenObj.getAccessToken();
 		if ("".equals(accessToken)) {
 			request.setAttribute("errorMsg", "QQ登录异常，请用其它方式登录");
-			request.setAttribute("redirectTo", request.getSession().getAttribute("redirectTo"));
+			request.setAttribute("redirectTo", sessionRedirectTo);
 			return "show/login";
 		}
 		// 利用获取到的accessToken 去获取当前用的openid
@@ -105,7 +106,7 @@ public class LoginController {
 		// System.out.println("欢迎你，代号为 " + openID + " 的用户,accessToken为"+accessToken);
 		if(StringUtils.isBlank(openID)){
 			request.setAttribute("errorMsg", "QQ登录异常，请用其它方式登录");
-			request.setAttribute("redirectTo", request.getSession().getAttribute("redirectTo"));
+			request.setAttribute("redirectTo", sessionRedirectTo);
 			return "show/login";
 		}
 		UserSnsEntity userSnsEntity = new UserSnsEntity();
@@ -130,7 +131,7 @@ public class LoginController {
     		return "show/bind";
 		}else{
 			request.getSession().setAttribute(Constants.PARAM_USER_BASE_INFO, userLoginEntity);
-			String redirectTo = (String)request.getSession().getAttribute("redirectTo");
+			String redirectTo = (String)sessionRedirectTo;
 			if(StringUtils.isBlank(redirectTo)){
 				redirectTo = Constants.SYS_INDEX;
 			}
@@ -163,4 +164,31 @@ public class LoginController {
 		}
 		return "redirect:"+redirectUrl;
 	}
+	
+
+	@RequestMapping("to_register")
+	public String toRegister(HttpServletRequest request, Model model){
+		if(request.getSession().getAttribute(Constants.PARAM_USER_BASE_INFO) != null){//已登录，返回首页
+			return "redirect:"+Constants.SYS_INDEX;
+		}
+		return "show/register";
+	}
+	
+
+	@RequestMapping("do_register")
+	public String doRegister(HttpServletRequest request, Model model){
+		String email = request.getParameter("email");
+		String upwd = request.getParameter("upwd");
+		
+		//非空验证
+		//验证码验证（采用三部分验证码，1机器干扰的数字，2加或乘图片，3机器干扰的数字）
+		//密码确认验证
+		//邮箱格式验证
+		//
+		UserLoginEntity userLoginEntity = new UserLoginEntity();
+		
+		
+		return "redirect:"+Constants.SYS_INDEX;
+	}
+
 }
