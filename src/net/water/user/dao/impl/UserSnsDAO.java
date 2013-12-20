@@ -21,7 +21,7 @@ public class UserSnsDAO extends BaseDAO implements IUserSnsDAO {
 		return super.queryForObject(sql, new Object[]{userSnsEntity.getQqOpenId()}, new RowMapper<UserSnsEntity>() {
 			public UserSnsEntity mapRow(ResultSet rs, int value) throws SQLException {
 				UserSnsEntity entity = new UserSnsEntity();
-				entity.setUserId(rs.getInt("user_id"));
+				entity.setUserId(rs.getString("user_id"));
 				entity.setQqUsername(rs.getString("qq_username"));
 				entity.setQqOpenId(rs.getString("qq_open_id"));
 				entity.setQqAccessToken(rs.getString("qq_access_token"));
@@ -31,12 +31,12 @@ public class UserSnsDAO extends BaseDAO implements IUserSnsDAO {
 		});
 	}
 	
-	public UserSnsEntity queryUserSnsByUserId(int userId){
+	public UserSnsEntity queryUserSnsByUserId(String userId){
 		String sql = "select user_id,qq_username,qq_open_id,qq_access_token,update_time from w_user_sns where user_id=? limit 1";
 		return super.queryForObject(sql, new Object[]{userId}, new RowMapper<UserSnsEntity>() {
 			public UserSnsEntity mapRow(ResultSet rs, int value) throws SQLException {
 				UserSnsEntity entity = new UserSnsEntity();
-				entity.setUserId(rs.getInt("user_id"));
+				entity.setUserId(rs.getString("user_id"));
 				entity.setQqUsername(rs.getString("qq_username"));
 				entity.setQqOpenId(rs.getString("qq_open_id"));
 				entity.setQqAccessToken(rs.getString("qq_access_token"));

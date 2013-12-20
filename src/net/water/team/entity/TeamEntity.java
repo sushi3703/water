@@ -10,19 +10,19 @@ public class TeamEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/* 团队ID */
-	private int  teamId;
+	private String  teamId;
 			
 	/* 团队名称 */
 	private String  teamName;
 			
 	/* 创建者ID */
-	private int  createUserId;
+	private String  createUserId;
 			
 	/* 创建时间 */
 	private Date  createTime;
 			
 	/* 当前管理员ID */
-	private int  managerId;
+	private String  managerId;
 			
 	/*状态，1有效，0删除*/
 	private int status;
@@ -35,11 +35,11 @@ public class TeamEntity implements Serializable {
 		this.status = status;
 	}
 
-	public int getTeamId() {
+	public String getTeamId() {
 		return teamId;
 	}
 	
-	public void setTeamId(int teamId) {
+	public void setTeamId(String teamId) {
 		this.teamId = teamId;
 	}	
 	public String getTeamName() {
@@ -49,11 +49,11 @@ public class TeamEntity implements Serializable {
 	public void setTeamName(String teamName) {
 		this.teamName = teamName;
 	}	
-	public int getCreateUserId() {
+	public String getCreateUserId() {
 		return createUserId;
 	}
 	
-	public void setCreateUserId(int createUserId) {
+	public void setCreateUserId(String createUserId) {
 		this.createUserId = createUserId;
 	}	
 	public Date getCreateTime() {
@@ -63,24 +63,24 @@ public class TeamEntity implements Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}	
-	public int getManagerId() {
+	public String getManagerId() {
 		return managerId;
 	}
 	
-	public void setManagerId(int managerId) {
+	public void setManagerId(String managerId) {
 		this.managerId = managerId;
 	}	
 	
 	public void toTeamDto(TeamDto teamDto) throws Exception {
-		teamDto.setTeamId(String.valueOf(this.teamId));
+		teamDto.setTeamId(this.teamId);
 		
 		teamDto.setTeamName(this.teamName);
 		
-		teamDto.setCreateUserId(String.valueOf(this.createUserId));
+		teamDto.setCreateUserId(this.createUserId);
 		
 		teamDto.setCreateTime(SuDateUtils.getFormatString(this.createTime,"yyyy-MM-dd HH:mm:ss"));
 		
-		teamDto.setManagerId(String.valueOf(this.managerId));
+		teamDto.setManagerId(this.managerId);
 		
 		teamDto.setStatus(String.valueOf(this.status));
 		

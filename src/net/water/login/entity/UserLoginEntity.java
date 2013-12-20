@@ -7,7 +7,7 @@ public class UserLoginEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/* ID */
-	private int  userId;
+	private String  userId;
 	
 	/*用户名*/
 	private String uname;
@@ -26,13 +26,13 @@ public class UserLoginEntity implements Serializable {
 	private String qqAccessToken;
 	
 	/*所属团队ID*/
-	private int teamId;
+	private String teamId;
 	
-	public int getTeamId() {
+	public String getTeamId() {
 		return teamId;
 	}
 
-	public void setTeamId(int teamId) {
+	public void setTeamId(String teamId) {
 		this.teamId = teamId;
 	}
 
@@ -60,11 +60,11 @@ public class UserLoginEntity implements Serializable {
 		this.type = type;
 	}
 
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

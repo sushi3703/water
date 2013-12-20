@@ -83,15 +83,15 @@ public class TeamDto extends PagerDTO {
 
 	public TeamEntity toTeamEntity() {
 		TeamEntity teamEntity = new TeamEntity();
-		teamEntity.setTeamId(SuIntUtils.getInt(this.teamId));
+		teamEntity.setTeamId(this.teamId);
 		
 		teamEntity.setTeamName(this.getTeamName());
 		
-		teamEntity.setCreateUserId(SuIntUtils.getInt(this.createUserId));
+		teamEntity.setCreateUserId(this.createUserId);
 		
 		teamEntity.setCreateTime(SuDateUtils.getDateByFormatString(this.createTime,"yyyy-MM-dd HH:mm:ss"));
 		
-		teamEntity.setManagerId(SuIntUtils.getInt(this.managerId));
+		teamEntity.setManagerId(this.managerId);
 		
 		teamEntity.setStatus(SuIntUtils.getInt(this.status));
 		

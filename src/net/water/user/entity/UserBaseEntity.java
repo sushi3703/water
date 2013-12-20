@@ -10,7 +10,7 @@ public class UserBaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/*  */
-	private int  userId;
+	private String  userId;
 			
 	/* 创建时间 */
 	private Date  createTime;
@@ -38,13 +38,13 @@ public class UserBaseEntity implements Serializable {
 	private String email;
 	
 	/*查询条件并显示信息，所属团队*/
-	private int teamId;
+	private String teamId;
 
-	public int getTeamId() {
+	public String getTeamId() {
 		return teamId;
 	}
 
-	public void setTeamId(int teamId) {
+	public void setTeamId(String teamId) {
 		this.teamId = teamId;
 	}
 
@@ -64,11 +64,11 @@ public class UserBaseEntity implements Serializable {
 		this.email = email;
 	}
 
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 	
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}	
 	public Date getCreateTime() {
@@ -115,7 +115,7 @@ public class UserBaseEntity implements Serializable {
 	}	
 	
 	public void toUserBaseDto(UserBaseDto userBaseDto) {
-		userBaseDto.setUserId(String.valueOf(this.userId));
+		userBaseDto.setUserId(this.userId);
 		
 		userBaseDto.setCreateTime(SystemUtils.dateToStr(this.createTime,"yyyy-MM-dd HH:mm:ss"));
 		

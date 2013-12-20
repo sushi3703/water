@@ -8,7 +8,7 @@ public class UserSnsEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/* ID */
-	private int  userId;
+	private String  userId;
 	
 	/*qq用户名*/
 	private String qqUsername;
@@ -20,11 +20,11 @@ public class UserSnsEntity implements Serializable {
 	/*最后更新时间*/
 	private Date updateTime;
 
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

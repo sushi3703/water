@@ -22,7 +22,7 @@ public interface IUserLoginDAO {
 	 * @param userId
 	 * @return
 	 */
-	public UserLoginEntity queryUserLoginByUserId(int userId);
+	public UserLoginEntity queryUserLoginByUserId(String userId);
 	
 	/**
 	 * 创建用户(登录信息)
@@ -44,7 +44,7 @@ public interface IUserLoginDAO {
 	 * @param status 状态
 	 * @throws DataBaseException
 	 */
-	public void updateUserStatus(int userId,int status) throws DataBaseException;
+	public void updateUserStatus(String userId,int status) throws DataBaseException;
 	
 }
 

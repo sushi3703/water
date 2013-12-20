@@ -21,7 +21,7 @@ public interface IUserSnsDAO {
 	 * @param userId
 	 * @return
 	 */
-	public UserSnsEntity queryUserSnsByUserId(int userId);
+	public UserSnsEntity queryUserSnsByUserId(String userId);
 	
 	/**
 	 * 创建用户sns绑定账号信息

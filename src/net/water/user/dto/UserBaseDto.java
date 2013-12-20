@@ -126,7 +126,7 @@ public class UserBaseDto extends PagerDTO {
 
 	public UserBaseEntity toUserBaseEntity() {
 		UserBaseEntity userBaseEntity = new UserBaseEntity();
-		userBaseEntity.setUserId(SystemUtils.strToInt(this.userId));
+		userBaseEntity.setUserId(this.userId);
 		
 		
 		userBaseEntity.setCreateTime(SystemUtils.strToDate(this.createTime,"yyyy-MM-dd HH:mm:ss"));

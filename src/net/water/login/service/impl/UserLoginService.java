@@ -71,8 +71,8 @@ public class UserLoginService implements IUserLoginService {
 	}
 	
 	public void operateBindQqLogin(UserSnsEntity userSnsEntity)throws DataBaseException{
-		int userId = userSnsEntity.getUserId();
-		if(userId == 0){
+		String userId = userSnsEntity.getUserId();
+		if(StringUtils.isBlank(userId)){
 			return;
 		}
 		UserSnsEntity snsEntity = userSnsDAO.queryUserSnsByUserId(userId);

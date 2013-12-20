@@ -55,7 +55,7 @@ public class UserBaseDAO extends BaseDAO implements IUserBaseDAO {
 
 				public UserBaseEntity mapRow(ResultSet rs, int arg1) throws SQLException {
 					UserBaseEntity userBaseEntity = new UserBaseEntity();
-					userBaseEntity.setUserId(rs.getInt("user_id"));
+					userBaseEntity.setUserId(rs.getString("user_id"));
 					userBaseEntity.setCreateTime(rs.getTimestamp("create_time"));
 					userBaseEntity.setDepartment(rs.getString("department"));
 					userBaseEntity.setJobTitle(rs.getString("job_title"));
@@ -64,7 +64,7 @@ public class UserBaseDAO extends BaseDAO implements IUserBaseDAO {
 					userBaseEntity.setNote(rs.getString("note"));
 					userBaseEntity.setUname(rs.getString("uname"));
 					userBaseEntity.setEmail(rs.getString("email"));
-					userBaseEntity.setTeamId(rs.getInt("team_id"));
+					userBaseEntity.setTeamId(rs.getString("team_id"));
 					return userBaseEntity;
 				}
 				
@@ -74,7 +74,7 @@ public class UserBaseDAO extends BaseDAO implements IUserBaseDAO {
 
 				public UserBaseEntity mapRow(ResultSet rs, int arg1) throws SQLException {
 					UserBaseEntity userBaseEntity = new UserBaseEntity();
-					userBaseEntity.setUserId(rs.getInt("user_id"));
+					userBaseEntity.setUserId(rs.getString("user_id"));
 					userBaseEntity.setCreateTime(rs.getTimestamp("create_time"));
 					userBaseEntity.setDepartment(rs.getString("department"));
 					userBaseEntity.setJobTitle(rs.getString("job_title"));
@@ -83,7 +83,7 @@ public class UserBaseDAO extends BaseDAO implements IUserBaseDAO {
 					userBaseEntity.setNote(rs.getString("note"));
 					userBaseEntity.setUname(rs.getString("uname"));
 					userBaseEntity.setEmail(rs.getString("email"));
-					userBaseEntity.setTeamId(rs.getInt("team_id"));
+					userBaseEntity.setTeamId(rs.getString("team_id"));
 					return userBaseEntity;
 				}
 				
@@ -97,7 +97,7 @@ public class UserBaseDAO extends BaseDAO implements IUserBaseDAO {
 		return super.queryForObject(sql, new Object[]{userId}, new RowMapper<UserBaseEntity>() {
 			public UserBaseEntity mapRow(ResultSet rs, int value) throws SQLException {
 				UserBaseEntity userBaseEntity = new UserBaseEntity();
-				userBaseEntity.setUserId(rs.getInt("user_id"));
+				userBaseEntity.setUserId(rs.getString("user_id"));
 				userBaseEntity.setCreateTime(rs.getTimestamp("create_time"));
 				userBaseEntity.setDepartment(rs.getString("department"));
 				userBaseEntity.setJobTitle(rs.getString("job_title"));
@@ -106,7 +106,7 @@ public class UserBaseDAO extends BaseDAO implements IUserBaseDAO {
 				userBaseEntity.setNote(rs.getString("note"));
 				userBaseEntity.setUname(rs.getString("uname"));
 				userBaseEntity.setEmail(rs.getString("email"));
-				userBaseEntity.setTeamId(rs.getInt("team_id"));
+				userBaseEntity.setTeamId(rs.getString("team_id"));
 				return userBaseEntity;
 			}
 		});

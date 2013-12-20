@@ -28,29 +28,29 @@ public class UserLoginDAO extends BaseDAO implements IUserLoginDAO {
 		return super.queryForObject(sql, new Object[]{email}, new RowMapper<UserLoginEntity>() {
 			public UserLoginEntity mapRow(ResultSet rs, int value) throws SQLException {
 				UserLoginEntity entity = new UserLoginEntity();
-				entity.setUserId(rs.getInt("user_id"));
+				entity.setUserId(rs.getString("user_id"));
 				entity.setUname(rs.getString("uname"));
 				entity.setUpwd(rs.getString("upwd"));
 				entity.setStatus(rs.getInt("status"));
 				entity.setType(rs.getInt("type"));
 				entity.setEmail(rs.getString("email"));
-				entity.setTeamId(rs.getInt("team_id"));
+				entity.setTeamId(rs.getString("team_id"));
 				return entity;
 			}
 		});
 	}
 
-	public UserLoginEntity queryUserLoginByUserId(int userId) {
+	public UserLoginEntity queryUserLoginByUserId(String userId) {
 		String sql = "select user_id,uname,email,type,status,team_id from w_user_login where user_id=? limit 1";
 		return super.queryForObject(sql, new Object[]{userId}, new RowMapper<UserLoginEntity>() {
 			public UserLoginEntity mapRow(ResultSet rs, int value) throws SQLException {
 				UserLoginEntity entity = new UserLoginEntity();
-				entity.setUserId(rs.getInt("user_id"));
+				entity.setUserId(rs.getString("user_id"));
 				entity.setUname(rs.getString("uname"));
 				entity.setStatus(rs.getInt("status"));
 				entity.setType(rs.getInt("type"));
 				entity.setEmail(rs.getString("email"));
-				entity.setTeamId(rs.getInt("team_id"));
+				entity.setTeamId(rs.getString("team_id"));
 				return entity;
 			}
 		});
@@ -64,7 +64,7 @@ public class UserLoginDAO extends BaseDAO implements IUserLoginDAO {
 	}
 	
 
-	public void updateUserStatus(int userId,int status) throws DataBaseException{
+	public void updateUserStatus(String userId,int status) throws DataBaseException{
 		String sql = "update w_user_login set status=? where user_id=?";
 		super.update(sql, new Object[]{status,userId});
 	}

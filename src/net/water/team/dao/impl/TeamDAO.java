@@ -51,11 +51,11 @@ public class TeamDAO extends BaseDAO implements ITeamDAO {
 
 				public TeamEntity mapRow(ResultSet rs, int arg1) throws SQLException {
 					TeamEntity teamEntity = new TeamEntity();
-					teamEntity.setTeamId(rs.getInt("team_id"));
+					teamEntity.setTeamId(rs.getString("team_id"));
 					teamEntity.setTeamName(rs.getString("team_name"));
-					teamEntity.setCreateUserId(rs.getInt("create_user_id"));
+					teamEntity.setCreateUserId(rs.getString("create_user_id"));
 					teamEntity.setCreateTime(rs.getTimestamp("create_time"));
-					teamEntity.setManagerId(rs.getInt("manager_id"));
+					teamEntity.setManagerId(rs.getString("manager_id"));
 					teamEntity.setStatus(rs.getInt("status"));
 					return teamEntity;
 				}
@@ -66,11 +66,11 @@ public class TeamDAO extends BaseDAO implements ITeamDAO {
 
 				public TeamEntity mapRow(ResultSet rs, int arg1) throws SQLException {
 					TeamEntity teamEntity = new TeamEntity();
-					teamEntity.setTeamId(rs.getInt("team_id"));
+					teamEntity.setTeamId(rs.getString("team_id"));
 					teamEntity.setTeamName(rs.getString("team_name"));
-					teamEntity.setCreateUserId(rs.getInt("create_user_id"));
+					teamEntity.setCreateUserId(rs.getString("create_user_id"));
 					teamEntity.setCreateTime(rs.getTimestamp("create_time"));
-					teamEntity.setManagerId(rs.getInt("manager_id"));
+					teamEntity.setManagerId(rs.getString("manager_id"));
 					teamEntity.setStatus(rs.getInt("status"));
 					return teamEntity;
 				}
@@ -86,11 +86,11 @@ public class TeamDAO extends BaseDAO implements ITeamDAO {
 		return super.queryForObject(sql, new Object[]{teamId }, new RowMapper<TeamEntity>() {
 			public TeamEntity mapRow(ResultSet rs, int value) throws SQLException {
 				TeamEntity teamEntity = new TeamEntity();
-				teamEntity.setTeamId(rs.getInt("team_id"));
+				teamEntity.setTeamId(rs.getString("team_id"));
 				teamEntity.setTeamName(rs.getString("team_name"));
-				teamEntity.setCreateUserId(rs.getInt("create_user_id"));
+				teamEntity.setCreateUserId(rs.getString("create_user_id"));
 				teamEntity.setCreateTime(rs.getTimestamp("create_time"));
-				teamEntity.setManagerId(rs.getInt("manager_id"));
+				teamEntity.setManagerId(rs.getString("manager_id"));
 				teamEntity.setStatus(rs.getInt("status"));
 				return teamEntity;
 			}
@@ -113,7 +113,7 @@ public class TeamDAO extends BaseDAO implements ITeamDAO {
 	
 	
 	public void updateTeam(TeamEntity teamEntity) throws DataBaseException {
-		if(teamEntity.getTeamId()==0)return;
+		if(StringUtils.isBlank(teamEntity.getTeamId()))return;
 		
 		StringBuffer updateSql = new StringBuffer("update w_team set ");
 		List<Object> args = new ArrayList<Object>();
@@ -121,9 +121,9 @@ public class TeamDAO extends BaseDAO implements ITeamDAO {
 			args.add(teamEntity.getTeamName());
 			updateSql.append("team_name=?").append(",");	
 		}
-		if(teamEntity.getManagerId() != 0){
+		if(StringUtils.isNotBlank(teamEntity.getManagerId())){
 			args.add(teamEntity.getManagerId());
-			updateSql.append("manager_id=?").append(",");	
+			updateSql.append("manager_id=?").append(",");
 		}
 		
 		args.add(teamEntity.getTeamId());

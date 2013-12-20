@@ -48,9 +48,9 @@ public class UserBaseService implements IUserBaseService {
 	}
 
 	public void destroyUser(UserBaseDto userBaseDto, Model model) throws DataBaseException{
-		String userIdStr = userBaseDto.getUserId();
-		if(StringUtils.isNotBlank(userIdStr)) {
-			userLoginDAO.updateUserStatus(Integer.parseInt(userIdStr), Constants.STATUS_DISABLE);
+		String userId = userBaseDto.getUserId();
+		if(StringUtils.isNotBlank(userId)) {
+			userLoginDAO.updateUserStatus(userId, Constants.STATUS_DISABLE);
 		}
 	}
 
