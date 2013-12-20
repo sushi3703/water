@@ -1,9 +1,9 @@
 package net.water.login.service;
-import org.springframework.ui.Model;
-
 import net.kuakao.core.exception.DataBaseException;
 import net.water.login.entity.UserLoginEntity;
 import net.water.user.entity.UserSnsEntity;
+
+import org.springframework.ui.Model;
 
 
 public interface IUserLoginService {
@@ -35,4 +35,5 @@ public interface IUserLoginService {
 	 * @throws DataBaseException
 	 */
 	public void operateBindQqLogin(UserSnsEntity userSnsEntity)throws DataBaseException;
+	
 }

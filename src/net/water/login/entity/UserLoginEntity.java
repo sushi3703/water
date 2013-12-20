@@ -18,12 +18,8 @@ public class UserLoginEntity implements Serializable {
 	/*状态*/
 	private int status;
 
-	/*用户类型,1注册用户,2管理用户*/
+	/*用户类型,1根用户,2普通用户*/
 	private int type;
-	
-	private String qqOpenId;
-	
-	private String qqAccessToken;
 	
 	/*所属团队ID*/
 	private String teamId;
@@ -34,22 +30,6 @@ public class UserLoginEntity implements Serializable {
 
 	public void setTeamId(String teamId) {
 		this.teamId = teamId;
-	}
-
-	public String getQqOpenId() {
-		return qqOpenId;
-	}
-
-	public void setQqOpenId(String qqOpenId) {
-		this.qqOpenId = qqOpenId;
-	}
-
-	public String getQqAccessToken() {
-		return qqAccessToken;
-	}
-
-	public void setQqAccessToken(String qqAccessToken) {
-		this.qqAccessToken = qqAccessToken;
 	}
 
 	public int getType() {

@@ -25,7 +25,7 @@
 	<!-- team end -->
 	
 	<!-- user begin -->
-	<bean id="userBaseService" class="net.water.user.service.impl.UserBaseService" />
+	<bean id="userService" class="net.water.user.service.impl.UserService" />
 	<!-- user end -->
 	
 </beans>

@@ -14,7 +14,7 @@ import net.kuakao.core.exception.DataBaseException;
 import net.sf.json.JSONObject;
 import net.water.user.dto.UserBaseDto;
 import net.water.user.entity.UserBaseEntity;
-import net.water.user.service.IUserBaseService;
+import net.water.user.service.IUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,12 +28,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserAdminController {
 	
 	@Autowired
-	private IUserBaseService userBaseService;
+	private IUserService userService;
 	
 	@RequestMapping("index")
 	public String index(HttpServletRequest request,@ModelAttribute("_page") UserBaseDto userBaseDto, Model model) throws Exception {
 		userBaseDto.setQueryStr(request.getQueryString() == null ? "" : request.getQueryString());
-		List<UserBaseEntity> userBaseEntitys = userBaseService.queryUserBaseByPage(userBaseDto ,model);
+		List<UserBaseEntity> userBaseEntitys = userService.queryUserBaseByPage(userBaseDto ,model);
 		model.addAttribute("userEntitys", userBaseEntitys);
 		return "admin/user/user_index";
 	}
@@ -41,7 +41,7 @@ public class UserAdminController {
 	@RequestMapping("edit")
 	public String edit(@ModelAttribute("userBaseDto") UserBaseDto userBaseDto, Model model,HttpServletRequest request) throws Exception {
 		userBaseDto.setFormTokenCode(request);
-		userBaseService.getUserBaseById(userBaseDto ,model);
+		userService.getUserBaseById(userBaseDto ,model);
 		return "admin/user/user_edit";
 	}
 	
@@ -50,7 +50,7 @@ public class UserAdminController {
 		if(FormTokenUtil.validFormToken(request, response, userBaseDto, true)) {
 			return "userBase/userBase_edit";
 		}
-		userBaseService.saveUserBase(userBaseDto ,model);
+		userService.saveUserBase(userBaseDto ,model);
 		return "redirect:/admin/userBase/index.action?" + userBaseDto.getQueryStr();
 	}
 	
@@ -70,7 +70,7 @@ public class UserAdminController {
 		}
 		Map<String,String> msgs = new HashMap<String,String>();
 		try {
-			userBaseService.destroyUser(userBaseDto ,model);
+			userService.destroyUser(userBaseDto ,model);
 			msgs.put("success","删除成功!");
 		} catch (DataBaseException e) {
 			e.printStackTrace();

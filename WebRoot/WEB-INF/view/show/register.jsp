@@ -9,7 +9,26 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/tool/jquery/jquery.min.js"></script>
 <script type="text/javascript">
-	
+	var doRegister = function(){
+		var v_email = $("#email").val();
+		//非空验证
+		//密码确认验证
+		//邮箱验证
+		$.get("${pageContext.request.contextPath}/user/validate_email.action",{"email":v_email},function(data){
+			if(data == "suc"){
+				$.post("${pageContext.request.contextPath}/user/do_register.action",$("#form_register").serialize(),function(data){
+					if(data == "suc"){
+						location.href = "${pageContext.request.contextPath}/front/login/index.action";
+					}else{
+						alert(data);
+					}
+				});
+			}else{
+				alert(data);
+			}
+		});
+		
+	};
 </script>
 </head>
 <body>
@@ -17,10 +36,12 @@
 <c:if test="${!empty errorMsg}">
 	<font color="red">${errorMsg}</font>
 </c:if>
-<form action="${pageContext.request.contextPath}/login/do_register.action" method="post">
-<p>邮箱：<input type="text" name="email" /><span>邮箱作为登录账号，也可用于找回密码等</span></p>
-<p>密码：<input type="password" name="upwd" /><span>请输入密码</span></p>
-<p><input type="submit" value="注册" /></p>
+<form id="form_register">
+<input type="hidden" name="type" value="${type}" />
+<input type="hidden" name="teamId" value="${teamId}" />
+<p>邮箱：<input type="text" name="email" id="email" /><span>邮箱作为登录账号</span></p>
+<p>密码：<input type="password" name="upwd" id="upwd" /><span>请输入密码</span></p>
+<p><input type="button" onclick="doRegister()" value="注册" /></p>
 </form>
 
 </body>

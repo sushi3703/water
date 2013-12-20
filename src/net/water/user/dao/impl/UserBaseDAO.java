@@ -114,7 +114,7 @@ public class UserBaseDAO extends BaseDAO implements IUserBaseDAO {
 
 	
 	public void createUserBase(UserBaseEntity userBaseEntity) throws DataBaseException {
-		String sql = "insert into w_user_base(user_id,create_time ,department ,job_title ,qq ,mobile ,note ) values(? ,? ,? ,? ,? ,? ,? ,? ,? ,? )";
+		String sql = "insert into w_user_base(user_id,create_time ,department ,job_title ,qq ,mobile ,note ) values(? ,? ,? ,? ,? ,? ,? )";
 		super.update(sql, new Object[]{userBaseEntity.getUserId() ,userBaseEntity.getCreateTime() ,userBaseEntity.getDepartment() ,userBaseEntity.getJobTitle() ,userBaseEntity.getQq() ,userBaseEntity.getMobile() ,userBaseEntity.getNote() });
 	}
 	

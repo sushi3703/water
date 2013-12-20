@@ -1,7 +1,6 @@
 package net.water.login.service.impl;
 
 import java.util.Date;
-import java.util.UUID;
 
 import net.kuakao.core.exception.DataBaseException;
 import net.water.Constants;
@@ -90,12 +89,5 @@ public class UserLoginService implements IUserLoginService {
 		userLoginDAO.updateUserPwd(userLoginEntity);
 	}
 	
-	public void createRegisterUser(UserLoginEntity userLoginEntity, Model model){
-		String userId = UUID.randomUUID().toString();
-		//登录信息
-		userLoginDAO.createUserLoginInfo(userLoginEntity);
-		//基本信息
-	}
-
 }
 

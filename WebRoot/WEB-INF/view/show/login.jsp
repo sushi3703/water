@@ -18,10 +18,13 @@
         </c:if>
         <input name="email" type="text" class="form-control" placeholder="邮箱" autofocus>
         <input name="upwd" type="password" class="form-control" placeholder="密码">
-        <label class="checkbox">
+        <label>
           <a href="javascript:alert('请联系管理员，重置密码');"> 忘记密码？</a>
         </label>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+        <label>
+          <a href="${pageContext.request.contextPath}/user/to_register.action?type=2">注册</a>
+        </label>
   <p><br/>
   	<a href="${pageContext.request.contextPath}/login/snsLogin.action?redirectTo=${redirectTo}">
   		<img src="${pageContext.request.contextPath}/img/login_qq.png" />
