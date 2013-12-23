@@ -15,12 +15,6 @@ public interface IUserLoginService {
 	public UserLoginEntity queryUserLogin(UserLoginEntity userLoginEntity, Model model);
 
 	/**
-	 * 修改用户登录密码
-	 * @param userLoginEntity
-	 */
-	public void updateUserPwd(UserLoginEntity userLoginEntity);
-	
-	/**
 	 * qq登录是否已绑定系统账号
 	 * <br/>如已绑定，检查更新accessToken/qqUsername
 	 * <br/>返回对应用户的登录信息

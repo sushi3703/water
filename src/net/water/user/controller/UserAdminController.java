@@ -12,10 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.kuakao.core.base.util.FormTokenUtil;
 import net.kuakao.core.exception.DataBaseException;
 import net.sf.json.JSONObject;
+import net.water.Constants;
+import net.water.login.entity.UserLoginEntity;
 import net.water.user.dto.UserBaseDto;
 import net.water.user.entity.UserBaseEntity;
 import net.water.user.service.IUserService;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -81,5 +84,45 @@ public class UserAdminController {
 		writer.flush();
 	}
 
+	/**
+	 * 管理员重置用户密码
+	 * @param userLoginEntity userId/email
+	 * @param request
+	 * @param response
+	 * @param model
+	 */
+	@RequestMapping("reset_pwd")
+	public void resetPwd(UserLoginEntity userLoginEntity,HttpServletRequest request,HttpServletResponse response, Model model){
+		PrintWriter writer = null;
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+		try {
+			writer = response.getWriter();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if(writer == null){
+			return;
+		}
+		if(StringUtils.isBlank(userLoginEntity.getUserId()) || StringUtils.isBlank(userLoginEntity.getEmail())){
+			writer.print("请选择要重置密码的用户");
+			writer.flush();
+			return;
+		}
+		//默认重置密码
+		String defaultResetPwd = "010";
+		userLoginEntity.setUpwd(defaultResetPwd);
+		String res = "aa";
+		try {
+			userService.updateUserPwd(userLoginEntity);
+			res = "密码重置成功，新密码为"+defaultResetPwd;
+		} catch (Exception e) {
+			e.printStackTrace();
+			res = "密码重置失败，请联系管理员";
+		}
+		writer.print(res);
+		writer.flush();
+	}
+	
 }
 

@@ -7,6 +7,13 @@
   	<meta charset="utf-8">
     <title>用户管理</title>
     <script type="text/javascript" src="${pageContext.request.contextPath}/common/include_css_and_js.action"></script>
+    <script type="text/javascript">
+    var resetPwd = function(userId,email){
+    	$.post("${pageContext.request.contextPath}/admin/user/reset_pwd.action",{"userId":userId,"email":email},function(data){
+    		alert(data);
+    	});
+    };
+    </script>
     </head>
    <body>
    <!--固定头部-->
@@ -54,7 +61,6 @@
        <th>Email</th>
        <th>QQ</th>
        <th>手机</th>
-       <th>固定电话</th>
        <th>操作</th>
        </tr>
        <tbody>
@@ -66,13 +72,12 @@
        <td>${userEntity.email}</td>
        <td>${userEntity.qq}</td>
        <td>${userEntity.mobile}</td>
-       <td>${userEntity.tel}</td>
        <td> <div class="btn-group">
                 <button data-toggle="dropdown" class="btn dropdown-toggle btn-primary">操作 <span class="caret"></span></button>
                 <ul class="dropdown-menu">
                   <li><a href="${pageContext.request.contextPath}/admin/user/edit.action?userId=${userEntity.userId}&queryStr=${_page.encodeQueryStr}">编辑</a></li>
                   <li><a href="">设置权限</a></li>
-                  <li><a href="">重置密码</a></li>
+                  <li><a href="javascript:resetPwd('${userEntity.userId}','${userEntity.email}');">重置密码</a></li>
                   <li><a href="javascript:void(0)" onClick="commonDel('${pageContext.request.contextPath}/admin/user/destroy.action',{'userId':'${userEntity.userId}'});">删除</a></li>
                 </ul>
               </div></td>

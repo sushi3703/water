@@ -27,6 +27,13 @@ public interface IUserService {
 	 */
 	public UserBaseEntity getUserBaseById(UserBaseDto userBaseDto, Model model) throws DataBaseException;
 	
+
+	/**
+	 * 修改用户登录密码
+	 * @param userLoginEntity
+	 * @throws DataBaseException
+	 */
+	public void updateUserPwd(UserLoginEntity userLoginEntity)throws DataBaseException;
 	
 	/**
 	 * 保存或更新用户基本信息

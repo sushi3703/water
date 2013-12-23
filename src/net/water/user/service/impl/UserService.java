@@ -75,11 +75,20 @@ public class UserService implements IUserService {
 		userBaseEntity.setUserId(userId);
 		userBaseEntity.setCreateTime(new Date());
 		userBaseDAO.createUserBase(userBaseEntity);
+		//
+		userLoginEntity.setUpwd(null);
 	}
 	
 	public boolean validateEmailExit(String email){
 		return userLoginDAO.queryUserLoginByEmail(email)!=null;
 	}
 
+	@Override
+	public void updateUserPwd(UserLoginEntity userLoginEntity)throws DataBaseException {
+		System.out.println("userId:"+userLoginEntity.getUserId()+",pwd:"+userLoginEntity.getUpwd()+",email:"+userLoginEntity.getEmail());
+		userLoginEntity.setUpwd(Md5.md5(userLoginEntity.getEmail()+userLoginEntity.getUpwd()));
+		userLoginDAO.updateUserPwd(userLoginEntity);
+	}
+	
 }
 

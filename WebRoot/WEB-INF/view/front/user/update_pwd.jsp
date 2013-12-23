@@ -12,7 +12,7 @@
 
 <div class="container">
 
-      <form class="form-signin" action="${pageContext.request.contextPath}/front/login/do_update_pwd.action" method="post">
+      <form class="form-signin" action="${pageContext.request.contextPath}/front/user/do_update_pwd.action" method="post">
         <h2 class="form-signin-heading">修改密码</h2>
         <c:if test="${!empty errorMsg}">
           <font color="red">${errorMsg}</font>

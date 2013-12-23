@@ -84,10 +84,5 @@ public class UserLoginService implements IUserLoginService {
 		}
 	}
 
-	@Override
-	public void updateUserPwd(UserLoginEntity userLoginEntity) {
-		userLoginDAO.updateUserPwd(userLoginEntity);
-	}
-	
 }
 

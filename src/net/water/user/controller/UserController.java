@@ -65,6 +65,8 @@ public class UserController {
 		String res = "suc";
 		try {
 			userService.createRegisterUser(userLoginEntity, model);
+			//登录
+			request.getSession().setAttribute(Constants.PARAM_USER_BASE_INFO, userLoginEntity);
 		} catch (DataBaseException e) {
 			e.printStackTrace();
 			res = "系统异常，请稍候再试";
@@ -118,5 +120,6 @@ public class UserController {
 			writer.flush();
 		}
 	}
+
 
 }
