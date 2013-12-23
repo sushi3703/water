@@ -37,7 +37,6 @@ public class UserFrontController {
 			e.printStackTrace();
 		}
 		String showMsg = request.getParameter(Constants.PARAM_ERROR_MSG);
-		System.out.println(showMsg);
 		if(StringUtils.isNotBlank(showMsg)){
 			model.addAttribute(Constants.PARAM_ERROR_MSG, showMsg);
 		}
