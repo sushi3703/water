@@ -20,7 +20,7 @@
         <c:if test="${!empty showMsg}">
           <font color="green">${showMsg}</font>
         </c:if>
-        <input type="text" readonly="readonly" class="form-control" placeholder="${userBaseInfo.uname}" >
+        <input type="text" readonly="readonly" class="form-control" placeholder="${userLoginBaseInfo.uname}" >
         <input name="oldPwd" type="password" class="form-control" placeholder="原密码">
         <input name="newPwd" type="password" class="form-control" placeholder="新密码">
         <button class="btn btn-lg btn-primary btn-block" type="submit">修改</button>

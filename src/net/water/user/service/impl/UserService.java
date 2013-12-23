@@ -32,9 +32,9 @@ public class UserService implements IUserService {
 
 	public UserBaseEntity getUserBaseById(UserBaseDto userBaseDto, Model model) throws DataBaseException {
 			UserBaseEntity userBaseEntity = null;
-			String userIdStr = userBaseDto.getUserId();
-			if(StringUtils.isNotBlank(userIdStr)) {
-				userBaseEntity = userBaseDAO.getUserBaseById(Integer.parseInt(userIdStr));
+			String userId = userBaseDto.getUserId();
+			if(StringUtils.isNotBlank(userId)) {
+				userBaseEntity = userBaseDAO.getUserBaseById(userId);
 				if(userBaseEntity != null) {
 					userBaseEntity.toUserBaseDto(userBaseDto);
 				}
@@ -42,13 +42,21 @@ public class UserService implements IUserService {
 			return userBaseEntity;
 	}
 
-	public void saveUserBase(UserBaseDto userBaseDto, Model model) throws DataBaseException {
-		UserBaseEntity userBaseEntity = userBaseDto.toUserBaseEntity();
-		if(StringUtils.isNotBlank(userBaseDto.getUserId())) {
-			userBaseDAO.updateUserBase(userBaseEntity);
-		} else {
-			userBaseDAO.createUserBase(userBaseEntity);
+	public void updateUserBase(UserBaseEntity userBaseEntity, Model model) throws DataBaseException {
+		String userId = userBaseEntity.getUserId();
+		if(StringUtils.isBlank(userId)) {
+			throw new DataBaseException("请重新登录后再试");
 		}
+		//修改用户名
+		UserLoginEntity loginInfo = userLoginDAO.queryUserLoginByUserId(userId);
+		if(loginInfo == null){
+			throw new DataBaseException("请重新登录后再试");
+		}
+		if(!loginInfo.getUname().equals(userBaseEntity.getUname())){
+			userLoginDAO.updateUserName(userId, userBaseEntity.getUname());
+		}
+		//修改基本信息
+		userBaseDAO.updateUserBase(userBaseEntity);
 	}
 
 	public void destroyUser(UserBaseDto userBaseDto, Model model) throws DataBaseException{
@@ -85,7 +93,6 @@ public class UserService implements IUserService {
 
 	@Override
 	public void updateUserPwd(UserLoginEntity userLoginEntity)throws DataBaseException {
-		System.out.println("userId:"+userLoginEntity.getUserId()+",pwd:"+userLoginEntity.getUpwd()+",email:"+userLoginEntity.getEmail());
 		userLoginEntity.setUpwd(Md5.md5(userLoginEntity.getEmail()+userLoginEntity.getUpwd()));
 		userLoginDAO.updateUserPwd(userLoginEntity);
 	}

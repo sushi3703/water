@@ -36,11 +36,12 @@ public interface IUserService {
 	public void updateUserPwd(UserLoginEntity userLoginEntity)throws DataBaseException;
 	
 	/**
-	 * 保存或更新用户基本信息
-	 * @param userBaseDto
-	 * @throws Exception
+	 * 更新用户基本信息
+	 * @param userBaseEntity
+	 * @param model
+	 * @throws DataBaseException
 	 */
-	public void saveUserBase(UserBaseDto userBaseDto, Model model) throws DataBaseException;
+	public void updateUserBase(UserBaseEntity userBaseEntity, Model model) throws DataBaseException;
 	
 	/**
 	 * 删除用户

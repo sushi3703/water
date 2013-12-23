@@ -23,7 +23,7 @@ public class Constants {
 
 	//===================参数名begin==========
     /**参数名，用户基本信息entity*/
-    public final static String PARAM_USER_BASE_INFO = "userBaseInfo";
+    public final static String PARAM_USER_BASE_INFO = "userLoginBaseInfo";
     /**参数名，当前登录用户的ID*/
     public final static String PARAM_USER_LOGIN_ID = "loginUserId";
     /**参数名，当前登录用户的用户名*/

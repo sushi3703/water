@@ -39,12 +39,28 @@ public interface IUserLoginDAO {
 	public void updateUserPwd(UserLoginEntity userLoginEntity) throws DataBaseException;
 	
 	/**
-	 * 删除用户
+	 * 修改用户状态
 	 * @param userId 用户ID
 	 * @param status 状态
 	 * @throws DataBaseException
 	 */
 	public void updateUserStatus(String userId,int status) throws DataBaseException;
+	
+	/**
+	 * 修改用户名
+	 * @param userId
+	 * @param uname
+	 * @throws DataBaseException
+	 */
+	public void updateUserName(String userId,String uname) throws DataBaseException;
+	
+	/**
+	 * 修改用户所在团队
+	 * @param userId
+	 * @param teamId
+	 * @throws DataBaseException
+	 */
+	public void updateUserTeam(String userId,String teamId) throws DataBaseException;
 	
 }
 

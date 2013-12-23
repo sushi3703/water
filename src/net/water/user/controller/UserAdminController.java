@@ -47,7 +47,7 @@ public class UserAdminController {
 		userService.getUserBaseById(userBaseDto ,model);
 		return "admin/user/user_edit";
 	}
-	
+	/*
 	@RequestMapping(value="save",method=RequestMethod.POST)
 	public String save(@ModelAttribute("userBaseDto") UserBaseDto userBaseDto, Model model,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		if(FormTokenUtil.validFormToken(request, response, userBaseDto, true)) {
@@ -56,7 +56,7 @@ public class UserAdminController {
 		userService.saveUserBase(userBaseDto ,model);
 		return "redirect:/admin/userBase/index.action?" + userBaseDto.getQueryStr();
 	}
-	
+	*/
 	
 	@RequestMapping("destroy")
 	public void destroy(UserBaseDto userBaseDto, Model model, HttpServletResponse response) {

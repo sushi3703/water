@@ -1,17 +1,15 @@
 package net.water.user.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import net.kuakao.core.exception.DataBaseException;
 import net.water.Constants;
 import net.water.login.entity.UserLoginEntity;
 import net.water.login.service.IUserLoginService;
+import net.water.user.dto.UserBaseDto;
+import net.water.user.entity.UserBaseEntity;
 import net.water.user.service.IUserService;
 
 import org.apache.commons.lang3.StringUtils;
@@ -31,18 +29,53 @@ public class UserFrontController {
 	@Autowired
 	private IUserLoginService userLoginService;
 
-	@RequestMapping(value="to_modify_base_info",method=RequestMethod.GET)
-	public String toModifyBaseInfo(HttpServletRequest request, Model model){
-		
-		return "front/user/modify_user_base_info";
+	@RequestMapping(value="to_update_user_base",method=RequestMethod.GET)
+	public String toUpdateUserBase(HttpServletRequest request, Model model){
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		String showMsg = request.getParameter(Constants.PARAM_ERROR_MSG);
+		System.out.println(showMsg);
+		if(StringUtils.isNotBlank(showMsg)){
+			model.addAttribute(Constants.PARAM_ERROR_MSG, showMsg);
+		}
+		UserBaseDto userBaseDto = new UserBaseDto();
+		userBaseDto.setUserId((String)request.getAttribute(Constants.PARAM_USER_LOGIN_ID));
+		UserBaseEntity userBaseInfo = userService.getUserBaseById(userBaseDto, model);
+		model.addAttribute("userBaseInfo", userBaseInfo);
+		return "front/user/update_user_base";
+	}
+	
+
+	@RequestMapping(value="do_update_user_base",method=RequestMethod.POST)
+	public String doUpdateUserBase(UserBaseEntity userBaseEntity,HttpServletRequest request, Model model){
+		if(StringUtils.isBlank(userBaseEntity.getUserId())){
+			model.addAttribute(Constants.PARAM_ERROR_MSG, "请重新登录后再试");
+			return "redirect:/front/user/to_update_user_base.action";
+		}
+		String res = "修改成功";
+		HttpSession session = request.getSession();
+		UserLoginEntity loginEntity = (UserLoginEntity)session.getAttribute(Constants.PARAM_USER_BASE_INFO);
+		try {
+			userService.updateUserBase(userBaseEntity, model);
+			loginEntity.setUname(userBaseEntity.getUname());
+			session.setAttribute(Constants.PARAM_USER_BASE_INFO, loginEntity);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res = "请重新登录后再试";
+		}
+		model.addAttribute(Constants.PARAM_ERROR_MSG, res);
+		return "redirect:/front/user/to_update_user_base.action";
 	}
 	
 
 	@RequestMapping("to_update_pwd")
 	public String toUpdatePwd(HttpServletRequest request, Model model){
-		String showMsg = request.getParameter(Constants.PARAM_SHOW_MSG);
+		String showMsg = request.getParameter(Constants.PARAM_ERROR_MSG);
 		if(StringUtils.isNotBlank(showMsg)){
-			model.addAttribute(Constants.PARAM_SHOW_MSG, showMsg);
+			model.addAttribute(Constants.PARAM_ERROR_MSG, showMsg);
 		}
 		return "front/user/update_pwd";
 	}

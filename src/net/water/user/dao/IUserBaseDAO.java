@@ -28,7 +28,7 @@ public interface IUserBaseDAO {
 	 * @return 用户基本信息
 	 * @throws DataBaseException
 	 */
-	public UserBaseEntity getUserBaseById(int userId) throws DataBaseException;
+	public UserBaseEntity getUserBaseById(String userId) throws DataBaseException;
 	
 	/**
 	 * 创建用户基本信息

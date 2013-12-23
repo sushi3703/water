@@ -92,7 +92,7 @@ public class UserBaseDAO extends BaseDAO implements IUserBaseDAO {
 	}
 	
 	
-	public UserBaseEntity getUserBaseById(int userId) throws DataBaseException {
+	public UserBaseEntity getUserBaseById(String userId) throws DataBaseException {
 		String sql = "select b.user_id,b.create_time,b.department,b.job_title,b.qq,b.mobile,b.note,l.uname,l.email,l.team_id from w_user_base b,w_user_login l where b.user_id=l.user_id and b.user_id = ?  limit 1";
 		return super.queryForObject(sql, new Object[]{userId}, new RowMapper<UserBaseEntity>() {
 			public UserBaseEntity mapRow(ResultSet rs, int value) throws SQLException {
@@ -129,19 +129,19 @@ public class UserBaseDAO extends BaseDAO implements IUserBaseDAO {
 		}
 		if(StringUtils.isNotBlank(userBaseEntity.getJobTitle())){
 			args.add(userBaseEntity.getJobTitle());
-			updateSql.append("job_title=?").append(",");	
+			updateSql.append("job_title=?").append(",");
 		}
 		if(StringUtils.isNotBlank(userBaseEntity.getQq())){
 			args.add(userBaseEntity.getQq());
-			updateSql.append("qq=?").append(",");	
+			updateSql.append("qq=?").append(",");
 		}
 		if(StringUtils.isNotBlank(userBaseEntity.getMobile())){
 			args.add(userBaseEntity.getMobile());
-			updateSql.append("mobile=?").append(",");	
+			updateSql.append("mobile=?").append(",");
 		}
 		if(StringUtils.isNotBlank(userBaseEntity.getNote())){
 			args.add(userBaseEntity.getNote());
-			updateSql.append("note=?").append(",");	
+			updateSql.append("note=?").append(",");
 		}
 		
 		args.add(userBaseEntity.getUserId());

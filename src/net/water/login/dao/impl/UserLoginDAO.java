@@ -69,5 +69,18 @@ public class UserLoginDAO extends BaseDAO implements IUserLoginDAO {
 		super.update(sql, new Object[]{status,userId});
 	}
 	
+
+	public void updateUserName(String userId,String uname) throws DataBaseException{
+		String sql = "update w_user_login set uname=? where user_id=?";
+		super.update(sql, new Object[]{uname,userId});
+	}
+	
+
+	public void updateUserTeam(String userId,String teamId) throws DataBaseException{
+		String sql = "update w_user_login set team_id=? where user_id=?";
+		super.update(sql, new Object[]{teamId,userId});
+	}
+	
+	
 }
 

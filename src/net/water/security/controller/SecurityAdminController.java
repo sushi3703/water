@@ -28,7 +28,6 @@ public class SecurityAdminController {
 		
 		StringBuffer leftInfo = new StringBuffer();
 		leftInfo.append("document.write(\"");
-		leftInfo.append("<div class='navi'><ul class='main-nav'>");
 		//========test begin
 		//ttt1
 		leftInfo.append("<li>");
@@ -62,7 +61,6 @@ public class SecurityAdminController {
 		leftInfo.append("</li>");
 		
 		//========test end		
-		leftInfo.append("</ul></div>");
 		leftInfo.append("\");");
 		
 		writer.println(leftInfo.toString());
