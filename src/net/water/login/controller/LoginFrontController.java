@@ -7,12 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.water.Constants;
-import net.water.login.service.IUserLoginService;
 import net.water.tool.file.ConfigUtil;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,17 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/front/login")
 public class LoginFrontController {
-
-	@Autowired
-	private IUserLoginService userLoginService;
 	
-
 	@RequestMapping("index")
 	public String index(HttpServletRequest request, Model model){
-		
 		return "front/index";
 	}
-	
 	
 	@RequestMapping("logout")
 	public String logout(HttpServletRequest request, Model model){

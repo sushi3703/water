@@ -28,7 +28,7 @@ public interface ITeamDAO {
 	 * @return 团队
 	 * @throws DataBaseException
 	 */
-	public TeamEntity getTeamById(int teamId) throws DataBaseException;
+	public TeamEntity getTeamById(String teamId) throws DataBaseException;
 	
 	/**
 	 * 创建团队

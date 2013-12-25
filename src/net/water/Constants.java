@@ -22,7 +22,7 @@ public class Constants {
     //================常量定义end==========
 
 	//===================参数名begin==========
-    /**参数名，用户基本信息entity*/
+    /**参数名，用户登录基本信息entity*/
     public final static String PARAM_USER_BASE_INFO = "userLoginBaseInfo";
     /**参数名，当前登录用户的ID*/
     public final static String PARAM_USER_LOGIN_ID = "loginUserId";
@@ -38,7 +38,7 @@ public class Constants {
     /**提示信息,操作成功*/
     public final static String INFO_SUC = "suc";
     /**提示信息,程序异常*/
-    public final static String INFO_EXCEPTION = "程序异常，请联系QQ305371288";
+    public final static String INFO_EXCEPTION = "系统异常，请联系QQ305371288";
     /**提示信息,登录超时*/
     public final static String INFO_USERNOLOGIN = "请重新登录";
     /**提示信息,无权限*/

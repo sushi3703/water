@@ -26,7 +26,7 @@ public class UserService implements IUserService {
 	@Autowired
 	private IUserLoginDAO userLoginDAO;
 
-	public List<UserBaseEntity> queryUserBaseByPage(UserBaseDto userBaseDto, Model model) throws DataBaseException {
+	public List<UserBaseEntity> queryUsers(UserBaseDto userBaseDto, Model model) throws DataBaseException {
 		return userBaseDAO.queryUserBases(userBaseDto);
 	}
 

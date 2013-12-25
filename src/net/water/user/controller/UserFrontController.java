@@ -72,9 +72,13 @@ public class UserFrontController {
 
 	@RequestMapping("to_update_pwd")
 	public String toUpdatePwd(HttpServletRequest request, Model model){
-		String showMsg = request.getParameter(Constants.PARAM_ERROR_MSG);
+		String errorMsg = request.getParameter(Constants.PARAM_ERROR_MSG);
+		if(StringUtils.isNotBlank(errorMsg)){
+			model.addAttribute(Constants.PARAM_ERROR_MSG, errorMsg);
+		}
+		String showMsg = request.getParameter(Constants.PARAM_SHOW_MSG);
 		if(StringUtils.isNotBlank(showMsg)){
-			model.addAttribute(Constants.PARAM_ERROR_MSG, showMsg);
+			model.addAttribute(Constants.PARAM_SHOW_MSG, showMsg);
 		}
 		return "front/user/update_pwd";
 	}

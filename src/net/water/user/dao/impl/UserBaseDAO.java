@@ -34,7 +34,7 @@ public class UserBaseDAO extends BaseDAO implements IUserBaseDAO {
 			where.append(" and l.uname like '%"+userBaseDto.getUname()+"%'");
 		}
 		if(StringUtils.isNotBlank(userBaseDto.getEmail())){
-			args.add(userBaseEntity.getEmail());
+			args.add(userBaseDto.getEmail());
 			where.append(" and l.email=?");
 		}
 		if(StringUtils.isNotBlank(userBaseDto.getDepartment())) {
@@ -49,9 +49,15 @@ public class UserBaseDAO extends BaseDAO implements IUserBaseDAO {
 			args.add(userBaseEntity.getMobile());
 			where.append(" and b.mobile=?");
 		}
+		if(StringUtils.isNotBlank(userBaseDto.getTeamId())){
+			args.add(userBaseDto.getTeamId());
+			where.append(" and l.team_id=?");
+		}
+		
+		String sqlSel = sql + where.toString() + " order by b.create_time";
 		
 		if(userBaseDto.getPerPage() == -1){
-			return super.query(sql + where.toString(), args.toArray(), new RowMapper<UserBaseEntity>() {
+			return super.query(sqlSel, args.toArray(), new RowMapper<UserBaseEntity>() {
 
 				public UserBaseEntity mapRow(ResultSet rs, int arg1) throws SQLException {
 					UserBaseEntity userBaseEntity = new UserBaseEntity();
@@ -70,7 +76,7 @@ public class UserBaseDAO extends BaseDAO implements IUserBaseDAO {
 				
 			});
 		}else{
-			return super.queryByPage(sql + where.toString().replaceFirst("and","where"), args.toArray(), new RowMapper<UserBaseEntity>() {
+			return super.queryByPage(sqlSel, args.toArray(), new RowMapper<UserBaseEntity>() {
 
 				public UserBaseEntity mapRow(ResultSet rs, int arg1) throws SQLException {
 					UserBaseEntity userBaseEntity = new UserBaseEntity();

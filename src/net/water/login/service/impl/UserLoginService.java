@@ -22,6 +22,10 @@ public class UserLoginService implements IUserLoginService {
 	
 	@Autowired
 	private IUserSnsDAO userSnsDAO;
+	
+	public UserLoginEntity getUserLoginByUserId(String userId){
+		return userLoginDAO.queryUserLoginByUserId(userId);
+	}
 
 	@Override
 	public UserLoginEntity queryUserLogin(UserLoginEntity userLoginEntity, Model model) {

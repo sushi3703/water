@@ -17,7 +17,7 @@ public interface IUserService {
 	 * @return 用户基本信息列表
 	 * @throws Exception
 	 */
-	public List<UserBaseEntity> queryUserBaseByPage(UserBaseDto userBaseDto, Model model) throws DataBaseException;
+	public List<UserBaseEntity> queryUsers(UserBaseDto userBaseDto, Model model) throws DataBaseException;
 	
 	/**
 	 * 查询单个用户基本信息对象

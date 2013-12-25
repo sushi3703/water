@@ -81,7 +81,7 @@ public class TeamDAO extends BaseDAO implements ITeamDAO {
 
 	
 	
-	public TeamEntity getTeamById(int teamId) throws DataBaseException {
+	public TeamEntity getTeamById(String teamId) throws DataBaseException {
 		String sql = "select team_id,team_name,create_user_id,create_time,manager_id,status from w_team where team_id = ?  limit 1";
 		return super.queryForObject(sql, new Object[]{teamId }, new RowMapper<TeamEntity>() {
 			public TeamEntity mapRow(ResultSet rs, int value) throws SQLException {
@@ -106,8 +106,8 @@ public class TeamDAO extends BaseDAO implements ITeamDAO {
 	
 	
 	public void createTeam(TeamEntity teamEntity) throws DataBaseException {
-		String sql = "insert into w_team(team_name ,create_user_id ,create_time ,manager_id,status ) values(? ,? ,? ,?,? )";
-		super.update(sql, new Object[]{teamEntity.getTeamName() ,teamEntity.getCreateUserId() ,teamEntity.getCreateTime() ,teamEntity.getManagerId(),teamEntity.getStatus() });
+		String sql = "insert into w_team(team_id,team_name ,create_user_id ,create_time ,manager_id ) values(? ,? ,? ,? ,?)";
+		super.update(sql, new Object[]{teamEntity.getTeamId(),teamEntity.getTeamName() ,teamEntity.getCreateUserId() ,teamEntity.getCreateTime() ,teamEntity.getManagerId() });
 	}
 	
 	
@@ -119,11 +119,7 @@ public class TeamDAO extends BaseDAO implements ITeamDAO {
 		List<Object> args = new ArrayList<Object>();
 		if(StringUtils.isNotBlank(teamEntity.getTeamName())){
 			args.add(teamEntity.getTeamName());
-			updateSql.append("team_name=?").append(",");	
-		}
-		if(StringUtils.isNotBlank(teamEntity.getManagerId())){
-			args.add(teamEntity.getManagerId());
-			updateSql.append("manager_id=?").append(",");
+			updateSql.append("team_name=?").append(",");
 		}
 		
 		args.add(teamEntity.getTeamId());

@@ -8,6 +8,12 @@ import org.springframework.ui.Model;
 
 public interface IUserLoginService {
 	/**
+	 * 根据用户ID取得其登录基本信息
+	 * @param userId
+	 * @return
+	 */
+	public UserLoginEntity getUserLoginByUserId(String userId);
+	/**
 	 * 用户登录并取得用户登录信息
 	 * @param userLoginEntity email和upwd信息
 	 * @return 用户登录基本信息

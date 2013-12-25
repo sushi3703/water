@@ -18,7 +18,7 @@
   <div class="container-fluid">
     <div class="row-fluid">
     <!--左侧导航开始-->
-	<script type="text/javascript" src="${pageContext.request.contextPath}/admin/security/security_left.action"></script>    
+	<jsp:include page="/WEB-INF/view/common_left.jsp"></jsp:include>    
     <!--左侧导航结束-->
     <div class="content">
     <div class="row-fluid no-margin">

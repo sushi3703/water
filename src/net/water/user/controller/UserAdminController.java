@@ -36,7 +36,7 @@ public class UserAdminController {
 	@RequestMapping("index")
 	public String index(HttpServletRequest request,@ModelAttribute("_page") UserBaseDto userBaseDto, Model model) throws Exception {
 		userBaseDto.setQueryStr(request.getQueryString() == null ? "" : request.getQueryString());
-		List<UserBaseEntity> userBaseEntitys = userService.queryUserBaseByPage(userBaseDto ,model);
+		List<UserBaseEntity> userBaseEntitys = userService.queryUsers(userBaseDto ,model);
 		model.addAttribute("userEntitys", userBaseEntitys);
 		return "admin/user/user_index";
 	}
