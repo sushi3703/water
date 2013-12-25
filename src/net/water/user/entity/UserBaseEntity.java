@@ -39,6 +39,17 @@ public class UserBaseEntity implements Serializable {
 	
 	/*查询条件并显示信息，所属团队*/
 	private String teamId;
+	
+	/*显示信息，用户类型*/
+	private int type;
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
 
 	public String getTeamId() {
 		return teamId;

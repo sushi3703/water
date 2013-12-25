@@ -63,12 +63,38 @@
     <div class="box">
     <div class="box-head">
 	<h3>团队成员</h3>
+	&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="邀请成员" class="btn btn-danger" />
 	</div>
 	<div class="box-content">
-	
-	assssssss
-	<br/>
-	vvvvvvvv
+	<div id="div_msg_invite_register" class="alert alert-info alert-block">
+		<a class="close" href="#" data-dismiss="alert">×</a>
+		<h4 class="alert-heading">复制以下链接给好友，即可邀请加入</h4>
+		${pageContext.request.contextPath}/user/to_register.action?inviteId=${teamEntity.teamId}
+	</div>
+	<table class="table table-bordered table-striped">
+       <tr>
+       <th>用户类型</th>
+       <th>用户名</th>
+       <th>职务</th>
+       <th>部门</th>
+       <th>Email</th>
+       <th>QQ</th>
+       <th>手机</th>
+       </tr>
+       <tbody>
+       <c:forEach var="userEntity" items="${users}">
+       <tr>
+       <td>${userEntity.type==1?"管理员":"成员"}</td>
+       <td>${userEntity.uname}</td>
+       <td>${userEntity.jobTitle}</td>
+       <td>${userEntity.department}</td>
+       <td>${userEntity.email}</td>
+       <td>${userEntity.qq}</td>
+       <td>${userEntity.mobile}</td>
+       </tr>
+       </c:forEach>
+       </tbody>
+    </table>
 	</div>
     </div>
     

@@ -71,6 +71,7 @@ public class UserBaseDAO extends BaseDAO implements IUserBaseDAO {
 					userBaseEntity.setUname(rs.getString("uname"));
 					userBaseEntity.setEmail(rs.getString("email"));
 					userBaseEntity.setTeamId(rs.getString("team_id"));
+					userBaseEntity.setType(rs.getInt("type"));
 					return userBaseEntity;
 				}
 				
@@ -90,6 +91,7 @@ public class UserBaseDAO extends BaseDAO implements IUserBaseDAO {
 					userBaseEntity.setUname(rs.getString("uname"));
 					userBaseEntity.setEmail(rs.getString("email"));
 					userBaseEntity.setTeamId(rs.getString("team_id"));
+					userBaseEntity.setType(rs.getInt("type"));
 					return userBaseEntity;
 				}
 				
@@ -99,7 +101,7 @@ public class UserBaseDAO extends BaseDAO implements IUserBaseDAO {
 	
 	
 	public UserBaseEntity getUserBaseById(String userId) throws DataBaseException {
-		String sql = "select b.user_id,b.create_time,b.department,b.job_title,b.qq,b.mobile,b.note,l.uname,l.email,l.team_id from w_user_base b,w_user_login l where b.user_id=l.user_id and b.user_id = ?  limit 1";
+		String sql = "select b.user_id,b.create_time,b.department,b.job_title,b.qq,b.mobile,b.note,l.uname,l.email,l.team_id,l.type from w_user_base b,w_user_login l where b.user_id=l.user_id and b.user_id = ?  limit 1";
 		return super.queryForObject(sql, new Object[]{userId}, new RowMapper<UserBaseEntity>() {
 			public UserBaseEntity mapRow(ResultSet rs, int value) throws SQLException {
 				UserBaseEntity userBaseEntity = new UserBaseEntity();
@@ -113,6 +115,7 @@ public class UserBaseDAO extends BaseDAO implements IUserBaseDAO {
 				userBaseEntity.setUname(rs.getString("uname"));
 				userBaseEntity.setEmail(rs.getString("email"));
 				userBaseEntity.setTeamId(rs.getString("team_id"));
+				userBaseEntity.setType(rs.getInt("type"));
 				return userBaseEntity;
 			}
 		});

@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.kuakao.core.exception.DataBaseException;
 import net.water.Constants;
 import net.water.login.entity.UserLoginEntity;
+import net.water.team.dto.TeamDto;
+import net.water.team.entity.TeamEntity;
+import net.water.team.service.ITeamService;
 import net.water.user.service.IUserService;
 
 import org.apache.commons.lang3.StringUtils;
@@ -26,14 +29,34 @@ public class UserController {
 
 	@Autowired
 	private IUserService userService;
+	
+	@Autowired
+	private ITeamService teamService;
 
 	@RequestMapping(value="to_register",method=RequestMethod.GET)
 	public String toRegister(HttpServletRequest request, Model model){
 		if(request.getSession().getAttribute(Constants.PARAM_USER_BASE_INFO) != null){//已登录，返回首页
 			return "redirect:"+Constants.SYS_INDEX;
 		}
-		model.addAttribute("type", request.getParameter("type"));
-		model.addAttribute("teamId", request.getParameter("teamId"));
+		//验证邀请码
+		String teamId = request.getParameter("inviteId");
+		int type = 1;
+		if(StringUtils.isNotBlank(teamId)){
+			TeamDto teamDto = new TeamDto();
+			teamDto.setTeamId(teamId);
+			TeamEntity teamEntity = null;
+			try {
+				teamEntity = teamService.getTeamById(teamDto, model);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			if(teamEntity == null){
+				model.addAttribute(Constants.PARAM_ERROR_MSG, "您的邀请码有误，请联系邀请者重新获取邀请链接");
+			}
+			type = 2;
+		}
+		model.addAttribute("type", type);
+		model.addAttribute("teamId", teamId);
 		return "show/register";
 	}
 	

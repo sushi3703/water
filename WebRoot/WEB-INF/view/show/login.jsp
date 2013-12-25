@@ -23,7 +23,7 @@
         </label>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
         <label>
-          <a href="${pageContext.request.contextPath}/user/to_register.action?type=1">注册</a>
+          <a href="${pageContext.request.contextPath}/user/to_register.action">注册</a>
         </label>
   <p><br/>
   	<a href="${pageContext.request.contextPath}/login/snsLogin.action?redirectTo=${redirectTo}">
