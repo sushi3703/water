@@ -39,11 +39,11 @@ public class UserController {
 			return "redirect:"+Constants.SYS_INDEX;
 		}
 		//验证邀请码
-		String teamId = request.getParameter("inviteId");
+		String inviteId = request.getParameter("inviteId");
 		int type = 1;
-		if(StringUtils.isNotBlank(teamId)){
+		if(StringUtils.isNotBlank(inviteId)){
 			TeamDto teamDto = new TeamDto();
-			teamDto.setTeamId(teamId);
+			teamDto.setTeamId(inviteId);
 			TeamEntity teamEntity = null;
 			try {
 				teamEntity = teamService.getTeamById(teamDto, model);
@@ -52,11 +52,13 @@ public class UserController {
 			}
 			if(teamEntity == null){
 				model.addAttribute(Constants.PARAM_ERROR_MSG, "您的邀请码有误，请联系邀请者重新获取邀请链接");
+				return "show/su_error";
 			}
 			type = 2;
+			model.addAttribute("teamName", teamEntity.getTeamName());
 		}
 		model.addAttribute("type", type);
-		model.addAttribute("teamId", teamId);
+		model.addAttribute("teamId", inviteId);
 		return "show/register";
 	}
 	

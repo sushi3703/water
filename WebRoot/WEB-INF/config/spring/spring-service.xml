@@ -17,7 +17,6 @@
 	<!-- security begin -->
 	<bean id="secUrlService" class="net.water.security.service.impl.SecUrlService" />
 	<bean id="secResourceService" class="net.water.security.service.impl.SecResourceService" />
-	<bean id="secResGroupService" class="net.water.security.service.impl.SecResGroupService" />
 	<!-- security end -->
 	
 	<!-- team begin -->

@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="kuakao" uri="http://www.kuakao.net/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="net.water.tool.file.ConfigUtil" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -15,7 +16,10 @@
     			return;
     		}
     		$("#form_team_base_info").submit();
-    }
+    };
+    var showInvite = function(){
+    	$("#div_msg_invite_register").removeClass("hidden");
+    };
     </script>
   </head>
   <body>
@@ -63,13 +67,15 @@
     <div class="box">
     <div class="box-head">
 	<h3>团队成员</h3>
-	&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="邀请成员" class="btn btn-danger" />
+	<c:if test="${!empty userLoginBaseInfo && userLoginBaseInfo.type == 1}">
+	&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="邀请成员" id="btn_show_invite" onclick="showInvite()" class="btn btn-danger" />
+	</c:if>
 	</div>
 	<div class="box-content">
-	<div id="div_msg_invite_register" class="alert alert-info alert-block">
+	<div id="div_msg_invite_register" class="hidden alert alert-info alert-block">
 		<a class="close" href="#" data-dismiss="alert">×</a>
-		<h4 class="alert-heading">复制以下链接给好友，即可邀请加入</h4>
-		${pageContext.request.contextPath}/user/to_register.action?inviteId=${teamEntity.teamId}
+		<h4 class="alert-heading">复制以下链接给好友，即可邀请其加入</h4>
+		<%=ConfigUtil.getValue("project_domain") %>/user/to_register.action?inviteId=${teamEntity.teamId}
 	</div>
 	<table class="table table-bordered table-striped">
        <tr>

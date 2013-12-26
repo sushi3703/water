@@ -15,9 +15,6 @@ public class TeamEntity implements Serializable {
 	/* 团队名称 */
 	private String  teamName;
 			
-	/* 创建者ID */
-	private String  createUserId;
-			
 	/* 创建时间 */
 	private Date  createTime;
 			
@@ -49,13 +46,6 @@ public class TeamEntity implements Serializable {
 	public void setTeamName(String teamName) {
 		this.teamName = teamName;
 	}	
-	public String getCreateUserId() {
-		return createUserId;
-	}
-	
-	public void setCreateUserId(String createUserId) {
-		this.createUserId = createUserId;
-	}	
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -75,8 +65,6 @@ public class TeamEntity implements Serializable {
 		teamDto.setTeamId(this.teamId);
 		
 		teamDto.setTeamName(this.teamName);
-		
-		teamDto.setCreateUserId(this.createUserId);
 		
 		teamDto.setCreateTime(SuDateUtils.getFormatString(this.createTime,"yyyy-MM-dd HH:mm:ss"));
 		

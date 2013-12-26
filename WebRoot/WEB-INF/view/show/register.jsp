@@ -36,6 +36,9 @@
 <c:if test="${!empty errorMsg}">
 	<font color="red">${errorMsg}</font>
 </c:if>
+<c:if test="${!empty teamName}">
+	<font color="green">欢迎加入&nbsp;${teamName}</font>
+</c:if>
 <form id="form_register">
 <input type="hidden" name="type" value="${type}" />
 <input type="hidden" name="teamId" value="${teamId}" />

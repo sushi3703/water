@@ -20,7 +20,7 @@ import org.springframework.stereotype.Repository;
 public class TeamDAO extends BaseDAO implements ITeamDAO {
 	
 	public List<TeamEntity> queryTeams(TeamDto teamDto) throws DataBaseException {
-		String sql = "select team_id,team_name,create_user_id,create_time,manager_id,status from w_team";
+		String sql = "select team_id,team_name,create_time,manager_id,status from w_team";
 		StringBuffer where = new StringBuffer();
 		List<Object> args = new ArrayList<Object>();
 		TeamEntity teamEntity = teamDto.toTeamEntity();
@@ -31,10 +31,6 @@ public class TeamDAO extends BaseDAO implements ITeamDAO {
 		}
 		if(StringUtils.isNotBlank(teamDto.getTeamName())) {
 			where.append(" and team_name like '%"+teamEntity.getTeamName()+"%'");
-		}
-		if(StringUtils.isNotBlank(teamDto.getCreateUserId())) {
-			args.add(teamEntity.getCreateUserId());
-			where.append(" and create_user_id=?");
 		}
 		if(StringUtils.isNotBlank(teamDto.getManagerId())) {
 			args.add(teamEntity.getManagerId());
@@ -53,7 +49,6 @@ public class TeamDAO extends BaseDAO implements ITeamDAO {
 					TeamEntity teamEntity = new TeamEntity();
 					teamEntity.setTeamId(rs.getString("team_id"));
 					teamEntity.setTeamName(rs.getString("team_name"));
-					teamEntity.setCreateUserId(rs.getString("create_user_id"));
 					teamEntity.setCreateTime(rs.getTimestamp("create_time"));
 					teamEntity.setManagerId(rs.getString("manager_id"));
 					teamEntity.setStatus(rs.getInt("status"));
@@ -68,7 +63,6 @@ public class TeamDAO extends BaseDAO implements ITeamDAO {
 					TeamEntity teamEntity = new TeamEntity();
 					teamEntity.setTeamId(rs.getString("team_id"));
 					teamEntity.setTeamName(rs.getString("team_name"));
-					teamEntity.setCreateUserId(rs.getString("create_user_id"));
 					teamEntity.setCreateTime(rs.getTimestamp("create_time"));
 					teamEntity.setManagerId(rs.getString("manager_id"));
 					teamEntity.setStatus(rs.getInt("status"));
@@ -82,13 +76,12 @@ public class TeamDAO extends BaseDAO implements ITeamDAO {
 	
 	
 	public TeamEntity getTeamById(String teamId) throws DataBaseException {
-		String sql = "select team_id,team_name,create_user_id,create_time,manager_id,status from w_team where team_id = ?  limit 1";
+		String sql = "select team_id,team_name,create_time,manager_id,status from w_team where team_id = ?  limit 1";
 		return super.queryForObject(sql, new Object[]{teamId }, new RowMapper<TeamEntity>() {
 			public TeamEntity mapRow(ResultSet rs, int value) throws SQLException {
 				TeamEntity teamEntity = new TeamEntity();
 				teamEntity.setTeamId(rs.getString("team_id"));
 				teamEntity.setTeamName(rs.getString("team_name"));
-				teamEntity.setCreateUserId(rs.getString("create_user_id"));
 				teamEntity.setCreateTime(rs.getTimestamp("create_time"));
 				teamEntity.setManagerId(rs.getString("manager_id"));
 				teamEntity.setStatus(rs.getInt("status"));
@@ -106,8 +99,8 @@ public class TeamDAO extends BaseDAO implements ITeamDAO {
 	
 	
 	public void createTeam(TeamEntity teamEntity) throws DataBaseException {
-		String sql = "insert into w_team(team_id,team_name ,create_user_id ,create_time ,manager_id ) values(? ,? ,? ,? ,?)";
-		super.update(sql, new Object[]{teamEntity.getTeamId(),teamEntity.getTeamName() ,teamEntity.getCreateUserId() ,teamEntity.getCreateTime() ,teamEntity.getManagerId() });
+		String sql = "insert into w_team(team_id,team_name ,create_time ,manager_id ) values(? ,? ,? ,?)";
+		super.update(sql, new Object[]{teamEntity.getTeamId(),teamEntity.getTeamName() ,teamEntity.getCreateTime() ,teamEntity.getManagerId() });
 	}
 	
 	

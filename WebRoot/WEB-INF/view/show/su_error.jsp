@@ -6,8 +6,7 @@
 <title>后台管理系统</title>
 <body>
 <p>系统错误，信息如下：</p>
-<p>${errorCode}</p>
-<p>请联系管理员</p>
+<p>${errorMsg}</p>
 <p><input type="button" onclick="history.back(-1);" value="返 回" /></p>
 </body>
 </html>

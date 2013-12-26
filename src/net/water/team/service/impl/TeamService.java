@@ -46,7 +46,6 @@ public class TeamService implements ITeamService {
 			//创建团队
 			String teamId = UUID.randomUUID().toString();
 			teamEntity.setTeamId(teamId);
-			teamEntity.setCreateUserId(teamEntity.getManagerId());
 			teamEntity.setCreateTime(new Date());
 			teamDAO.createTeam(teamEntity);
 			teamDto.setTeamId(teamId);
