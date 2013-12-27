@@ -9,7 +9,7 @@ public class SecResourceEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/* ID */
-	private int  resId;
+	private String  resId;
 			
 	/* 资源名称 */
 	private String  resName;
@@ -25,15 +25,26 @@ public class SecResourceEntity implements Serializable {
 			
 	/* 状态，1有效0删除 */
 	private int  status;
+	
+	/*依赖的基础资源*/
+	private String baseRes;
 			
 	/* 资源所包含的url，用于显示 */
 	private List<SecUrlEntity> urls;
 	
-	public int getResId() {
+	public String getBaseRes() {
+		return baseRes;
+	}
+
+	public void setBaseRes(String baseRes) {
+		this.baseRes = baseRes;
+	}
+
+	public String getResId() {
 		return resId;
 	}
 	
-	public void setResId(int resId) {
+	public void setResId(String resId) {
 		this.resId = resId;
 	}	
 	public String getResName() {
@@ -80,18 +91,20 @@ public class SecResourceEntity implements Serializable {
 		this.urls = urls;
 	}
 
-	public void toSecResourceDto(SecResourceDto SecResourceDto) throws Exception {
-		SecResourceDto.setResId(String.valueOf(this.resId));
+	public void toSecResourceDto(SecResourceDto secResourceDto) throws Exception {
+		secResourceDto.setResId(this.resId);
 		
-		SecResourceDto.setResName(this.resName);
+		secResourceDto.setResName(this.resName);
 		
-		SecResourceDto.setAppType(String.valueOf(this.appType));
+		secResourceDto.setAppType(String.valueOf(this.appType));
 		
-		SecResourceDto.setAppMenu(String.valueOf(this.appMenu));
+		secResourceDto.setAppMenu(String.valueOf(this.appMenu));
 		
-		SecResourceDto.setUrlIds(this.urlIds);
+		secResourceDto.setUrlIds(this.urlIds);
 		
-		SecResourceDto.setStatus(String.valueOf(this.status));
+		secResourceDto.setStatus(String.valueOf(this.status));
+		
+		secResourceDto.setBaseRes(this.baseRes);
 		
 	}
 

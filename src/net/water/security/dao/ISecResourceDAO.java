@@ -4,6 +4,7 @@ import java.util.List;
 import net.kuakao.core.exception.DataBaseException;
 import net.water.security.dto.SecResourceDto;
 import net.water.security.entity.SecResourceEntity;
+import net.water.security.entity.SecUserResourceEntity;
 
 /**
  * 权限资源
@@ -28,7 +29,7 @@ public interface ISecResourceDAO {
 	 * @return 权限资源
 	 * @throws DataBaseException
 	 */
-	public SecResourceEntity getSecResourceById(int resId) throws DataBaseException;
+	public SecResourceEntity getSecResourceById(String resId) throws DataBaseException;
 	
 	/**
 	 * 创建权限资源
@@ -47,9 +48,31 @@ public interface ISecResourceDAO {
 	/**
 	 * 删除权限资源
 	 * @param resId 权限资源ID
+	 * @param status 状态
 	 * @throws DataBaseException
 	 */
-	public void destroySecResource(int resId) throws DataBaseException;
+	public void updateResourceStatus(String resId,int status) throws DataBaseException;
+	
+	/**
+	 * 查询用户的所有资源关系
+	 * @param userId
+	 * @return
+	 * @throws DataBaseException
+	 */
+	public List<SecUserResourceEntity> getUserResByUserId(String userId) throws DataBaseException;
+	
+	/**
+	 * 添加用户资源关系
+	 * @param userResEntity
+	 * @throws DataBaseException
+	 */
+	public void createUserRes(SecUserResourceEntity userResEntity) throws DataBaseException;
 
+	/**
+	 * 删除用户的所有资源关系
+	 * @param userId
+	 * @throws DataBaseException
+	 */
+	public void destroyUserResByUserId(String userId) throws DataBaseException;
 }
 

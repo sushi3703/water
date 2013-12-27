@@ -30,7 +30,6 @@ public class SecurityFrontController {
 		leftInfo.append("<ul class='collapsed-nav closed' style='display: none'>");
 		leftInfo.append("<li><a style='margin-left: 0px;' href='/admin/secUrl/index.action'>url管理</a></li>");
 		leftInfo.append("<li><a style='margin-left: 0px;' href='/admin/secResource/index.action'>资源管理</a></li>");
-		leftInfo.append("<li><a style='margin-left: 0px;' href='/admin/secResGroup/index.action'>资源组管理</a></li>");
 		leftInfo.append("</ul>");
 		leftInfo.append("</li>");
 		//

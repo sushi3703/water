@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.kuakao.core.xmlconfig.util.XmlConfigUtil;
+import net.water.Constants;
 import net.water.security.dao.ISecResourceDAO;
 import net.water.security.dao.ISecUrlDAO;
 import net.water.security.dto.SecResourceDto;
@@ -48,7 +49,7 @@ public class SecResourceService implements ISecResourceService {
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
 		Map<Integer,Integer> resUrlMap = new HashMap<Integer, Integer>();
 		if(StringUtils.isNotBlank(resId)){
-			SecResourceEntity secResourceEntity = secResourceDAO.getSecResourceById(Integer.parseInt(resId));
+			SecResourceEntity secResourceEntity = secResourceDAO.getSecResourceById(resId);
 			if(secResourceEntity != null){
 				String urlIds = secResourceEntity.getUrlIds();
 				if(StringUtils.isNotBlank(urlIds)){
@@ -100,7 +101,7 @@ public class SecResourceService implements ISecResourceService {
 			SecResourceEntity secResourceEntity = null;
 			String resId = secResourceDto.getResId();
 			if(StringUtils.isNotBlank(resId)) {
-				secResourceEntity = secResourceDAO.getSecResourceById(Integer.parseInt(resId));
+				secResourceEntity = secResourceDAO.getSecResourceById(resId);
 				if(secResourceEntity != null) {
 					secResourceEntity.toSecResourceDto(secResourceDto);
 				}
@@ -120,7 +121,7 @@ public class SecResourceService implements ISecResourceService {
 	public void destroySecResource(SecResourceDto secResourceDto, Model model, Map<String,String> msgs) throws Exception {
 		String resId = secResourceDto.getResId();
 		if(StringUtils.isNotBlank(resId)) {
-			secResourceDAO.destroySecResource(Integer.parseInt(resId));
+			secResourceDAO.updateResourceStatus(resId,Constants.STATUS_DISABLE);
 			msgs.put("success","删除成功!");
 		}else{
 			msgs.put("error","请选择要删除的Id");

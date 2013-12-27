@@ -28,9 +28,20 @@ public class SecResourceDto extends PagerDTO {
 			
 	/* 状态，1有效0删除 */
 	private String  status;
+
+	/*依赖的基础资源*/
+	private String baseRes;
 			
 	/*是否需要查询url信息*/
 	private boolean needUrlInfos=false;
+
+	public String getBaseRes() {
+		return baseRes;
+	}
+
+	public void setBaseRes(String baseRes) {
+		this.baseRes = baseRes;
+	}
 
 	public String  getResId() {
 		return resId;
@@ -90,20 +101,22 @@ public class SecResourceDto extends PagerDTO {
 	}
 
 	public SecResourceEntity toSecResourceEntity() {
-		SecResourceEntity SecResourceEntity = new SecResourceEntity();
-		SecResourceEntity.setResId(SystemUtils.strToInt(this.resId));
+		SecResourceEntity secResourceEntity = new SecResourceEntity();
+		secResourceEntity.setResId(this.resId);
 		
-		SecResourceEntity.setResName(this.getResName());
+		secResourceEntity.setResName(this.getResName());
 		
-		SecResourceEntity.setAppType(SystemUtils.strToInt(this.appType));
+		secResourceEntity.setAppType(SystemUtils.strToInt(this.appType));
 		
-		SecResourceEntity.setAppMenu(SystemUtils.strToInt(this.appMenu));
+		secResourceEntity.setAppMenu(SystemUtils.strToInt(this.appMenu));
 		
-		SecResourceEntity.setUrlIds(this.getUrlIds());
+		secResourceEntity.setUrlIds(this.getUrlIds());
 		
-		SecResourceEntity.setStatus(SystemUtils.strToInt(this.status));
+		secResourceEntity.setStatus(SystemUtils.strToInt(this.status));
 		
-		return SecResourceEntity;
+		secResourceEntity.setBaseRes(this.baseRes);
+		
+		return secResourceEntity;
 	}
 }
 
