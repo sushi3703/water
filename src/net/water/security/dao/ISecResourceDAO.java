@@ -54,12 +54,12 @@ public interface ISecResourceDAO {
 	public void updateResourceStatus(String resId,int status) throws DataBaseException;
 	
 	/**
-	 * 查询用户的所有资源关系
+	 * 查询用户的所有资源
 	 * @param userId
 	 * @return
 	 * @throws DataBaseException
 	 */
-	public List<SecUserResourceEntity> getUserResByUserId(String userId) throws DataBaseException;
+	public List<SecResourceEntity> getResByUserId(String userId) throws DataBaseException;
 	
 	/**
 	 * 添加用户资源关系

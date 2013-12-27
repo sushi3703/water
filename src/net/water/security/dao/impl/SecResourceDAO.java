@@ -135,15 +135,18 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 		super.update(sql, args.toArray());
 	}
 	
-	public List<SecUserResourceEntity> getUserResByUserId(String userId) throws DataBaseException{
-		String sql = "select id,user_id,res_id from w_sec_user_resource where user_id = ?";
-		return super.query(sql, new Object[]{userId}, new RowMapper<SecUserResourceEntity>() {
-			public SecUserResourceEntity mapRow(ResultSet rs, int arg1) throws SQLException {
-				SecUserResourceEntity userResEntity = new SecUserResourceEntity();
-				userResEntity.setId(rs.getInt("id"));
-				userResEntity.setUserId(rs.getString("user_id"));
-				userResEntity.setResId(rs.getString("res_id"));
-				return userResEntity;
+	public List<SecResourceEntity> getResByUserId(String userId) throws DataBaseException{
+		String sql = "select r.res_id,r.res_name,r.app_type,r.app_menu,r.url_ids,r.base_res from w_sec_resource r,w_sec_user_resource ur where r.res_id=ur.res_id and ur.user_id = ?";
+		return super.query(sql, new Object[]{userId}, new RowMapper<SecResourceEntity>() {
+			public SecResourceEntity mapRow(ResultSet rs, int arg1) throws SQLException {
+				SecResourceEntity secResourceEntity = new SecResourceEntity();
+				secResourceEntity.setResId(rs.getString("res_id"));
+				secResourceEntity.setResName(rs.getString("res_name"));
+				secResourceEntity.setAppType(rs.getInt("app_type"));
+				secResourceEntity.setAppMenu(rs.getInt("app_menu"));
+				secResourceEntity.setUrlIds(rs.getString("url_ids"));
+				secResourceEntity.setBaseRes(rs.getString("base_res"));
+				return secResourceEntity;
 			}
 		});
 	}

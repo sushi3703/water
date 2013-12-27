@@ -113,7 +113,7 @@
     
     <#-- 直接跳转begin -->
     <li>
-    	<input id="turnPageNo" name="turnPageNo" type="text" value="${_pager.pageNo}" style="width: 30px;float:left;margin-left: 5px;" />
+    	<input id="turnPageNo" name="turnPageNo" type="text" value="${_pager.pageNo}" style="width:30px;height:30px;float:left;margin-left:5px;" />
     	<a href="javascript:gotoPage();">GO</a>
     </li>
     <#-- 直接跳转end -->

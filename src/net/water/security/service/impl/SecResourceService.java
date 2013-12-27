@@ -127,6 +127,51 @@ public class SecResourceService implements ISecResourceService {
 			msgs.put("error","请选择要删除的Id");
 		}
 	}
+	
+	public Map<Integer, List<SecUrlEntity>> getUserSecMenu(String userId){
+		if(StringUtils.isBlank(userId)){
+			return null;
+		}
+		//用户所有res
+		List<SecResourceEntity> ress = secResourceDAO.getResByUserId(userId);
+		if(ress == null || ress.isEmpty()){
+			return null;
+		}
+		StringBuffer allUrlIds = new StringBuffer("");
+		String urlIds;
+		for(SecResourceEntity res : ress){
+			urlIds = res.getUrlIds();
+			if(StringUtils.isBlank(urlIds)){
+				continue;
+			}
+			allUrlIds.append(","+urlIds);
+		}
+		String allUrlIdStr = allUrlIds.toString();
+		if(StringUtils.isBlank(allUrlIdStr)){
+			return null;
+		}
+		allUrlIdStr = allUrlIdStr.substring(1);
+		SecUrlDto urlDto = new SecUrlDto();
+		urlDto.setUrlId(allUrlIdStr);
+		urlDto.setUrlShow(SecUrlDto.URL_SHOW_TRUE+"");
+		List<SecUrlEntity> urls = secUrlDAO.querySecUrls(urlDto);
+		if(urls == null || urls.isEmpty()){
+			return null;
+		}
+		//按菜单分组
+		Map<Integer,List<SecUrlEntity>> menuUrlsMap = new HashMap<Integer, List<SecUrlEntity>>();
+		List<SecUrlEntity> menuUrls;
+		for(SecUrlEntity url : urls){
+			menuUrls = menuUrlsMap.get(url.getAppMenu());
+			if(menuUrls == null){
+				menuUrls = new ArrayList<SecUrlEntity>();
+			}
+			menuUrls.add(url);
+			menuUrlsMap.put(url.getAppMenu(), menuUrls);
+		}
+		
+		return menuUrlsMap;
+	}
 
 }
 

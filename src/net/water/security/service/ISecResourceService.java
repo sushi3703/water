@@ -4,6 +4,7 @@ import java.util.Map;
 
 import net.water.security.dto.SecResourceDto;
 import net.water.security.entity.SecResourceEntity;
+import net.water.security.entity.SecUrlEntity;
 
 import org.springframework.ui.Model;
 
@@ -48,5 +49,12 @@ public interface ISecResourceService {
 	 * @throws Exception
 	 */
 	public void destroySecResource(SecResourceDto secResourceDto, Model model, Map<String,String> msgs) throws Exception;
+	
+	/**
+	 * 取用户的权限菜单
+	 * @param userId
+	 * @return map的key是菜单id，value是该菜单下的所有可见的urlEntity
+	 */
+	public Map<Integer, List<SecUrlEntity>> getUserSecMenu(String userId);
 
 }
