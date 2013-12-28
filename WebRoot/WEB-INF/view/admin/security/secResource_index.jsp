@@ -41,7 +41,12 @@
        	</select>
        </td>
        <th class="span2">资源名称:</th>
-       <td class="span3"> <input type="text" name="resName" id="resName" value="${_page.resName}"  class="input-medium" /></td>
+       <td class="span3"> <input type="text" name="resName" id="resName" value="${_page.resName}"  style="width: 210px;"  class="input-medium" /></td>
+       </tr>
+       <tr>
+       <th class="span2">资源ID:</th>
+       <td class="span3"> <input type="text" name="resId" id="resId" value="${_page.resId}"  style="width: 210px;"  class="input-medium" /></td>
+       <td>&nbsp;</td><td>&nbsp;</td>
        </tr>
        <tr>
        <td style="text-align:center" colspan="4"><button type="submit" class="btn btn-primary">查询</button></td>

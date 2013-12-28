@@ -32,7 +32,7 @@ public class SecResourceAdminController {
 
 	@RequestMapping("index")
 	public String index(HttpServletRequest request,@ModelAttribute("_page") SecResourceDto secResourceDto, Model model) throws Exception {
-		secResourceDto.setPerPage(Constants.NUM_PAGE_PER);
+		secResourceDto.setPerPage(10);
 		secResourceDto.setQueryStr(request.getQueryString() == null ? "" : request.getQueryString());
 		secResourceDto.setNeedUrlInfos(true);
 		List<SecResourceEntity> secResourceEntitys = secResourceService.querySecResources(secResourceDto ,model);
