@@ -3,9 +3,9 @@
 # Package Files #
 *.war
 *.ear
-#*.jar#
+*.jar
 
-#*.properties#
+*.properties
 
 .classpath
 .mymetadata
