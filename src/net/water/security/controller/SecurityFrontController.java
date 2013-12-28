@@ -46,6 +46,7 @@ public class SecurityFrontController {
 		leftInfo.append("document.write(\"");
 		//========make menu begin
 		if(menuUrlsMap != null && !menuUrlsMap.isEmpty()){
+			String selMenu = request.getParameter("selMenu");
 			//菜单中文名
 			Map<String,String> menuNameMap = XmlConfigUtil.getMap("security_menu");
 			List<SecUrlEntity> urls;
@@ -54,18 +55,18 @@ public class SecurityFrontController {
 				if(urls == null || urls.isEmpty()){
 					continue;
 				}
-				leftInfo.append("<li>");
+				leftInfo.append("<li id='li_menu_"+menuId+"'>");
 				leftInfo.append("<a class='light toggle-collapsed' href='#'><div class='ico'><i class='icon-th-large icon-white'></i></div>");
 				leftInfo.append(menuNameMap.get(menuId+"")+"<img alt='' src='http://cachecss.kuakao.com/public/ui/img/toggle-subnav-down.png'>");
 				leftInfo.append("</a>");
-				leftInfo.append("<ul id='ul_menu_"+menuId+"' class='collapsed-nav closed' style='display: none'>");
+				leftInfo.append("<ul id='ul_menu_"+menuId+"' class='collapsed-nav  closed'>");
 				for(SecUrlEntity url : urls){
-					leftInfo.append("<li id='li_url_"+url.getUrlId()+"'><a style='margin-left: 0px;' href='"+url.getUrlPath()
-							+ this.getSignAfterUrl(url.getUrlPath())
-							+ "selMenu=" + menuId + "&selUrl=" + url.getUrlId()
-							+ "'>" + url.getUrlName() + "</a></li>");
+					leftInfo.append("<li id='li_url_"+url.getUrlId()+"'><a style='margin-left: 0px;' href='"
+							+ url.getUrlPath() + this.getSignAfterUrl(url.getUrlPath()) + "selMenu=" + menuId + "&selUrl=" + url.getUrlId() + "'>" 
+							+ url.getUrlName() + "</a></li>");
 				}
 				leftInfo.append("</ul>");
+				
 				leftInfo.append("</li>");
 			}
 		}
