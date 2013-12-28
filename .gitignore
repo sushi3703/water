@@ -3,7 +3,7 @@
 # Package Files #
 *.war
 *.ear
-*.jar
+#*.jar#
 
 *.properties
 
