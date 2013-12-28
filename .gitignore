@@ -5,6 +5,8 @@
 *.ear
 *.jar
 
+*.properties
+
 .classpath
 .mymetadata
 .project
