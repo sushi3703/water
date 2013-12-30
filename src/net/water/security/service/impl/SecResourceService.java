@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import net.kuakao.core.xmlconfig.util.XmlConfigUtil;
 import net.water.Constants;
@@ -110,11 +111,14 @@ public class SecResourceService implements ISecResourceService {
 	}
 
 	public void saveSecResource(SecResourceDto secResourceDto, Model model) throws Exception {
-		SecResourceEntity SecResourceEntity = secResourceDto.toSecResourceEntity();
-		if(StringUtils.isNotBlank(secResourceDto.getResId())) {
-			secResourceDAO.updateSecResource(SecResourceEntity);
-		} else {
-			secResourceDAO.createSecResource(SecResourceEntity);
+		String resId = secResourceDto.getResId();
+		SecResourceEntity secResourceEntity = secResourceDto.toSecResourceEntity();
+		if(StringUtils.isBlank(resId)){//create
+			resId = UUID.randomUUID().toString();
+			secResourceEntity.setResId(resId);
+			secResourceDAO.createSecResource(secResourceEntity);
+		}else{//update
+			secResourceDAO.updateSecResource(secResourceEntity);
 		}
 	}
 

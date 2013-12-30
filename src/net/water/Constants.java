@@ -22,7 +22,7 @@ public class Constants {
     //================常量定义end==========
 
 	//===================参数名begin==========
-    /**参数名，用户登录基本信息entity*/
+    /**参数名，用户登录基本信息UserLoginEntity*/
     public final static String PARAM_USER_BASE_INFO = "userLoginBaseInfo";
     /**参数名，当前登录用户的ID*/
     public final static String PARAM_USER_LOGIN_ID = "loginUserId";

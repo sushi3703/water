@@ -6,6 +6,12 @@ import net.kuakao.core.dto.PagerDTO;
 import net.water.user.entity.UserBaseEntity;
 public class UserBaseDto extends PagerDTO {
 	
+	/**用户类型，1根用户*/
+	public final static int USER_TYPE_BASE = 1;
+
+	/**用户类型，2成员用户*/
+	public final static int USER_TYPE_MEMBER = 2;
+	
 	/*  */
 	private String  userId;
 			
@@ -42,6 +48,17 @@ public class UserBaseDto extends PagerDTO {
 	
 	/*查询条件并显示信息，所属团队*/
 	private String teamId;
+	
+	/*查询条件，用户类型*/
+	private String userType;
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
 
 	public String getTeamId() {
 		return teamId;

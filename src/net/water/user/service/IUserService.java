@@ -20,6 +20,15 @@ public interface IUserService {
 	public List<UserBaseEntity> queryUsers(UserBaseDto userBaseDto, Model model) throws DataBaseException;
 	
 	/**
+	 * 分布查询根用户信息(基本信息、团队信息)
+	 * @param userBaseDto
+	 * @param model
+	 * @return
+	 * @throws DataBaseException
+	 */
+	public List<UserBaseEntity> getAllBaseUser(UserBaseDto userBaseDto, Model model) throws DataBaseException;
+	
+	/**
 	 * 查询单个用户基本信息对象
 	 * @param userBaseDto 用户基本信息Dto
 	 * @return 用户基本信息

@@ -23,6 +23,14 @@ public interface IUserBaseDAO {
 	public List<UserBaseEntity> queryUserBases(UserBaseDto userBaseDto) throws DataBaseException;
 	
 	/**
+	 * 分布查询根用户信息
+	 * @param userBaseDto
+	 * @return
+	 * @throws DataBaseException
+	 */
+	public List<UserBaseEntity> getAllBaseUser(UserBaseDto userBaseDto) throws DataBaseException;
+	
+	/**
 	 * 查询单个用户基本信息对象
 	 * @param userId 用户ID
 	 * @return 用户基本信息

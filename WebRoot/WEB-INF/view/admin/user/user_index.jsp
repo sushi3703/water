@@ -9,7 +9,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/common/include_css_and_js.action"></script>
     <script type="text/javascript">
     var resetPwd = function(userId,email){
-    	$.post("${pageContext.request.contextPath}/admin/user/reset_pwd.action",{"userId":userId,"email":email},function(data){
+    	$.post("${pageContext.request.contextPath}/front/user/reset_pwd.action",{"userId":userId,"email":email},function(data){
     		alert(data);
     	});
     };
@@ -28,8 +28,7 @@
     <div class="row-fluid no-margin">
     <div class="span12">
     <ul class="nav nav-tabs nav-tabs-main">
-          <li class="active"><a href="#"><i class="icon-th-list"></i><span>用户列表</span></a></li>
-          <li class=""><a href="${pageContext.request.contextPath}/admin/user/edit.action?queryStr=${_page.encodeQueryStr}"><i class="icon-plus"></i><span>新增用户</span></a></li>
+          <li class="active"><a href="#"><i class="icon-th-list"></i><span>根用户列表</span></a></li>
         </ul>
       <div class="tab-content">
        <div id="1" class="tab-pane active">
@@ -37,10 +36,16 @@
        <table class="offset1">
        
        <tr>
+       <th>用户ID :</th>
+       <td class="span3"> <input type="text" name="userId" value="${_page.userId}"  class="input-medium" style="width: 210px;" /></td>
        <th>用户名:</th>
        <td class="span3"> <input type="text" name="uname" value="${_page.uname}"  class="input-medium" style="width: 210px;" /></td>
-       <th>部门 :</th>
-       <td class="span3"> <input type="text" name="department" value="${_page.department}"  class="input-medium" style="width: 210px;" /></td>
+       </tr>
+       <tr>
+       <th>联系QQ</th>
+       <td class="span3"> <input type="text" name="qq" value="${_page.qq}"  class="input-medium" style="width: 210px;" /></td>
+       <th>手机</th>
+       <td class="span3"> <input type="text" name="mobile" value="${_page.mobile}"  class="input-medium" style="width: 210px;" /></td>
        </tr>
        <tr>
        <td style="text-align:center" colspan="4"><button type="submit" class="btn btn-primary">查询</button></td>
@@ -55,9 +60,10 @@
        
        <table class="table table-bordered table-striped">
        <tr>
+       <th>用户ID</th>
        <th>用户名</th>
-       <th>部门</th>
-       <th>职务</th>
+       <th>团队ID</th>
+       <th>团队名称</th>
        <th>Email</th>
        <th>QQ</th>
        <th>手机</th>
@@ -66,19 +72,18 @@
        <tbody>
        <c:forEach var="userEntity" items="${userEntitys}">
        <tr>
+       <td>${userEntity.userId}</td>
        <td>${userEntity.uname}</td>
-       <td>${userEntity.department}</td>
-       <td>${userEntity.jobTitle}</td>
+       <td>${userEntity.teamId}</td>
+       <td>${userEntity.teamName}</td>
        <td>${userEntity.email}</td>
        <td>${userEntity.qq}</td>
        <td>${userEntity.mobile}</td>
        <td> <div class="btn-group">
                 <button data-toggle="dropdown" class="btn dropdown-toggle btn-primary">操作 <span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                  <li><a href="${pageContext.request.contextPath}/admin/user/edit.action?userId=${userEntity.userId}&queryStr=${_page.encodeQueryStr}">编辑</a></li>
-                  <li><a href="">设置权限</a></li>
+                  <li><a href="">修改权限</a></li>
                   <li><a href="javascript:resetPwd('${userEntity.userId}','${userEntity.email}');">重置密码</a></li>
-                  <li><a href="javascript:void(0)" onClick="commonDel('${pageContext.request.contextPath}/admin/user/destroy.action',{'userId':'${userEntity.userId}'});">删除</a></li>
                 </ul>
               </div></td>
        </tr>

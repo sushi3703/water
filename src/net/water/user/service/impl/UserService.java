@@ -29,6 +29,10 @@ public class UserService implements IUserService {
 	public List<UserBaseEntity> queryUsers(UserBaseDto userBaseDto, Model model) throws DataBaseException {
 		return userBaseDAO.queryUserBases(userBaseDto);
 	}
+	
+	public List<UserBaseEntity> getAllBaseUser(UserBaseDto userBaseDto, Model model) throws DataBaseException {
+		return userBaseDAO.getAllBaseUser(userBaseDto);
+	}
 
 	public UserBaseEntity getUserBaseById(UserBaseDto userBaseDto, Model model) throws DataBaseException {
 			UserBaseEntity userBaseEntity = null;

@@ -1,8 +1,12 @@
 package net.water.user.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.water.Constants;
@@ -114,6 +118,59 @@ public class UserFrontController {
 		
 		model.addAttribute(Constants.PARAM_SHOW_MSG, "密码修改成功");
 		return "redirect:/front/user/to_update_pwd.action";
+	}
+
+	/**
+	 * 管理员重置用户密码
+	 * @param userLoginEntity userId/email
+	 * @param request
+	 * @param response
+	 * @param model
+	 */
+	@RequestMapping("reset_pwd")
+	public void resetPwd(UserLoginEntity userLoginEntity,HttpServletRequest request,HttpServletResponse response, Model model){
+		PrintWriter writer = null;
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+		try {
+			writer = response.getWriter();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if(writer == null){
+			return;
+		}
+		if(StringUtils.isBlank(userLoginEntity.getUserId()) || StringUtils.isBlank(userLoginEntity.getEmail())){
+			writer.print("请选择要重置密码的用户");
+			writer.flush();
+			return;
+		}
+		//验证当前用户为根用户
+		UserLoginEntity loginUserInfo = (UserLoginEntity)request.getSession().getAttribute(Constants.PARAM_USER_BASE_INFO);
+		if(loginUserInfo == null){
+			writer.print(Constants.INFO_USERNOLOGIN);
+			writer.flush();
+			return;
+		}
+		if(loginUserInfo.getType() != UserBaseDto.USER_TYPE_BASE){
+			writer.print(Constants.INFO_USERNOSECURITY);
+			writer.flush();
+			return;
+		}
+		
+		//默认重置密码
+		String defaultResetPwd = new Random(10000).nextInt()+"";
+		userLoginEntity.setUpwd(defaultResetPwd);
+		String res = "";
+		try {
+			userService.updateUserPwd(userLoginEntity);
+			res = "密码重置成功，新密码为"+defaultResetPwd;
+		} catch (Exception e) {
+			e.printStackTrace();
+			res = "密码重置失败，请联系管理员";
+		}
+		writer.print(res);
+		writer.flush();
 	}
 	
 

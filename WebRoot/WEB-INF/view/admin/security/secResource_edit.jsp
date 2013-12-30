@@ -73,13 +73,17 @@
     <c:if test="${!empty menuInfoMap['urlInfoMaps']}">
 	<div class="accordion-body collapse" id="collapse${menuInfoMap['menuId']}" style="height: 0px;">
 	<div class="accordion-inner">
+	<table>
     <c:forEach items="${menuInfoMap['urlInfoMaps']}" var="urlInfoMap">
-    <input type="checkbox" name="resUrl" <c:if test="${urlInfoMap['selected']}">checked="checked"</c:if> value="${urlInfoMap['urlId']}" />&nbsp;
-    <c:if test="${urlInfoMap['urlShow']==1}"><b>show</b></c:if>&nbsp;&nbsp;
-    <i>${urlInfoMap['urlMethodShow']}</i>&nbsp;&nbsp;
-    ${urlInfoMap['urlName']}&nbsp;&nbsp;
-    ${urlInfoMap['urlPath']}
+    <tr>
+    <td><input type="checkbox" name="resUrl" <c:if test="${urlInfoMap['selected']}">checked="checked"</c:if> value="${urlInfoMap['urlId']}" /></td>
+    <td><c:if test="${urlInfoMap['urlShow']==1}"><b>show</b></c:if>&nbsp;&nbsp;</td>
+    <td><i>${urlInfoMap['urlMethodShow']}</i>&nbsp;&nbsp;</td>
+    <td>${urlInfoMap['urlName']}&nbsp;&nbsp;</td>
+    <td>${urlInfoMap['urlPath']}</td>
+    </tr>
     </c:forEach>
+    </table>
     </div>
     </div>
     </c:if>

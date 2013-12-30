@@ -22,7 +22,7 @@
     <div class="span12">
     <ul class="nav nav-tabs nav-tabs-main">
           <li class="active"><a href="#"><i class="icon-th-list"></i><span>资源列表</span></a></li>
-          <li class=""><a href="${pageContext.request.contextPath}/admin/secResource/edit.action?queryStr=${_page.encodeQueryStr}"><i class="icon-plus"></i><span>新增资源</span></a></li>
+          <li class=""><a href="${pageContext.request.contextPath}/admin/secResource/edit.action?selMenu=${param['selMenu']}&selUrl=${param['selUrl']}&queryStr=${_page.encodeQueryStr}"><i class="icon-plus"></i><span>新增资源</span></a></li>
         </ul>
       <div class="tab-content">
        <div id="1" class="tab-pane active">
