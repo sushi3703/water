@@ -36,15 +36,15 @@
        <table class="offset1">
        
        <tr>
-       <th>用户ID :</th>
+       <th class="span2">用户ID:</th>
        <td class="span3"> <input type="text" name="userId" value="${_page.userId}"  class="input-medium" style="width: 210px;" /></td>
-       <th>用户名:</th>
+       <th class="span2">用户名:</th>
        <td class="span3"> <input type="text" name="uname" value="${_page.uname}"  class="input-medium" style="width: 210px;" /></td>
        </tr>
        <tr>
-       <th>联系QQ</th>
+       <th class="span2">联系QQ:</th>
        <td class="span3"> <input type="text" name="qq" value="${_page.qq}"  class="input-medium" style="width: 210px;" /></td>
-       <th>手机</th>
+       <th class="span2">手机:</th>
        <td class="span3"> <input type="text" name="mobile" value="${_page.mobile}"  class="input-medium" style="width: 210px;" /></td>
        </tr>
        <tr>

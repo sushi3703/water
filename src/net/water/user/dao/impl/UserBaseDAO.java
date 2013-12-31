@@ -104,7 +104,7 @@ public class UserBaseDAO extends BaseDAO implements IUserBaseDAO {
 	}
 	
 	public List<UserBaseEntity> getAllBaseUser(UserBaseDto userBaseDto) throws DataBaseException {
-		String sql = "select b.user_id,b.create_time,b.qq,b.mobile,b.note,l.uname,l.email,l.team_id,t.team_name from w_user_base b join w_user_login l on b.user_id=l.user_id left join w_team t on l.team_id=t.team_id where l.status=1";
+		String sql = "select b.user_id,b.create_time,b.qq,b.mobile,b.note,l.uname,l.email,l.team_id,t.team_name from w_user_base b join w_user_login l on b.user_id=l.user_id left join w_team t on l.team_id=t.team_id where l.status=1 and l.type=1";
 		StringBuffer where = new StringBuffer();
 		List<Object> args = new ArrayList<Object>();
 		
