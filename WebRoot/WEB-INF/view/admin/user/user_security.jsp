@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
   	<meta charset="utf-8">
-    <title>用户编辑</title>
+    <title>用户权限</title>
     <script type="text/javascript" src="${pageContext.request.contextPath}/common/include_css_and_js.action"></script>
     <script type="text/javascript">
     

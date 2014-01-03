@@ -37,6 +37,12 @@ public class UserAdminController {
 		model.addAttribute("userEntitys", userBaseEntitys);
 		return "admin/user/user_index";
 	}
+	
+	@RequestMapping("to_update_security")
+	public String toUpdateSecurity(HttpServletRequest request, Model model) throws Exception {
+		
+		return "admin/user/user_security";
+	}
 
 }
 
