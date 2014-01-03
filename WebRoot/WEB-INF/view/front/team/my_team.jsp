@@ -68,7 +68,7 @@
     <div class="box-head">
 	<h3>团队成员</h3>
 	<c:if test="${!empty userLoginBaseInfo && userLoginBaseInfo.type == 1}">
-	&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="邀请成员" id="btn_show_invite" onclick="showInvite()" class="btn btn-danger" />
+	&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="邀请成员" id="btn_show_invite" onclick="showInvite()" class="btn btn-success" />
 	</c:if>
 	</div>
 	<div class="box-content">
