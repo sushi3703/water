@@ -172,6 +172,5 @@ public class UserFrontController {
 		writer.print(res);
 		writer.flush();
 	}
-	
 
 }

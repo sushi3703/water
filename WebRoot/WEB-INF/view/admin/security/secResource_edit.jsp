@@ -93,7 +93,6 @@
     </td>
     </tr>
     <tr>
-    <tr>
     <td colspan="2" style="text-align:center">
     <button type="submit" class="btn btn-primary">保存</button>
      <button type="submit" class="btn " onclick="history.back(-1);" >返回</button>

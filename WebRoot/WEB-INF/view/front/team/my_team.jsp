@@ -20,9 +20,15 @@
     var showInvite = function(){
     	$("#div_msg_invite_register").removeClass("hidden");
     };
+    var resetPwd = function(userId,email){
+    	$.post("${pageContext.request.contextPath}/front/user/reset_pwd.action",{"userId":userId,"email":email},function(data){
+    		alert(data);
+    	});
+    };
     </script>
   </head>
   <body>
+  <c:set var="loginUserIsAdmin" value="${!empty userLoginBaseInfo && userLoginBaseInfo.type == 1}"></c:set>
   <!--固定头部-->
  <script type="text/javascript" src="${pageContext.request.contextPath}/front/login/common_top.action"></script>
 <!--固定头部结束-->
@@ -53,8 +59,8 @@
 	<div class="control-group">
 		<label class="control-label" for="teamName">团队名称：</label>
 		<div class="controls">
-		<input type="text" id="teamName" name="teamName" class="input-square" <c:if test="${empty userLoginBaseInfo || userLoginBaseInfo.type !=1}"> style="border:0px" readonly="readonly"</c:if> value="${teamEntity.teamName}" />
-		<c:if test="${!empty userLoginBaseInfo && userLoginBaseInfo.type == 1}">
+		<input type="text" id="teamName" name="teamName" class="input-square" <c:if test="${!loginUserIsAdmin}"> style="border:0px" readonly="readonly"</c:if> value="${teamEntity.teamName}" />
+		<c:if test="${loginUserIsAdmin}">
     	&nbsp;&nbsp;
     	<input type="button" id="btn_team_info" value="修改" onclick="teamBaseInfoFormSubmit()" class="btn btn-primary" />
     	</c:if>
@@ -67,17 +73,18 @@
     <div class="box">
     <div class="box-head">
 	<h3>团队成员</h3>
-	<c:if test="${!empty userLoginBaseInfo && userLoginBaseInfo.type == 1}">
+	<c:if test="${loginUserIsAdmin}">
 	&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="邀请成员" id="btn_show_invite" onclick="showInvite()" class="btn btn-success" />
 	</c:if>
 	</div>
-	<div class="box-content">
+	<div class="box-content box-nomargin">
 	<div id="div_msg_invite_register" class="hidden alert alert-info alert-block">
 		<a class="close" href="#" data-dismiss="alert">×</a>
 		<h4 class="alert-heading">复制以下链接给好友，即可邀请其加入</h4>
 		<%=ConfigUtil.getValue("project_domain") %>/user/to_register.action?inviteId=${teamEntity.teamId}
 	</div>
-	<table class="table table-bordered table-striped">
+	<table class="table table-striped table-bordered">
+       <thead>
        <tr>
        <th>用户类型</th>
        <th>用户名</th>
@@ -86,7 +93,11 @@
        <th>Email</th>
        <th>QQ</th>
        <th>手机</th>
+       <c:if test="${loginUserIsAdmin}">
+       <th>管理</th>
+       </c:if>
        </tr>
+       </thead>
        <tbody>
        <c:forEach var="userEntity" items="${users}">
        <tr>
@@ -97,6 +108,14 @@
        <td>${userEntity.email}</td>
        <td>${userEntity.qq}</td>
        <td>${userEntity.mobile}</td>
+       <c:if test="${loginUserIsAdmin}">
+       <td>
+       <c:if test="${userEntity.type != 1}">
+       	<a href="${pageContext.request.contextPath}/front/security/to_update_security.action?userId=${userEntity.userId}">修改权限</a>&nbsp;
+       	<a href="javascript:resetPwd('${userEntity.userId}','${userEntity.email}');">重置密码</a>
+       	</c:if>
+       </td>
+       </c:if>
        </tr>
        </c:forEach>
        </tbody>

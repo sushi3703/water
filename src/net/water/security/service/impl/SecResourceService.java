@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import net.kuakao.core.exception.DataBaseException;
 import net.kuakao.core.xmlconfig.util.XmlConfigUtil;
 import net.water.Constants;
 import net.water.security.dao.ISecResourceDAO;
@@ -14,6 +15,7 @@ import net.water.security.dto.SecResourceDto;
 import net.water.security.dto.SecUrlDto;
 import net.water.security.entity.SecResourceEntity;
 import net.water.security.entity.SecUrlEntity;
+import net.water.security.entity.SecUserResourceEntity;
 import net.water.security.service.ISecResourceService;
 
 import org.apache.commons.lang3.StringUtils;
@@ -175,6 +177,69 @@ public class SecResourceService implements ISecResourceService {
 		}
 		
 		return menuUrlsMap;
+	}
+	
+	public List<Map<String,Object>> getUserResourceOfTeam(String adminId,String userId){
+		//管理员所有可分配的资源
+		List<SecResourceEntity> adminRess = secResourceDAO.getResByUserId(adminId);
+		if(adminRess == null || adminRess.isEmpty()){
+			return null;
+		}
+		//用户当前拥有的资源
+		List<SecResourceEntity> userRess = secResourceDAO.getResByUserId(userId);
+		Map<String,String> userResMap = new HashMap<String, String>();
+		if(userRess != null && !userRess.isEmpty()){
+			for(SecResourceEntity userRes : userRess){
+				userResMap.put(userRes.getResId(), userRes.getResId());
+			}
+		}
+		//
+		Map<Integer,List<Map<String,String>>> menuIdResMap = new HashMap<Integer, List<Map<String,String>>>();
+		List<Map<String,String>> resList;
+		Map<String,String> resMap;
+		for(SecResourceEntity res : adminRess){
+			resMap = new HashMap<String, String>();
+			resMap.put("resId", res.getResId());
+			resMap.put("resName", res.getResName());
+			resMap.put("chk", StringUtils.isNotBlank(userResMap.get(res.getResId()))?"true":"false");
+			
+			resList = menuIdResMap.get(res.getAppMenu());
+			if(resList == null){
+				resList = new ArrayList<Map<String,String>>();
+			}
+			resList.add(resMap);
+			menuIdResMap.put(res.getAppMenu(), resList);
+		}
+		if(menuIdResMap.isEmpty()){
+			return null;
+		}
+		//
+		List<Map<String,Object>> menuResList = new ArrayList<Map<String,Object>>();
+		//菜单中文名
+		Map<String,String> menuNameMap = XmlConfigUtil.getMap("security_menu");
+		Map<String,Object> menuResMap;
+		for(int menuId : menuIdResMap.keySet()){
+			menuResMap = new HashMap<String, Object>();
+			menuResMap.put("menuName", menuNameMap.get(menuId+""));
+			menuResMap.put("resList", menuIdResMap.get(menuId));
+			menuResList.add(menuResMap);
+		}
+		return menuResList;
+	}
+	
+	public void updateUserRes(String userId,String selRes) throws DataBaseException{
+		//删除原用户资源数据
+		secResourceDAO.destroyUserResByUserId(userId);
+		if(StringUtils.isBlank(selRes)){
+			return;
+		}
+		SecUserResourceEntity userRes;
+		for(String resId : selRes.split(",")){
+			userRes = new SecUserResourceEntity();
+			userRes.setResId(resId);
+			userRes.setUserId(userId);
+			secResourceDAO.createUserRes(userRes);
+		}
 	}
 
 }

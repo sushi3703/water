@@ -2,6 +2,7 @@ package net.water.security.service;
 import java.util.List;
 import java.util.Map;
 
+import net.kuakao.core.exception.DataBaseException;
 import net.water.security.dto.SecResourceDto;
 import net.water.security.entity.SecResourceEntity;
 import net.water.security.entity.SecUrlEntity;
@@ -56,5 +57,21 @@ public interface ISecResourceService {
 	 * @return map的key是菜单id，value是该菜单下的所有可见的urlEntity
 	 */
 	public Map<Integer, List<SecUrlEntity>> getUserSecMenu(String userId);
+	
+	/**
+	 * 修改用户权限时的资源数据
+	 * @param adminId 管理员id
+	 * @param userId 待修改的用户id
+	 * @return List<菜单属性>,Map<菜单名,资源列表等属性>,List<Map<resId/resName等要展示的资源属性,key的相应值>>
+	 */
+	public List<Map<String,Object>> getUserResourceOfTeam(String adminId,String userId);
+	
+	/**
+	 * 修改用户的资源数据
+	 * @param userId
+	 * @param selRes
+	 * @throws DataBaseException
+	 */
+	public void updateUserRes(String userId,String selRes) throws DataBaseException;
 
 }
