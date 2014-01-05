@@ -73,5 +73,12 @@ public interface ISecResourceService {
 	 * @throws DataBaseException
 	 */
 	public void updateUserRes(String userId,String selRes) throws DataBaseException;
+	
+	/**
+	 * 取用户所有可访问的url(目前只用于权限验证)
+	 * @param userId
+	 * @return
+	 */
+	public List<SecUrlEntity> getUserAllUrl(String userId);
 
 }

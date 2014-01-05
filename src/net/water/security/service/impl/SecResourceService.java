@@ -241,6 +241,10 @@ public class SecResourceService implements ISecResourceService {
 			secResourceDAO.createUserRes(userRes);
 		}
 	}
+	
+	public List<SecUrlEntity> getUserAllUrl(String userId){
+		
+		return null;
+	}
 
 }
-
