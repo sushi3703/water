@@ -102,7 +102,7 @@
        <td> <div class="btn-group">
                 <button data-toggle="dropdown" class="btn dropdown-toggle btn-primary">操作 <span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                  <li><a href="${pageContext.request.contextPath}/admin/secUrl/edit.action?urlId=${secUrlEntity.urlId}&queryStr=${_page.encodeQueryStr}">编辑</a></li>
+                  <li><a href="${pageContext.request.contextPath}/admin/secUrl/edit.action?urlId=${secUrlEntity.urlId}&selMenu=${param['selMenu']}&selUrl=${param['selUrl']}&queryStr=${_page.encodeQueryStr}">编辑</a></li>
                   <li><a href="javascript:void(0)" onClick="commonDel('${pageContext.request.contextPath}/admin/secUrl/destroy.action',{'urlId':'${secUrlEntity.urlId}'});">删除</a></li>
                 </ul>
               </div></td>

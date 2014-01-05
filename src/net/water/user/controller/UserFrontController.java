@@ -3,7 +3,7 @@ package net.water.user.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.Random;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -159,7 +159,7 @@ public class UserFrontController {
 		}
 		
 		//默认重置密码
-		String defaultResetPwd = new Random(10000).nextInt()+"";
+		String defaultResetPwd = UUID.randomUUID().toString().substring(0, 8);
 		userLoginEntity.setUpwd(defaultResetPwd);
 		String res = "";
 		try {

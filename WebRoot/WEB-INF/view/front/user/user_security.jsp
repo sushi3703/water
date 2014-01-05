@@ -24,7 +24,9 @@
             	ids += $(this).val();
         	}
     	});
-    	
+    	$.post("${pageContext.request.contextPath}/front/security/do_update_security.action",{"userId":"${userId}","selRes":ids},function(data){
+    		alert(data);
+    	});
      };
     </script>
   </head>
@@ -68,6 +70,7 @@
     </c:forEach>
     <div class="form-actions">
     <input type="button" value="保存" onclick="updateUserSecurity()" class="btn btn-primary" />
+    <input type="button" value="返回" class="btn" onclick="history.back(-1);" />
     </div>
     </c:if>
     

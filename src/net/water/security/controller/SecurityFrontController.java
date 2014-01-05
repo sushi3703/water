@@ -97,6 +97,7 @@ public class SecurityFrontController {
 			model.addAttribute(Constants.PARAM_ERROR_MSG, "请选择要修改的用户");
 			return "show/su_error";
 		}
+		model.addAttribute("userId", userId);
 		//
 		List<Map<String, Object>> menuResList = resService.getUserResourceOfTeam(loginUserId, userId);
 		model.addAttribute("menuResList", menuResList);

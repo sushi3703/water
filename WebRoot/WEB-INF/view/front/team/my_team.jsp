@@ -18,13 +18,20 @@
     		$("#form_team_base_info").submit();
     };
     var showInvite = function(){
-    	$("#div_msg_invite_register").removeClass("hidden");
+    	if(${empty teamEntity}){
+    		alert("请先创建团队");
+    	}else{
+			$("#div_msg_invite_register").show();    		
+    	}
     };
     var resetPwd = function(userId,email){
     	$.post("${pageContext.request.contextPath}/front/user/reset_pwd.action",{"userId":userId,"email":email},function(data){
     		alert(data);
     	});
     };
+    $(function(){
+    	$("#div_msg_invite_register").hide();
+    })
     </script>
   </head>
   <body>
@@ -50,7 +57,7 @@
 	</div>
 	<div class="box-content">
 	<c:if test="${!empty showMsg}">
-		<div class="alert alert-info alert-block">
+		<div class="alert alert-block alert-success">
 		<a class="close" href="#" data-dismiss="alert">×</a>
 		<h4 class="alert-heading">${showMsg}</h4>
 		</div>
@@ -62,14 +69,14 @@
 		<input type="text" id="teamName" name="teamName" class="input-square" <c:if test="${!loginUserIsAdmin}"> style="border:0px" readonly="readonly"</c:if> value="${teamEntity.teamName}" />
 		<c:if test="${loginUserIsAdmin}">
     	&nbsp;&nbsp;
-    	<input type="button" id="btn_team_info" value="修改" onclick="teamBaseInfoFormSubmit()" class="btn btn-primary" />
+    	<input type="button" id="btn_team_info" value="${empty teamEntity ? '创建团队' : '修改'}" onclick="teamBaseInfoFormSubmit()" class="btn btn-primary" />
     	</c:if>
 		</div>
 	</div>
 	</form>
 	</div>
     </div>
-     
+    
     <div class="box">
     <div class="box-head">
 	<h3>团队成员</h3>
@@ -77,12 +84,12 @@
 	&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="邀请成员" id="btn_show_invite" onclick="showInvite()" class="btn btn-success" />
 	</c:if>
 	</div>
-	<div class="box-content box-nomargin">
-	<div id="div_msg_invite_register" class="hidden alert alert-info alert-block">
-		<a class="close" href="#" data-dismiss="alert">×</a>
+	<div id="div_msg_invite_register" class="alert alert-block alert-success">
+		<a class="close" href="#" onclick="$('#div_msg_invite_register').hide();">×</a>
 		<h4 class="alert-heading">复制以下链接给好友，即可邀请其加入</h4>
 		<%=ConfigUtil.getValue("project_domain") %>/user/to_register.action?inviteId=${teamEntity.teamId}
 	</div>
+	<div class="box-content box-nomargin">
 	<table class="table table-striped table-bordered">
        <thead>
        <tr>

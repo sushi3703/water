@@ -92,7 +92,7 @@
        	<div class="btn-group">
                 <button data-toggle="dropdown" class="btn dropdown-toggle btn-primary">操作 <span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                  <li><a href="${pageContext.request.contextPath}/admin/secResource/edit.action?resId=${secResourceEntity.resId}&queryStr=${_page.encodeQueryStr}">编辑</a></li>
+                  <li><a href="${pageContext.request.contextPath}/admin/secResource/edit.action?resId=${secResourceEntity.resId}&selMenu=${param['selMenu']}&selUrl=${param['selUrl']}&queryStr=${_page.encodeQueryStr}">编辑</a></li>
                   <li><a href="javascript:void(0)" onClick="commonDel('${pageContext.request.contextPath}/admin/secResource/destroy.action',{'resId':'${secResourceEntity.resId}'});">删除</a></li>
                 </ul>
        	</div>

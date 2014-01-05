@@ -82,7 +82,7 @@
        <td> <div class="btn-group">
                 <button data-toggle="dropdown" class="btn dropdown-toggle btn-primary">操作 <span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                  <li><a href="${pageContext.request.contextPath}/front/security/to_update_security.action?userId=${userEntity.userId}">修改权限</a></li>
+                  <li><a href="${pageContext.request.contextPath}/front/security/to_update_security.action?userId=${userEntity.userId}&selMenu=${param['selMenu']}&selUrl=${param['selUrl']}">修改权限</a></li>
                   <li><a href="javascript:resetPwd('${userEntity.userId}','${userEntity.email}');">重置密码</a></li>
                 </ul>
               </div></td>
