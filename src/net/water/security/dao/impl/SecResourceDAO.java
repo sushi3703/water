@@ -136,7 +136,7 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 	}
 	
 	public List<SecResourceEntity> getResByUserId(String userId) throws DataBaseException{
-		String sql = "select r.res_id,r.res_name,r.app_type,r.app_menu,r.url_ids,r.base_res from w_sec_resource r,w_sec_user_resource ur where r.res_id=ur.res_id and ur.user_id = ?";
+		String sql = "select r.res_id,r.res_name,r.app_type,r.app_menu,r.url_ids,r.base_res from w_sec_resource r,w_sec_user_resource ur where r.res_id=ur.res_id and r.status=1 and ur.user_id = ?";
 		return super.query(sql, new Object[]{userId}, new RowMapper<SecResourceEntity>() {
 			public SecResourceEntity mapRow(ResultSet rs, int arg1) throws SQLException {
 				SecResourceEntity secResourceEntity = new SecResourceEntity();

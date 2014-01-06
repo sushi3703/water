@@ -22,39 +22,16 @@ public class UserUrlCache extends BaseCache {
 
 	@Override
 	public int timeToLiveSeconds() {
-		return 30;
+		return 300;
 	}
 	
 	public List<SecUrlEntity> getUserUrls(String userId) {
 		Object o = this.get(userId);
 		if(o != null){
-			return (List<SecUrlEntity>) o;
+			return (List<SecUrlEntity>)o;
 		}
 		List<SecUrlEntity> urls = resourceService.getUserAllUrl(userId);
-		/*if(urls ){
-			
-		}
-		if(saUrls == null) {
-			List<SaUrlEntity> querySaUrls = this.getUserUrlResourcesSpring(userId, appId);
-			if(querySaUrls != null) {
-				List<SaUrlEntity> getSaUrls = new ArrayList<SaUrlEntity>();
-				List<SaUrlEntity> postSaUrls = new ArrayList<SaUrlEntity>();
-				for(SaUrlEntity saUrl : querySaUrls) {
-					if("1".equals(saUrl.getUrlMethod())) {
-						getSaUrls.add(saUrl);
-					} else if("2".equals(saUrl.getUrlMethod())) {
-						postSaUrls.add(saUrl);
-					}
-				}
-				this.set(userId + HTTP_GET_TYPE + appId, getSaUrls); //get方式的加载到缓存
-				this.set(userId + HTTP_POST_TYPE + appId, postSaUrls); //post方式的加载到缓存
-				if("GET".equals(methodType)) {
-					saUrls = getSaUrls;
-				} else if("POST".equals(methodType)) {
-					saUrls = postSaUrls;
-				}
-			}
-		}*/
+		this.set(userId, urls);
 		return urls;
 	}
 	/**

@@ -27,6 +27,11 @@ public class SecurityFrontController {
 	
 	@Autowired
 	private ISecResourceService resService;
+	
+	@RequestMapping("security_error")
+	public String securityError(HttpServletRequest request, Model model) throws Exception {
+		return "show/security_error";
+	}
 
 	@RequestMapping("security_left")
 	public void securityLeft(HttpServletResponse response,HttpServletRequest request, Model model) throws Exception {

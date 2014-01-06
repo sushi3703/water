@@ -243,8 +243,20 @@ public class SecResourceService implements ISecResourceService {
 	}
 	
 	public List<SecUrlEntity> getUserAllUrl(String userId){
+		List<SecResourceEntity> ress = secResourceDAO.getResByUserId(userId);
+		if(ress == null || ress.isEmpty()){
+			return null;
+		}
+		StringBuffer urlIds = new StringBuffer("");
+		for(SecResourceEntity res : ress){
+			urlIds.append(res.getUrlIds()+",");
+		}
+		String urlIdStr = urlIds.toString();
+		urlIdStr = urlIdStr.substring(0, urlIdStr.length()-1);
+		SecUrlDto urlDto = new SecUrlDto();
+		urlDto.setUrlId(urlIdStr);
 		
-		return null;
+		return secUrlDAO.querySecUrls(urlDto);
 	}
 
 }

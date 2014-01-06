@@ -10,10 +10,10 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.water.Constants;
-import net.water.login.entity.UserLoginEntity;
+import net.water.security.dto.SecUrlDto;
+import net.water.security.util.SecurityUtil;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,19 +31,20 @@ public class SecurityFilter implements Filter {
         String uri = request.getRequestURI();
         //判断后缀
         if(uri.endsWith(".jsp") || uri.endsWith(".action")) {
-        	HttpSession session = request.getSession();
-        	if(session == null){
-        		response.sendRedirect(request.getContextPath()+"/login/to_login.action?redirectTo="+uri);
-        		return;
+        	String methodType = request.getMethod();
+        	methodType = methodType.toUpperCase();
+        	int methodTypeInt = 0;
+        	if("GET".equals(methodType)){
+        		methodTypeInt = SecUrlDto.URL_METHOD_GET;
         	}
-        	Object userBaseInfoObj = session.getAttribute(Constants.PARAM_USER_BASE_INFO);
-        	if(userBaseInfoObj == null){ 
-        		response.sendRedirect(request.getContextPath()+"/login/to_login.action?redirectTo="+uri);
-        		return;
-	        }
-        	UserLoginEntity userLoginEntity = (UserLoginEntity)userBaseInfoObj;
-        	request.setAttribute(Constants.PARAM_USER_LOGIN_ID, userLoginEntity.getUserId());
-        	request.setAttribute(Constants.PARAM_USER_LOGIN_NAME, userLoginEntity.getUname());
+        	if("POST".equals(methodType)){
+        		methodTypeInt = SecUrlDto.URL_METHOD_POST;
+        	}
+        	boolean canDo = SecurityUtil.validateUrlCanDo((String)request.getAttribute(Constants.PARAM_USER_LOGIN_ID), methodTypeInt, request.getServletPath(), request.getSession().getServletContext());
+        	if(!canDo){
+        		response.sendRedirect("/front/security/security_error.action");
+    			return;
+        	}
         }
       
         filterChain.doFilter(request, response);
