@@ -32,7 +32,7 @@
        <tr>
        <th>菜单:</th>
        <td>
-       	<select name="appMenu" id="appMenu">
+       	<select name="appMenu">
        		<option value="">全部</option>
 	        <kuakao:xmlConfig configName="security_menu"/>
 	        <c:forEach var="xmlConfig" items="${xmlConfigs}">
@@ -46,7 +46,14 @@
        <tr>
        <th class="span2">资源ID:</th>
        <td class="span3"> <input type="text" name="resId" id="resId" value="${_page.resId}"  style="width: 210px;"  class="input-medium" /></td>
-       <td>&nbsp;</td><td>&nbsp;</td>
+       <th class="span2">是否可分配:</th>
+       <td>
+       	<select name="allowAssign">
+       		<option value="">全部</option>
+	        <option value="1" <c:if test="${_page.allowAssign==1}">selected='selected'</c:if>>允许</option>
+	        <option value="2" <c:if test="${_page.allowAssign==2}">selected='selected'</c:if>>不允许</option>
+       	</select>
+       	</td>
        </tr>
        <tr>
        <td style="text-align:center" colspan="4"><button type="submit" class="btn btn-primary">查询</button></td>
@@ -65,6 +72,9 @@
        <th>所属菜单</th>
        <th>资源名称</th>
        <th>包含URL</th>
+       <th>能否分配</th>
+       <th>依赖资源</th>
+       <th>描述</th>
        <th>操作</th>
        </tr>
        <tbody>
@@ -88,10 +98,14 @@
        </table>
        </c:if>
        </td>
+       <td>${secResourceEntity.allowAssign == 1 ? "允许" : "不允许"}</td>
+       <td>&nbsp;${secResourceEntity.baseRes}</td>
+       <td>&nbsp;${secResourceEntity.resDesc}</td>
        <td>
        	<div class="btn-group">
                 <button data-toggle="dropdown" class="btn dropdown-toggle btn-primary">操作 <span class="caret"></span></button>
                 <ul class="dropdown-menu">
+                  <li><a href="javascript:void(0)" onClick="">复制ID</a></li>
                   <li><a href="${pageContext.request.contextPath}/admin/secResource/edit.action?resId=${secResourceEntity.resId}&selMenu=${param['selMenu']}&selUrl=${param['selUrl']}&queryStr=${_page.encodeQueryStr}">编辑</a></li>
                   <li><a href="javascript:void(0)" onClick="commonDel('${pageContext.request.contextPath}/admin/secResource/destroy.action',{'resId':'${secResourceEntity.resId}'});">删除</a></li>
                 </ul>
