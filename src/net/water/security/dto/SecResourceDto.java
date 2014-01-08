@@ -1,10 +1,15 @@
 package net.water.security.dto;
 
 
-import net.kuakao.core.base.util.SystemUtils;
 import net.kuakao.core.dto.PagerDTO;
 import net.water.security.entity.SecResourceEntity;
+import net.water.tool.math.SuIntUtils;
 public class SecResourceDto extends PagerDTO {
+	
+	/**允许分配*/
+	public final static int ALLOW_ASSIGN_YES = 1;
+	/**不允许分配*/
+	public final static int ALLOW_ASSIGN_NO = 2;
 	
 	/* ID */
 	private String  resId;
@@ -31,9 +36,31 @@ public class SecResourceDto extends PagerDTO {
 
 	/*依赖的基础资源*/
 	private String baseRes;
+	
+	/*是否允许分配*/
+	private String allowAssign;
+	
+	/*描述*/
+	private String resDesc;
 			
 	/*是否需要查询url信息*/
 	private boolean needUrlInfos=false;
+
+	public String getAllowAssign() {
+		return allowAssign;
+	}
+
+	public void setAllowAssign(String allowAssign) {
+		this.allowAssign = allowAssign;
+	}
+
+	public String getResDesc() {
+		return resDesc;
+	}
+
+	public void setResDesc(String resDesc) {
+		this.resDesc = resDesc;
+	}
 
 	public String getBaseRes() {
 		return baseRes;
@@ -106,15 +133,19 @@ public class SecResourceDto extends PagerDTO {
 		
 		secResourceEntity.setResName(this.getResName());
 		
-		secResourceEntity.setAppType(SystemUtils.strToInt(this.appType));
+		secResourceEntity.setAppType(SuIntUtils.getInt(this.appType));
 		
-		secResourceEntity.setAppMenu(SystemUtils.strToInt(this.appMenu));
+		secResourceEntity.setAppMenu(SuIntUtils.getInt(this.appMenu));
 		
 		secResourceEntity.setUrlIds(this.getUrlIds());
 		
-		secResourceEntity.setStatus(SystemUtils.strToInt(this.status));
+		secResourceEntity.setStatus(SuIntUtils.getInt(this.status));
 		
 		secResourceEntity.setBaseRes(this.baseRes);
+		
+		secResourceEntity.setAllowAssign(SuIntUtils.getInt(this.allowAssign));
+		
+		secResourceEntity.setResDesc(this.resDesc);
 		
 		return secResourceEntity;
 	}

@@ -22,7 +22,7 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 	
 	
 	public List<SecResourceEntity> querySecResources(SecResourceDto secResourceDto) throws DataBaseException {
-		String sql = "select res_id,res_name,app_type,app_menu,url_ids,base_res from w_sec_resource where status=1";
+		String sql = "select res_id,res_name,app_type,app_menu,url_ids,base_res,allow_assign,res_desc from w_sec_resource where status=1";
 		StringBuffer where = new StringBuffer();
 		List<Object> args = new ArrayList<Object>();
 		SecResourceEntity secResourceEntity = secResourceDto.toSecResourceEntity();
@@ -46,6 +46,10 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 			args.add(secResourceEntity.getAppMenu());
 			where.append(" and app_menu=?");
 		}
+		if(StringUtils.isNotBlank(secResourceDto.getAllowAssign())) {
+			args.add(secResourceEntity.getAllowAssign());
+			where.append(" and allow_assign=?");
+		}
 		
 		String querySql = sql + where.toString() + " order by res_name";
 		
@@ -59,6 +63,8 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 					secResourceEntity.setAppMenu(rs.getInt("app_menu"));
 					secResourceEntity.setUrlIds(rs.getString("url_ids"));
 					secResourceEntity.setBaseRes(rs.getString("base_res"));
+					secResourceEntity.setAllowAssign(rs.getInt("allow_assign"));
+					secResourceEntity.setResDesc(rs.getString("res_desc"));
 					return secResourceEntity;
 				}
 			});
@@ -72,6 +78,8 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 					secResourceEntity.setAppMenu(rs.getInt("app_menu"));
 					secResourceEntity.setUrlIds(rs.getString("url_ids"));
 					secResourceEntity.setBaseRes(rs.getString("base_res"));
+					secResourceEntity.setAllowAssign(rs.getInt("allow_assign"));
+					secResourceEntity.setResDesc(rs.getString("res_desc"));
 					return secResourceEntity;
 				}
 			}, secResourceDto);
@@ -80,7 +88,7 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 	
 	
 	public SecResourceEntity getSecResourceById(String resId) throws DataBaseException {
-		String sql = "select res_id,res_name,app_type,app_menu,url_ids,base_res from w_sec_resource where res_id = ? and status=1  limit 1";
+		String sql = "select res_id,res_name,app_type,app_menu,url_ids,base_res,allow_assign,res_desc from w_sec_resource where res_id = ? and status=1  limit 1";
 		return super.queryForObject(sql, new Object[]{resId }, new RowMapper<SecResourceEntity>() {
 			public SecResourceEntity mapRow(ResultSet rs, int value) throws SQLException {
 				SecResourceEntity secResourceEntity = new SecResourceEntity();
@@ -90,6 +98,8 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 				secResourceEntity.setAppMenu(rs.getInt("app_menu"));
 				secResourceEntity.setUrlIds(rs.getString("url_ids"));
 				secResourceEntity.setBaseRes(rs.getString("base_res"));
+				secResourceEntity.setAllowAssign(rs.getInt("allow_assign"));
+				secResourceEntity.setResDesc(rs.getString("res_desc"));
 				return secResourceEntity;
 			}
 		});
@@ -104,8 +114,8 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 	
 	
 	public void createSecResource(SecResourceEntity secResourceEntity) throws DataBaseException {
-		String sql = "insert into w_sec_resource(res_id,res_name,app_menu,url_ids,base_res) values(? ,? ,? ,?,?)";
-		super.update(sql, new Object[]{secResourceEntity.getResId(),secResourceEntity.getResName() ,secResourceEntity.getAppMenu() ,secResourceEntity.getUrlIds(),secResourceEntity.getBaseRes() });
+		String sql = "insert into w_sec_resource(res_id,res_name,app_menu,url_ids,base_res,allow_assign,res_desc) values(? ,? ,? ,?,?,?,?)";
+		super.update(sql, new Object[]{secResourceEntity.getResId(),secResourceEntity.getResName() ,secResourceEntity.getAppMenu() ,secResourceEntity.getUrlIds(),secResourceEntity.getBaseRes(),secResourceEntity.getAllowAssign(),secResourceEntity.getResDesc() });
 	}
 	
 	
@@ -113,21 +123,18 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 	public void updateSecResource(SecResourceEntity secResourceEntity) throws DataBaseException {
 		StringBuffer updateSql = new StringBuffer("update w_sec_resource set ");
 		List<Object> args = new ArrayList<Object>();
-		if(StringUtils.isNotBlank(secResourceEntity.getResName())){
-			args.add(secResourceEntity.getResName());
-			updateSql.append("res_name=?").append(",");	
-		}
-		if(secResourceEntity.getAppMenu() != 0){
-			args.add(secResourceEntity.getAppMenu());
-			updateSql.append("app_menu=?").append(",");
-		}
-		if(StringUtils.isNotBlank(secResourceEntity.getUrlIds())){
-			args.add(secResourceEntity.getUrlIds());
-			updateSql.append("url_ids=?").append(",");
-		}
+		args.add(secResourceEntity.getResName());
+		updateSql.append("res_name=?").append(",");
+		args.add(secResourceEntity.getAppMenu());
+		updateSql.append("app_menu=?").append(",");
+		args.add(secResourceEntity.getUrlIds());
+		updateSql.append("url_ids=?").append(",");
 		args.add(secResourceEntity.getBaseRes());
 		updateSql.append("base_res=?").append(",");
-		
+		args.add(secResourceEntity.getAllowAssign());
+		updateSql.append("allow_assign=?").append(",");
+		args.add(secResourceEntity.getResDesc());
+		updateSql.append("res_desc=?").append(",");
 		
 		args.add(secResourceEntity.getResId());
 			
@@ -136,7 +143,7 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 	}
 	
 	public List<SecResourceEntity> getResByUserId(String userId) throws DataBaseException{
-		String sql = "select r.res_id,r.res_name,r.app_type,r.app_menu,r.url_ids,r.base_res from w_sec_resource r,w_sec_user_resource ur where r.res_id=ur.res_id and r.status=1 and ur.user_id = ?";
+		String sql = "select r.res_id,r.res_name,r.app_type,r.app_menu,r.url_ids,r.base_res,r.allow_assign,r.res_desc from w_sec_resource r,w_sec_user_resource ur where r.res_id=ur.res_id and r.status=1 and ur.user_id = ?";
 		return super.query(sql, new Object[]{userId}, new RowMapper<SecResourceEntity>() {
 			public SecResourceEntity mapRow(ResultSet rs, int arg1) throws SQLException {
 				SecResourceEntity secResourceEntity = new SecResourceEntity();
@@ -146,6 +153,8 @@ public class SecResourceDAO extends BaseDAO implements ISecResourceDAO {
 				secResourceEntity.setAppMenu(rs.getInt("app_menu"));
 				secResourceEntity.setUrlIds(rs.getString("url_ids"));
 				secResourceEntity.setBaseRes(rs.getString("base_res"));
+				secResourceEntity.setAllowAssign(rs.getInt("allow_assign"));
+				secResourceEntity.setResDesc(rs.getString("res_desc"));
 				return secResourceEntity;
 			}
 		});

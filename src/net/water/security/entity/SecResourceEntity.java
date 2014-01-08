@@ -28,10 +28,32 @@ public class SecResourceEntity implements Serializable {
 	
 	/*依赖的基础资源*/
 	private String baseRes;
+	
+	/*是否允许分配*/
+	private int allowAssign;
+	
+	/*描述*/
+	private String resDesc;
 			
 	/* 资源所包含的url，用于显示 */
 	private List<SecUrlEntity> urls;
 	
+	public int getAllowAssign() {
+		return allowAssign;
+	}
+
+	public void setAllowAssign(int allowAssign) {
+		this.allowAssign = allowAssign;
+	}
+
+	public String getResDesc() {
+		return resDesc;
+	}
+
+	public void setResDesc(String resDesc) {
+		this.resDesc = resDesc;
+	}
+
 	public String getBaseRes() {
 		return baseRes;
 	}
@@ -105,6 +127,10 @@ public class SecResourceEntity implements Serializable {
 		secResourceDto.setStatus(String.valueOf(this.status));
 		
 		secResourceDto.setBaseRes(this.baseRes);
+		
+		secResourceDto.setAllowAssign(String.valueOf(this.allowAssign));
+		
+		secResourceDto.setResDesc(this.resDesc);
 		
 	}
 
