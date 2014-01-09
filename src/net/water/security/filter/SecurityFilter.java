@@ -42,7 +42,7 @@ public class SecurityFilter implements Filter {
         	}
         	boolean canDo = SecurityUtil.validateUrlCanDo((String)request.getAttribute(Constants.PARAM_USER_LOGIN_ID), methodTypeInt, request.getServletPath(), request.getSession().getServletContext());
         	if(!canDo){
-        		response.sendRedirect("/front/security/security_error.action");
+        		response.sendRedirect("/show/security_error.html");
     			return;
         	}
         }
