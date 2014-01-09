@@ -38,6 +38,17 @@ public class SecResourceEntity implements Serializable {
 	/* 资源所包含的url，用于显示 */
 	private List<SecUrlEntity> urls;
 	
+	/*依赖的基础资源列表，用于显示*/
+	private List<SecResourceEntity> baseResList;
+	
+	public List<SecResourceEntity> getBaseResList() {
+		return baseResList;
+	}
+
+	public void setBaseResList(List<SecResourceEntity> baseResList) {
+		this.baseResList = baseResList;
+	}
+
 	public int getAllowAssign() {
 		return allowAssign;
 	}

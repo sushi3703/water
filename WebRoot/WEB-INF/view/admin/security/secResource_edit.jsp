@@ -54,7 +54,7 @@
     <tr>
     <th>所属菜单：</th>
     <td>
-		<select id="appMenu" name="appMenu">
+		<select name="appMenu">
 			<option value="">请选择所属菜单</option>
 			<kuakao:xmlConfig configName="security_menu"/>
 			<c:forEach var="xmlConfig" items="${xmlConfigs}">
@@ -62,6 +62,25 @@
 			</c:forEach>
 		</select>
       </td>
+    </tr>
+    <tr>
+    <th>能否分配：</th>
+    <td>
+		<select name="allowAssign">
+			<option value="1" <c:if test="${secResourceDto.allowAssign==1}">selected='selected'</c:if>>允许</option>
+			<option value="2" <c:if test="${secResourceDto.allowAssign==2}">selected='selected'</c:if>>不允许</option>
+		</select>
+      </td>
+    </tr>
+    <tr>
+    <th>描述：</th>
+    <td>
+    <textarea name="resDesc" class="span9 input-square" rows="6">${secResourceDto.resDesc}</textarea>
+    </td>
+    </tr>
+    <tr>
+    <th>依赖的基础资源：</th>
+    <td>待实现</td>
     </tr>
     <tr>
     <th>包含URL：</th>

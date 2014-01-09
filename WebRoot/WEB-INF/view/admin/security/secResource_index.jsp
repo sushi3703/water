@@ -68,11 +68,9 @@
        
        <table class="table table-bordered table-striped">
        <tr>
-       <th>ID</th>
        <th>所属菜单</th>
        <th>资源名称</th>
        <th>包含URL</th>
-       <th>能否分配</th>
        <th>依赖资源</th>
        <th>描述</th>
        <th>操作</th>
@@ -80,9 +78,8 @@
        <tbody>
        <c:forEach var="secResourceEntity" items="${secResourceEntitys}">
        <tr>
-       <td>${secResourceEntity.resId}</td>
        <td><kuakao:xmlConfig configName="security_menu" isMap="true" key="${secResourceEntity.appMenu}"/>&nbsp;</td>
-       <td>${secResourceEntity.resName}</td>
+       <td><span <c:if test="${secResourceEntity.allowAssign!=1}">style="color: red" title="不允许分配"</c:if>>${secResourceEntity.resName}</span></td>
        <td>
        &nbsp;
        <c:if test="${!empty secResourceEntity.urls}">
@@ -90,7 +87,7 @@
        <c:forEach items="${secResourceEntity.urls}" var="url">
        <tr>
        <td>&nbsp;<c:if test="${url.urlShow==1}">show</c:if></td>
-       <td>${url.urlMethod==1?"get":"post"}</td>
+       <td>${url.urlMethod==1?"G":"P"}</td>
        <td>${url.urlName}</td>
        <td>${url.urlPath}</td>
        </tr>
@@ -98,14 +95,21 @@
        </table>
        </c:if>
        </td>
-       <td>${secResourceEntity.allowAssign == 1 ? "允许" : "不允许"}</td>
-       <td>&nbsp;${secResourceEntity.baseRes}</td>
+       <td>&nbsp;
+       <c:if test="${!empty secResourceEntity.baseResList}">
+       <table>
+       <c:forEach items="${secResourceEntity.baseResList}" var="baseRes">
+       <tr><td><a href="javascript:void(0);" onclick="alert('${baseRes.resId}');">${baseRes.resName}</a></td></tr>
+       </c:forEach>
+       </table>
+       </c:if>
+       </td>
        <td>&nbsp;${secResourceEntity.resDesc}</td>
        <td>
        	<div class="btn-group">
                 <button data-toggle="dropdown" class="btn dropdown-toggle btn-primary">操作 <span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                  <li><a href="javascript:void(0)" onClick="">复制ID</a></li>
+                  <li><a href="javascript:void(0)" onClick="alert('${secResourceEntity.resId}');">显示ID</a></li>
                   <li><a href="${pageContext.request.contextPath}/admin/secResource/edit.action?resId=${secResourceEntity.resId}&selMenu=${param['selMenu']}&selUrl=${param['selUrl']}&queryStr=${_page.encodeQueryStr}">编辑</a></li>
                   <li><a href="javascript:void(0)" onClick="commonDel('${pageContext.request.contextPath}/admin/secResource/destroy.action',{'resId':'${secResourceEntity.resId}'});">删除</a></li>
                 </ul>

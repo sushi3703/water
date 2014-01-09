@@ -45,6 +45,25 @@ public class SecResourceService implements ISecResourceService {
 				res.setUrls(urls);
 			}
 		}
+		if(secResourceDto.isNeedBaseResInfos()){
+			String baseRes;
+			List<SecResourceEntity> baseResList;
+			SecResourceEntity resEntity;
+			for(SecResourceEntity res : ress){
+				baseRes = res.getBaseRes();
+				if(StringUtils.isBlank(baseRes)){
+					continue;
+				}
+				baseResList = new ArrayList<SecResourceEntity>();
+				for(String resId : baseRes.split(",")){
+					resEntity = secResourceDAO.getSecResourceById(resId);
+					if(resEntity != null){
+						baseResList.add(resEntity);
+					}
+				}
+				res.setBaseResList(baseResList);
+			}
+		}
 		return ress;
 	}
 
@@ -180,7 +199,7 @@ public class SecResourceService implements ISecResourceService {
 	}
 	
 	public List<Map<String,Object>> getUserResourceOfTeam(String adminId,String userId){
-		//管理员所有可分配的资源
+		//管理员所有的资源
 		List<SecResourceEntity> adminRess = secResourceDAO.getResByUserId(adminId);
 		if(adminRess == null || adminRess.isEmpty()){
 			return null;
@@ -198,9 +217,13 @@ public class SecResourceService implements ISecResourceService {
 		List<Map<String,String>> resList;
 		Map<String,String> resMap;
 		for(SecResourceEntity res : adminRess){
+			if(res.getAllowAssign() != SecResourceDto.ALLOW_ASSIGN_YES){//可分配
+				continue;
+			}
 			resMap = new HashMap<String, String>();
 			resMap.put("resId", res.getResId());
 			resMap.put("resName", res.getResName());
+			resMap.put("resDesc", res.getResDesc());
 			resMap.put("chk", StringUtils.isNotBlank(userResMap.get(res.getResId()))?"true":"false");
 			
 			resList = menuIdResMap.get(res.getAppMenu());

@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.kuakao.core.base.util.FormTokenUtil;
 import net.sf.json.JSONObject;
-import net.water.Constants;
 import net.water.security.dto.SecResourceDto;
 import net.water.security.entity.SecResourceEntity;
 import net.water.security.service.ISecResourceService;
@@ -35,6 +34,7 @@ public class SecResourceAdminController {
 		secResourceDto.setPerPage(10);
 		secResourceDto.setQueryStr(request.getQueryString() == null ? "" : request.getQueryString());
 		secResourceDto.setNeedUrlInfos(true);
+		secResourceDto.setNeedBaseResInfos(true);
 		List<SecResourceEntity> secResourceEntitys = secResourceService.querySecResources(secResourceDto ,model);
 		model.addAttribute("secResourceEntitys", secResourceEntitys);
 		return "admin/security/secResource_index";

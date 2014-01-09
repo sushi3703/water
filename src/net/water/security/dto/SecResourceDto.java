@@ -45,6 +45,17 @@ public class SecResourceDto extends PagerDTO {
 			
 	/*是否需要查询url信息*/
 	private boolean needUrlInfos=false;
+	
+	/*是否需要查询依赖资源信息*/
+	private boolean needBaseResInfos=false;
+
+	public boolean isNeedBaseResInfos() {
+		return needBaseResInfos;
+	}
+
+	public void setNeedBaseResInfos(boolean needBaseResInfos) {
+		this.needBaseResInfos = needBaseResInfos;
+	}
 
 	public String getAllowAssign() {
 		return allowAssign;

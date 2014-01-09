@@ -62,6 +62,7 @@
 		<tr>
 		<td class="table-checkbox"><input type="checkbox" name="selRes" chk="${resMap['chk']}" value="${resMap['resId']}" /></td>
 		<td>${resMap["resName"]}</td>
+		<td>${resMap["resDesc"]}</td>
 		</tr>
     	</c:forEach>
     	</table>
