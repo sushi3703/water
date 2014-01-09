@@ -1,6 +1,8 @@
 package net.water.login.filter;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -31,14 +33,24 @@ public class LoginFilter implements Filter {
         String uri = request.getRequestURI();
         //判断后缀
         if(uri.endsWith(".jsp") || uri.endsWith(".action")) {
+        	String redirectTo = "";
+        	Map params = request.getParameterMap();
+        	StringBuffer urlParam = new StringBuffer();
+        	if(params!=null && !params.isEmpty()){
+        		for(Object key : params.keySet()){
+        			if(urlParam.length()>0)urlParam.append("&");
+        			urlParam.append(key+"="+request.getParameter((String)key));
+        		}
+        		redirectTo = URLEncoder.encode(request.getRequestURL() + "?" + urlParam.toString(),"ISO-8859-1");
+        	}
         	HttpSession session = request.getSession();
         	if(session == null){
-        		response.sendRedirect(request.getContextPath()+"/login/to_login.action?redirectTo="+uri);
+        		response.sendRedirect(request.getContextPath()+"/login/to_login.action?redirectTo="+redirectTo);
         		return;
         	}
         	Object userBaseInfoObj = session.getAttribute(Constants.PARAM_USER_BASE_INFO);
         	if(userBaseInfoObj == null){ 
-        		response.sendRedirect(request.getContextPath()+"/login/to_login.action?redirectTo="+uri);
+        		response.sendRedirect(request.getContextPath()+"/login/to_login.action?redirectTo="+redirectTo);
         		return;
 	        }
         	UserLoginEntity userLoginEntity = (UserLoginEntity)userBaseInfoObj;
